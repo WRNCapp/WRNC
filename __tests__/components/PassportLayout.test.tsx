@@ -28,7 +28,7 @@ describe('Passport native layout contract', () => {
       expect(contentWidth * 0.48 * 3).toBeGreaterThan(contentWidth);
     }
     expect(StyleSheet.flatten(getByTestId('build-stat-grid').props.style)).toMatchObject({ marginTop: 16, rowGap: 12, flexWrap: 'wrap' });
-    expect(getByText('Documentation Score')).toBeTruthy();
+    expect(getByText('WRNC Build Score')).toBeTruthy();
     expect(getByText('7/100')).toBeTruthy();
   });
 

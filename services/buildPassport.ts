@@ -159,11 +159,11 @@ function recommendationRoute(vehicle: BuildPassportInput['vehicle'], category: B
     return undefined;
   }
 
-  if (category === 'vehicleInformation') {
+  if (category === 'vehicleProfile') {
     return undefined;
   }
 
-  if (category === 'activityHistory' || category === 'maintenanceRecords') {
+  if (category === 'buildTimeline' || category === 'maintenance' || category === 'modifications' || category === 'recordQuality') {
     return `/vehicle/${vehicle.id}/timeline`;
   }
 
@@ -171,11 +171,11 @@ function recommendationRoute(vehicle: BuildPassportInput['vehicle'], category: B
 }
 
 function recommendationLabel(category: BuildPassportRecommendation['category']) {
-  if (category === 'vehicleInformation') {
+  if (category === 'vehicleProfile') {
     return 'Back to Vehicle Workspace';
   }
 
-  if (category === 'activityHistory' || category === 'maintenanceRecords') {
+  if (category === 'buildTimeline' || category === 'maintenance' || category === 'modifications' || category === 'recordQuality') {
     return 'Open Timeline';
   }
 
@@ -186,7 +186,7 @@ function buildRecommendations(input: BuildPassportInput): BuildPassportRecommend
   return input.documentationScore.recommendations.map((recommendation) => ({
     ...recommendation,
     route: recommendationRoute(input.vehicle, recommendation.category),
-    action: recommendation.category === 'vehicleInformation' ? 'back' : undefined,
+    action: recommendation.category === 'vehicleProfile' ? 'back' : undefined,
     sourceLabel: recommendationLabel(recommendation.category),
   }));
 }

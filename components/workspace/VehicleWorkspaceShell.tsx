@@ -209,7 +209,7 @@ export function VehicleWorkspaceShell() {
                   <Text className="mt-1 text-sm text-wrnc-text-secondary">
                     {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
                   </Text>
-                  <View className="mt-3 flex-row flex-wrap gap-2">
+                  <View testID="vehicle-facts-grid" className="mt-4 flex-row flex-wrap justify-between gap-y-2">
                     <Fact label="VIN" value={activeVehicle.vin || 'Not recorded'} />
                     <Fact label="Mileage" value={activeVehicle.mileage !== null ? `${activeVehicle.mileage.toLocaleString()} mi` : 'Not recorded'} />
                     <Fact label="Engine" value={activeVehicle.engine || 'Not recorded'} />
@@ -287,7 +287,7 @@ export function VehicleWorkspaceShell() {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <View className="min-w-36 flex-1 rounded-lg bg-wrnc-background px-3 py-2">
+    <View testID="vehicle-fact" className="rounded-lg bg-wrnc-background px-3 py-2" style={{ flexBasis: '48%', minHeight: 56 }}>
       <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
       <Text className="mt-1 text-sm font-medium text-wrnc-text-primary">{value}</Text>
     </View>
@@ -316,6 +316,7 @@ function RecentActivities({
             <Button
               label={`${activity.title} · ${formatTimelineDate(activity.activityDate)}`}
               variant="secondary"
+              compact
               onPress={() => onPress(activity.id)}
             />
           </View>
