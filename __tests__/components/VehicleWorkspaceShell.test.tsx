@@ -304,11 +304,13 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
       },
     ];
 
-    const { getAllByText, getByText, queryByText } = render(<VehicleWorkspaceShell />);
+    const { getAllByText, getAllByTestId, getByTestId, getByText, queryByText } = render(<VehicleWorkspaceShell />);
 
     fireEvent.press(getAllByText('Benny')[0]);
 
     expect(getAllByText('Benny')).toHaveLength(1);
+    expect(getByTestId('vehicle-facts-grid')).toBeTruthy();
+    expect(getAllByTestId('vehicle-fact')).toHaveLength(4);
     expect(getByText('Build Passport')).toBeTruthy();
     expect(getByText('Timeline')).toBeTruthy();
     expect(getByText('Add Activity')).toBeTruthy();

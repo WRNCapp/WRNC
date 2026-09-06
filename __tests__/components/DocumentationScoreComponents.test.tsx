@@ -13,9 +13,9 @@ describe('documentation score components', () => {
 
   it('renders the breakdown', () => {
     const { getByText } = render(
-      <DocumentationScoreBreakdown categories={[{ key: 'vehicleInformation', label: 'Vehicle Information', score: 50, maxScore: 100, evidence: ['Recorded'] }]} />
+      <DocumentationScoreBreakdown categories={[{ key: 'vehicleProfile', label: 'Vehicle Profile', score: 5, maxScore: 10, evidence: ['Recorded'] }]} />
     );
-    expect(getByText('Vehicle Information')).toBeTruthy();
+    expect(getByText('Vehicle Profile')).toBeTruthy();
   });
 
   it('renders recommendations', () => {
@@ -27,8 +27,8 @@ describe('documentation score components', () => {
 
   it('renders category progress', () => {
     const { getByText } = render(
-      <DocumentationCategoryProgress category={{ key: 'manuals', label: 'Manuals', score: 80, maxScore: 100, evidence: ['Recorded'] }} />
+      <DocumentationCategoryProgress category={{ key: 'documentsReceipts', label: 'Documents & Receipts', score: 8, maxScore: 10, evidence: ['Recorded'] }} />
     );
-    expect(getByText('Manuals')).toBeTruthy();
+    expect(getByText('Documents & Receipts')).toBeTruthy();
   });
 });

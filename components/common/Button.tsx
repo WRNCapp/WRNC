@@ -5,6 +5,7 @@ export interface ButtonProps extends PressableProps {
   label: string;
   variant?: 'primary' | 'secondary' | 'danger';
   loading?: boolean;
+  compact?: boolean;
 }
 
 const VARIANT_STYLES: Record<NonNullable<ButtonProps['variant']>, { bg: string; text: string }> = {
@@ -14,14 +15,14 @@ const VARIANT_STYLES: Record<NonNullable<ButtonProps['variant']>, { bg: string; 
 };
 
 /** Common primary action button, shared across screens. */
-export function Button({ label, variant = 'primary', loading, disabled, ...props }: ButtonProps) {
+export function Button({ label, variant = 'primary', loading, disabled, compact = false, ...props }: ButtonProps) {
   const styles = VARIANT_STYLES[variant];
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ disabled: disabled || loading }}
       disabled={disabled || loading}
-      className={`items-center justify-center rounded-lg px-4 py-3 ${styles.bg} ${
+      className={`min-h-11 items-center justify-center rounded-lg ${compact ? 'px-3 py-2' : 'px-4 py-3'} ${styles.bg} ${
         disabled || loading ? 'opacity-50' : ''
       }`}
       {...props}

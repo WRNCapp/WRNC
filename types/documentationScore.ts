@@ -2,28 +2,32 @@ import type { Activity } from './activity';
 import type { Document } from './document';
 import type { Vehicle } from './vehicle';
 
-export type DocumentationCategoryKey =
-  | 'vehicleInformation'
-  | 'activityHistory'
-  | 'maintenanceRecords'
+export type BuildScoreCategoryKey =
+  | 'vehicleProfile'
+  | 'buildTimeline'
+  | 'modifications'
+  | 'maintenance'
   | 'photos'
-  | 'receipts'
-  | 'registration'
-  | 'insurance'
-  | 'warrantyDocuments'
-  | 'manuals'
-  | 'titles';
+  | 'partsInventory'
+  | 'documentsReceipts'
+  | 'ownershipProvenance'
+  | 'recordQuality';
 
-export interface DocumentationCategoryScore {
-  key: DocumentationCategoryKey;
+export type DocumentationCategoryKey = BuildScoreCategoryKey;
+
+export interface BuildScoreCategory {
+  key: BuildScoreCategoryKey;
   label: string;
   score: number;
   maxScore: number;
   evidence: string[];
+  recommendation?: string;
 }
 
+export type DocumentationCategoryScore = BuildScoreCategory;
+
 export interface DocumentationRecommendation {
-  category: DocumentationCategoryKey;
+  category: BuildScoreCategoryKey;
   title: string;
   message: string;
   impact: 'low' | 'medium' | 'high';
@@ -31,8 +35,16 @@ export interface DocumentationRecommendation {
 
 export interface DocumentationScoreResult {
   overallScore: number;
-  categories: DocumentationCategoryScore[];
+  categories: BuildScoreCategory[];
   recommendations: DocumentationRecommendation[];
+}
+
+export type BuildScoreResult = DocumentationScoreResult;
+
+export interface BuildScoreDelta {
+  previousScore: number;
+  currentScore: number;
+  delta: number;
 }
 
 export interface DocumentationScoreInput {
@@ -40,3 +52,5 @@ export interface DocumentationScoreInput {
   activities: Activity[];
   documents: Document[];
 }
+
+export type BuildScoreInput = DocumentationScoreInput;

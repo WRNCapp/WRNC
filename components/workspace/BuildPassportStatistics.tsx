@@ -14,7 +14,7 @@ export function BuildPassportStatistics({ statistics }: BuildPassportStatisticsP
       <Text className="mt-1 text-sm text-wrnc-text-secondary">High-level counts derived from the vehicle history.</Text>
 
       <View testID="build-stat-grid" style={passportLayout.metricGrid}>
-        <Stat label="Documentation Score" value={`${statistics.documentationScore}/100`} />
+        <Stat label="WRNC Build Score" value={`${statistics.documentationScore}/100`} />
         <Stat label="Activities" value={statistics.totalActivities} />
         <Stat label="Documents" value={statistics.totalDocuments} />
         <Stat label="Photos" value={statistics.totalPhotos} />

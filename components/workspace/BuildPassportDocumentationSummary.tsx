@@ -30,8 +30,8 @@ function renderLink(
 export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack }: BuildPassportDocumentationSummaryProps) {
   return (
     <View className="rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
-      <Text className="text-lg font-semibold text-wrnc-text-primary">Documentation Summary</Text>
-      <Text className="mt-1 text-sm text-wrnc-text-secondary">Documentation Score™ and attached records.</Text>
+      <Text className="text-lg font-semibold text-wrnc-text-primary">WRNC Build Score™</Text>
+      <Text className="mt-1 text-sm text-wrnc-text-secondary">Documentation quality and coverage from the current build record.</Text>
 
       <View testID="documentation-stat-grid" style={passportLayout.metricGrid}>
         <Stat label="Score" value={`${summary.overallScore}/100`} />

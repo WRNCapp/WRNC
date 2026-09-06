@@ -41,8 +41,8 @@ describe('useDocumentationScore', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data?.overallScore).toBeDefined();
     expect(useDocuments).toHaveBeenCalledWith('ws-1', { vehicleId: 'veh-1' });
-    expect(result.current.data?.categories.find((category) => category.key === 'receipts')?.score).toBe(100);
+    expect(result.current.data?.categories.find((category) => category.key === 'documentsReceipts')?.score).toBe(4);
     expect(result.current.data?.categories.find((category) => category.key === 'photos')?.score).toBe(0);
-    expect(result.current.data?.categories.find((category) => category.key === 'insurance')?.score).toBe(0);
+    expect(result.current.data?.categories.find((category) => category.key === 'ownershipProvenance')?.score).toBe(0);
   });
 });
