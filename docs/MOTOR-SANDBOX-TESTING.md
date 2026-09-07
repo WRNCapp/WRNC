@@ -19,6 +19,18 @@ The protected `/motor-sandbox` route lists all documented sandbox vehicles, requ
 
 The shared adapter and normalized types may later be reused by the app team. Native distribution configuration is not part of this branch.
 
+## Repeatable 15-VIN evidence run
+
+Run the controlled preview through the server proxy. Use a disposable WRNC test account and a short-lived access token. The runner never prints or writes the token.
+
+```sh
+MOTOR_EVIDENCE_ENDPOINT="https://preview.example/api/motor/vin" \
+MOTOR_EVIDENCE_BEARER_TOKEN="short-lived-access-token" \
+npm run qa:motor:live
+```
+
+The command checks all 15 sanctioned VINs against the expected vehicle identity and MOTOR IDs. It writes a timestamped JSON record and a reviewable Markdown matrix under `artifacts/motor-evidence/`. That directory is ignored by Git. A 15/15 result satisfies the response-identity portion of the gate only. Complete the manual gates in the generated report before recommending merge.
+
 ## Verified sandbox contract
 
 The vendor's 2024 sandbox document and live Swagger specification identify:

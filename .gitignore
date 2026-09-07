@@ -21,6 +21,8 @@ build/
 # Testing
 coverage/
 .nyc_output/
+artifacts/
+.npm-cache/
 
 # Build
 *.log

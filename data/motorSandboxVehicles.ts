@@ -1,25 +1,11 @@
+import sandboxVehicles from './motorSandboxVehicles.json';
+
 export interface MotorSandboxVehicle {
   year: number; make: string; model: string; vin: string;
   motorVehicleId: number; motorBaseVehicleId: number;
 }
 
-export const MOTOR_SANDBOX_VEHICLES: MotorSandboxVehicle[] = [
-  { year: 1997, make: 'Dodge', model: 'Neon', vin: '1B3ES47Y6VD205309', motorVehicleId: 1872, motorBaseVehicleId: 1939 },
-  { year: 2002, make: 'Ford', model: 'Explorer', vin: '1FMZU74W22UC09718', motorVehicleId: 5108, motorBaseVehicleId: 5264 },
-  { year: 2009, make: 'Chevrolet', model: 'Silverado 1500', vin: '1GCEK29079E143364', motorVehicleId: 20680, motorBaseVehicleId: 30027 },
-  { year: 2009, make: 'Dodge', model: 'Ram 1500', vin: '1D3HV13T39S713967', motorVehicleId: 20790, motorBaseVehicleId: 30144 },
-  { year: 2010, make: 'Toyota', model: 'Camry', vin: '4T4BF3EK8AR074927', motorVehicleId: 20957, motorBaseVehicleId: 30390 },
-  { year: 2010, make: 'Chevrolet', model: 'Camaro', vin: '2G1FT1EW3A9111145', motorVehicleId: 20969, motorBaseVehicleId: 30402 },
-  { year: 2010, make: 'Dodge', model: 'Challenger', vin: '2B3CJ7DW1AH173347', motorVehicleId: 22055, motorBaseVehicleId: 92758 },
-  { year: 2010, make: 'Honda', model: 'Civic', vin: '19XFA1F51AE028415', motorVehicleId: 22124, motorBaseVehicleId: 95946 },
-  { year: 2010, make: 'Ford', model: 'F-250 Super Duty', vin: '1FTSW2BR0AEB13613', motorVehicleId: 22147, motorBaseVehicleId: 95971 },
-  { year: 2010, make: 'Nissan', model: 'Altima', vin: '1N4AL2AP6AN555869', motorVehicleId: 22156, motorBaseVehicleId: 95980 },
-  { year: 2010, make: 'Mercedes-Benz', model: 'C350', vin: 'WDDGF5GBXAR126533', motorVehicleId: 22203, motorBaseVehicleId: 96028 },
-  { year: 2012, make: 'Ford', model: 'F-150', vin: '1FTFW1ET1CFA84056', motorVehicleId: 26332, motorBaseVehicleId: 118906 },
-  { year: 2016, make: 'Freightliner', model: 'Cascadia', vin: '3AKJGLD56GSGJ2574', motorVehicleId: 60180, motorBaseVehicleId: 136724 },
-  { year: 2015, make: 'Hino', model: '338', vin: '5PVNV8JRXF4S50916', motorVehicleId: 64112, motorBaseVehicleId: 141113 },
-  { year: 2010, make: 'Acura', model: 'MDX', vin: '2HNYD2H47AH532332', motorVehicleId: 22258, motorBaseVehicleId: 96087 },
-];
+export const MOTOR_SANDBOX_VEHICLES: MotorSandboxVehicle[] = sandboxVehicles;
 
 export const motorSandboxVehicleLabel = (vehicle: MotorSandboxVehicle) =>
   `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
