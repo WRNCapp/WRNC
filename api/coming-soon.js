@@ -12,13 +12,13 @@ const html = `<!doctype html>
 <meta name="robots" content="noindex,follow" />
 <title>WRNC | The Car Culture Platform</title>
 <meta name="description" content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds." />
-<link rel="canonical" href="https://wrnc.app/coming-soon" />
+<link rel="canonical" href="https://wrnc.app/" />
 <link rel="icon" href="/favicon.ico" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="WRNC" />
 <meta property="og:title" content="WRNC | The Car Culture Platform" />
 <meta property="og:description" content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds." />
-<meta property="og:url" content="https://wrnc.app/coming-soon" />
+<meta property="og:url" content="https://wrnc.app/" />
 <meta property="og:image" content="${SOCIAL_URL}" />
 <meta property="og:image:alt" content="WRNC | The Car Culture Platform" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -27,7 +27,7 @@ const html = `<!doctype html>
 <meta name="twitter:image" content="${SOCIAL_URL}" />
 <style>
 :root{color-scheme:dark;background:#080808;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080808}body{min-height:100dvh;overflow-x:hidden}.page{min-height:100dvh;padding:0 24px}.hero{width:min(100%,920px);min-height:78dvh;margin:0 auto;padding:72px 0 64px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.logo{display:block;width:min(226px,62vw);height:auto;margin:0 0 64px}h1{margin:0;max-width:760px;color:#fff;font-size:clamp(2.15rem,6vw,3rem);line-height:1.08;font-weight:800;letter-spacing:.01em;text-wrap:balance}.copy{max-width:660px;margin:22px auto 0;color:#c0c0c0;font-size:clamp(1rem,2.4vw,1.125rem);line-height:1.56}.status{margin-top:52px;display:flex;flex-direction:column;align-items:center}.built{margin:0;color:#fff;font-size:.94rem;font-weight:700;letter-spacing:.14em}.accent{width:42px;height:2px;margin:18px 0;background:#ff6400}.launch-list{width:min(100%,700px);margin-top:52px}#product-preview[hidden]{display:none!important}@media(max-width:480px){.page{padding:0 20px}.hero{min-height:82dvh;padding:54px 0 46px}.logo{margin-bottom:48px}h1{font-size:clamp(2rem,10vw,2.55rem)}.copy{margin-top:18px;line-height:1.5}.status{margin-top:42px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080808}body{min-height:100dvh;overflow-x:hidden}.page{min-height:100dvh;padding:0 24px}.hero{width:min(100%,920px);margin:0 auto;padding:56px 0 48px;display:flex;flex-direction:column;align-items:center;text-align:center}.logo{display:block;width:min(226px,62vw);height:auto;margin:0 0 44px}h1{margin:0;max-width:760px;color:#fff;font-size:clamp(2.15rem,6vw,3rem);line-height:1.08;font-weight:800;letter-spacing:.01em;text-wrap:balance}.copy{max-width:660px;margin:18px auto 0;color:#c0c0c0;font-size:clamp(1rem,2.4vw,1.125rem);line-height:1.5}.launch-list{width:min(100%,700px);margin-top:34px}.status{margin-top:34px;display:flex;flex-direction:column;align-items:center}.built{margin:0;color:#fff;font-size:.94rem;font-weight:700;letter-spacing:.14em}.accent{width:42px;height:2px;margin:16px 0 0;background:#ff6400}#product-preview[hidden]{display:none!important}.formkit-form[data-uid="9cf45d2196"]{border-color:#34373d!important;box-shadow:0 18px 60px rgba(0,0,0,.28)!important}.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:32px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header{margin:0 0 10px!important;font-size:28px!important;line-height:1.15!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header h2{margin:0!important;line-height:1.15!important}.formkit-form[data-uid="9cf45d2196"] .formkit-subheader{margin:0 0 20px!important;font-size:17px!important;line-height:1.45!important}.formkit-form[data-uid="9cf45d2196"] .formkit-fields{margin:0 auto!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input,.formkit-form[data-uid="9cf45d2196"] .formkit-submit{min-height:52px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input:focus,.formkit-form[data-uid="9cf45d2196"] .formkit-submit:focus-visible{outline:3px solid rgba(255,100,0,.48)!important;outline-offset:2px!important;border-color:#ff6400!important}@media(max-width:480px){.page{padding:0 20px}.hero{padding:34px 0 36px}.logo{margin-bottom:30px}h1{font-size:clamp(2rem,9.5vw,2.35rem)}.copy{margin-top:15px;line-height:1.45}.launch-list{margin-top:26px}.status{margin-top:28px}.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:24px 20px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header{font-size:27px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-subheader{font-size:16px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input{font-size:16px!important}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -39,13 +39,15 @@ const html = `<!doctype html>
 <h1 id="coming-soon-heading">EVERY BUILD DESERVES<br />A LIVING RECORD.</h1>
 <p class="copy">Your build history shouldn’t be scattered across camera rolls, receipts, emails, notes and memory.</p>
 <p class="copy">WRNC is building a purpose-built home for the Builder and the Build.</p>
-<div class="status"><p class="built">BUILT FOR BUILDERS.</p><span class="accent" aria-hidden="true"></span></div>
 <div class="launch-list" aria-label="Join the WRNC Launch List"><script async data-uid="9cf45d2196" src="https://wrnc.kit.com/9cf45d2196/index.js"></script></div>
+<div class="status"><p class="built">BUILT FOR BUILDERS.</p><span class="accent" aria-hidden="true"></span></div>
 </section>
 <section id="product-preview" hidden aria-label="WRNC product preview"></section>
 </main>
 <script>
 (function(){
+function enhanceKitForm(){var input=document.querySelector('input[name="email_address"]');if(!input)return false;input.setAttribute('type','email');input.setAttribute('autocomplete','email');input.setAttribute('inputmode','email');input.setAttribute('autocapitalize','none');input.setAttribute('spellcheck','false');return true}
+if(!enhanceKitForm()){var observer=new MutationObserver(function(){if(enhanceKitForm())observer.disconnect()});observer.observe(document.body,{childList:true,subtree:true});setTimeout(function(){observer.disconnect()},15000)}
 var params=new URLSearchParams(window.location.search);var referrer=document.referrer||'direct';var source=params.get('utm_source')||sourceFromReferrer(referrer);var data={source:source,referrer:referrer};var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
 keys.forEach(function(key){var value=params.get(key);if(!value)return;data[key]=value;try{sessionStorage.setItem('wrnc_'+key,value)}catch(error){}});
 window.va('event',{name:'Coming Soon Visit',data:data});
