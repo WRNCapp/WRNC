@@ -2,7 +2,7 @@ import sandboxVehicles from './motorSandboxVehicles.json';
 
 export interface MotorSandboxVehicle {
   year: number; make: string; model: string; vin: string;
-  motorVehicleId: number; motorBaseVehicleId: number;
+  motorVehicleId: number; motorBaseVehicleId: number; vcdbBaseVehicleId: number;
 }
 
 export const MOTOR_SANDBOX_VEHICLES: MotorSandboxVehicle[] = sandboxVehicles;

@@ -42,6 +42,8 @@ The vendor's 2024 sandbox document and live Swagger specification identify:
 5. MOTOR attribute names in the response.
 6. Fifteen sanctioned sandbox VINs.
 
+The PDF's `MOTOR Vehicle ID` column maps to the live MOTOR-standard response's `BaseVehicleID`. Its `VCdb Base Vehicle ID` column is a separate identifier standard and is not the live `BaseVehicleID` returned when `AttributeStandard=MOTOR`. The catalog records both source-document values and the live `VehicleID` verified on September 7, 2026.
+
 `MOTOR_SANDBOX_PUBLIC_KEY` and `MOTOR_SANDBOX_PRIVATE_KEY` are server-only. Never place them in source control, screenshots, logs, client code, or an `EXPO_PUBLIC_*` variable. Clients receive only normalized fields. Requests time out after 10 seconds, are not cached, and results are not persisted.
 
 ## Still required before deployment
