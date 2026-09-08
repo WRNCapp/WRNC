@@ -70,7 +70,7 @@ jobs:
       - name: Build store-signed iOS QA artifact
         run: npx eas-cli build --platform ios --profile qa --non-interactive --no-wait
         env:
-          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
 
 # Submission is intentionally excluded. Submit a verified build by exact build ID
 # so an unrelated newer EAS artifact can never be uploaded by accident.
