@@ -73,11 +73,13 @@ const activities: Activity[] = [
 describe('VehicleTimelineScreen', () => {
   it('renders an empty state with a create action when no activities exist', () => {
     const onCreateActivity = jest.fn();
+    const onBuildPassport = jest.fn();
     const { getByText } = render(
       <VehicleTimelineScreen
         vehicle={vehicle}
         activities={[]}
         onBack={jest.fn()}
+        onBuildPassport={onBuildPassport}
         onActivityPress={jest.fn()}
         onCreateActivity={onCreateActivity}
       />
@@ -86,6 +88,8 @@ describe('VehicleTimelineScreen', () => {
     expect(getByText('No activities yet')).toBeTruthy();
     fireEvent.press(getByText('Create Activity'));
     expect(onCreateActivity).toHaveBeenCalled();
+    fireEvent.press(getByText('Build Passport'));
+    expect(onBuildPassport).toHaveBeenCalled();
   });
 
   it('filters activities and opens selected entries', () => {
@@ -96,6 +100,7 @@ describe('VehicleTimelineScreen', () => {
         vehicle={vehicle}
         activities={activities}
         onBack={jest.fn()}
+        onBuildPassport={jest.fn()}
         onActivityPress={onActivityPress}
         onCreateActivity={onCreateActivity}
       />

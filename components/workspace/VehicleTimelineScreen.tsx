@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../common/Button';
 import type { Activity } from '../../types/activity';
 import type { Vehicle } from '../../types/vehicle';
@@ -25,6 +26,7 @@ export interface VehicleTimelineScreenProps {
   activities: Activity[];
   isLoading?: boolean;
   onBack: () => void;
+  onBuildPassport: () => void;
   onActivityPress: (activityId: string) => void;
   onCreateActivity: () => void;
 }
@@ -34,6 +36,7 @@ export function VehicleTimelineScreen({
   activities,
   isLoading,
   onBack,
+  onBuildPassport,
   onActivityPress,
   onCreateActivity,
 }: VehicleTimelineScreenProps) {
@@ -50,7 +53,10 @@ export function VehicleTimelineScreen({
   const vehicleLabel = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
   const listHeader = (
     <View>
-      <Button label="Back" variant="secondary" onPress={onBack} />
+      <Button label="← Vehicle" variant="secondary" onPress={onBack} />
+      <View className="mt-3">
+        <Button label="Build Passport" variant="secondary" onPress={onBuildPassport} />
+      </View>
       <View className="mt-4">
         <Text className="text-3xl font-bold text-wrnc-text-primary">Timeline</Text>
         <Text className="mt-2 text-sm text-wrnc-text-secondary">{vehicle.nickname || vehicleLabel}</Text>

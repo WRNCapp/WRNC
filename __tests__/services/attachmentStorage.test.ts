@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import * as FileSystem from 'expo-file-system';
+import { File as ExpoFile } from 'expo-file-system';
 import { supabase } from '../../lib/supabase';
 import {
   buildAttachmentPath,
@@ -19,13 +19,14 @@ jest.mock('../../lib/supabase', () => ({
   },
 }));
 
+const mockFileBytes = jest.fn();
+
 jest.mock('expo-file-system', () => ({
-  readAsStringAsync: jest.fn(),
-  EncodingType: { Base64: 'base64' },
+  File: jest.fn().mockImplementation(() => ({ bytes: mockFileBytes })),
 }));
 
 const mockStorageFrom = supabase.storage.from as jest.Mock;
-const mockReadAsStringAsync = FileSystem.readAsStringAsync as jest.Mock;
+const mockExpoFile = ExpoFile as unknown as jest.Mock;
 
 describe('sanitizeFileName', () => {
   it('replaces unsafe characters and preserves the extension', () => {
@@ -122,8 +123,7 @@ describe('toUploadableBody', () => {
 
   it('reads and decodes a native file URI into bytes', async () => {
     Object.defineProperty(Platform, 'OS', { get: () => 'ios' });
-    // base64 for "hi"
-    mockReadAsStringAsync.mockResolvedValue('aGk=');
+    mockFileBytes.mockResolvedValue(new Uint8Array([104, 105]));
 
     const result = await toUploadableBody({
       name: 'a.png',
@@ -132,7 +132,8 @@ describe('toUploadableBody', () => {
       uri: 'file:///tmp/a.png',
     });
 
-    expect(mockReadAsStringAsync).toHaveBeenCalledWith('file:///tmp/a.png', { encoding: 'base64' });
+    expect(mockExpoFile).toHaveBeenCalledWith('file:///tmp/a.png');
+    expect(mockFileBytes).toHaveBeenCalledTimes(1);
     expect(result).toBeInstanceOf(Uint8Array);
     expect(Array.from(result as Uint8Array)).toEqual([104, 105]); // "h", "i"
   });

@@ -3,18 +3,29 @@
     "version": ">= 5.4.0"
   },
   "build": {
+    "qa": {
+      "extends": "production",
+      "distribution": "store",
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://iwsqsudrayqeuexnuwtk.supabase.co"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "resourceClass": "m1"
+        "resourceClass": "default"
       }
     },
     "preview": {
       "distribution": "internal",
       "ios": {
         "simulator": false,
-        "resourceClass": "m1"
+        "resourceClass": "default"
       },
       "android": {
         "resourceClass": "medium"
@@ -22,7 +33,7 @@
     },
     "production": {
       "ios": {
-        "resourceClass": "m1"
+        "resourceClass": "default"
       },
       "android": {
         "resourceClass": "medium"
@@ -30,20 +41,25 @@
     }
   },
   "submit": {
+    "qa": {
+      "ios": {
+        "appleId": "themctowns@yahoo.com",
+        "ascAppId": "6791770564",
+        "appleTeamId": "GKNJ58S5YG"
+      }
+    },
     "production": {
       "ios": {
         "appleId": "$APPLE_ID",
-        "ascAppId": "$ASC_APP_ID",
+        "ascAppId": "6791770564",
         "appleTeamId": "$APPLE_TEAM_ID"
       },
-      "android": {
-        "serviceAccount": "$ANDROID_SERVICE_ACCOUNT"
-      }
+      "android": {}
     },
     "preview": {
       "ios": {
         "appleId": "$APPLE_ID",
-        "ascAppId": "$ASC_APP_ID",
+        "ascAppId": "6791770564",
         "appleTeamId": "$APPLE_TEAM_ID"
       }
     }

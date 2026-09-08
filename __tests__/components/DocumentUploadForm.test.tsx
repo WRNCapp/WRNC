@@ -1,11 +1,18 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { DocumentUploadForm } from '../../components/workspace/DocumentUploadForm';
 
 jest.mock('expo-document-picker', () => ({
   getDocumentAsync: jest.fn(),
 }));
+jest.mock('expo-image-picker', () => ({
+  requestCameraPermissionsAsync: jest.fn(),
+  launchCameraAsync: jest.fn(),
+  launchImageLibraryAsync: jest.fn(),
+}));
+jest.mock('expo-file-system', () => ({ File: jest.fn(() => ({ size: 4096 })) }));
 
 const mockGetDocumentAsync = DocumentPicker.getDocumentAsync as jest.Mock;
 
@@ -51,7 +58,7 @@ describe('DocumentUploadForm', () => {
     const { getByText, getByLabelText } = render(<DocumentUploadForm onSubmit={onSubmit} />);
 
     fireEvent.changeText(getByLabelText('Title'), 'Brake receipt');
-    fireEvent.press(getByText('Choose File'));
+    fireEvent.press(getByText('Files'));
     await waitFor(() => getByText('Selected: r.pdf'));
 
     fireEvent.press(getByText('Insurance'));
@@ -76,10 +83,45 @@ describe('DocumentUploadForm', () => {
     const { getByText, getByLabelText } = render(<DocumentUploadForm onSubmit={onSubmit} />);
 
     fireEvent.changeText(getByLabelText('Title'), 'Brake receipt');
-    fireEvent.press(getByText('Choose File'));
+    fireEvent.press(getByText('Files'));
     await waitFor(() => getByText('Selected: r.pdf'));
     fireEvent.press(getByText('Upload Document'));
 
     await waitFor(() => getByText('Storage quota exceeded'));
+  });
+
+  it.each(['Camera', 'Photo Library'])('selects and submits a %s attachment', async (source) => {
+    (ImagePicker.requestCameraPermissionsAsync as jest.Mock).mockResolvedValue({ granted: true });
+    const picker = source === 'Camera' ? ImagePicker.launchCameraAsync : ImagePicker.launchImageLibraryAsync;
+    (picker as jest.Mock).mockResolvedValue({ canceled: false, assets: [{ uri: 'file:///photo.jpg', fileName: 'photo.jpg', mimeType: 'image/jpeg' }] });
+    const submit = jest.fn().mockResolvedValue(undefined);
+    const { getByText, getByLabelText } = render(<DocumentUploadForm onSubmit={submit} />);
+    fireEvent.changeText(getByLabelText('Title'), 'Work evidence');
+    fireEvent.press(getByText(source));
+    await waitFor(() => getByText('Selected: photo.jpg'));
+    fireEvent.press(getByText('Upload Document'));
+    await waitFor(() => expect(submit).toHaveBeenCalledWith(expect.objectContaining({
+      file: { uri: 'file:///photo.jpg', name: 'photo.jpg', mimeType: 'image/jpeg', size: 4096 },
+    })));
+    expect(mockGetDocumentAsync).not.toHaveBeenCalled();
+  });
+
+  it('does not open the camera when permission is denied', async () => {
+    (ImagePicker.requestCameraPermissionsAsync as jest.Mock).mockResolvedValue({ granted: false });
+    const { getByText } = render(<DocumentUploadForm onSubmit={jest.fn()} />);
+    fireEvent.press(getByText('Camera'));
+    await waitFor(() => getByText('Camera access is off. Enable it in Settings, or choose Photo Library or Files.'));
+    expect(ImagePicker.launchCameraAsync).not.toHaveBeenCalled();
+  });
+
+  it('keeps the selected attachment after cancelling another source', async () => {
+    mockGetDocumentAsync.mockResolvedValue({ canceled: false, assets: [{ uri: 'file:///r.pdf', name: 'r.pdf', mimeType: 'application/pdf', size: 42 }] });
+    (ImagePicker.launchImageLibraryAsync as jest.Mock).mockResolvedValue({ canceled: true, assets: null });
+    const { getByText } = render(<DocumentUploadForm onSubmit={jest.fn()} />);
+    fireEvent.press(getByText('Files'));
+    await waitFor(() => getByText('Selected: r.pdf'));
+    fireEvent.press(getByText('Photo Library'));
+    await waitFor(() => expect(ImagePicker.launchImageLibraryAsync).toHaveBeenCalled());
+    getByText('Selected: r.pdf');
   });
 });

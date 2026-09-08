@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
-import * as FileSystem from 'expo-file-system';
+import { File as ExpoFile } from 'expo-file-system';
 import { supabase } from '../../lib/supabase';
-import { base64ToUint8Array } from '../../utils/base64';
 
 export type AttachmentBucket = 'vehicle-photos' | 'vehicle-documents';
 
@@ -106,8 +105,8 @@ export function buildAttachmentPath(
 /**
  * Converts a selected file into bytes Supabase Storage can upload, on both
  * web and native. Web `File`/`Blob` instances are passed through untouched.
- * Native `file://`/`content://` URIs are read as base64 via expo-file-system
- * and decoded to raw bytes locally, rather than passed as a bare URI string
+ * Native `file://`/`content://` URIs are read as bytes through Expo FileSystem,
+ * rather than passed as a bare URI string
  * (which supabase-js cannot upload directly) or run through `fetch(uri).blob()`
  * (which has had reported truncation issues on some Android/Hermes builds).
  */
@@ -123,11 +122,7 @@ export async function toUploadableBody(file: AttachmentFileInput): Promise<Blob 
     throw new Error('No file was provided for upload.');
   }
 
-  const base64 = await FileSystem.readAsStringAsync(file.uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-
-  return base64ToUint8Array(base64);
+  return new ExpoFile(file.uri).bytes();
 }
 
 /** Generates a short-lived signed URL for private viewing/downloading. Never returns a public URL. */

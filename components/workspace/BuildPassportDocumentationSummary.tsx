@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from '../common/Button';
+import { passportLayout } from './passportLayout';
 import { DocumentationCategoryProgress } from './DocumentationCategoryProgress';
 import type { BuildPassportDocumentationSummary as BuildPassportDocumentationSummaryType } from '../../types/buildPassport';
 
@@ -29,10 +30,10 @@ function renderLink(
 export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack }: BuildPassportDocumentationSummaryProps) {
   return (
     <View className="rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
-      <Text className="text-lg font-semibold text-wrnc-text-primary">Documentation Summary</Text>
-      <Text className="mt-1 text-sm text-wrnc-text-secondary">Documentation Score™ and attached records.</Text>
+      <Text className="text-lg font-semibold text-wrnc-text-primary">WRNC Build Score™</Text>
+      <Text className="mt-1 text-sm text-wrnc-text-secondary">Documentation quality and coverage from the current build record.</Text>
 
-      <View className="mt-4 flex-row flex-wrap gap-3">
+      <View testID="documentation-stat-grid" style={passportLayout.metricGrid}>
         <Stat label="Score" value={`${summary.overallScore}/100`} />
         <Stat label="Documents" value={summary.totalDocuments} />
         <Stat label="Photos" value={summary.photoDocuments} />
@@ -47,15 +48,15 @@ export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack 
         </View>
       ) : null}
 
-      <View className="mt-4 gap-2">
+      <View style={passportLayout.compactStack}>
         {summary.categories.map((category) => (
           <DocumentationCategoryProgress key={category.key} category={category} />
         ))}
       </View>
 
-      <View className="mt-4 flex-row flex-wrap gap-3">
+      <View style={passportLayout.links}>
         {summary.sourceLinks.map((link) => (
-          <View key={link.label} className="min-w-36 flex-1">
+          <View key={link.label} style={passportLayout.link}>
             {renderLink(link, onNavigate, onBack)}
           </View>
         ))}
@@ -66,7 +67,7 @@ export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack 
 
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
-    <View className="min-w-24 flex-1 rounded-xl border border-wrnc-border bg-wrnc-background px-3 py-2">
+    <View testID="documentation-stat" className="rounded-xl border border-wrnc-border bg-wrnc-background px-3 py-2" style={passportLayout.metric}>
       <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
       <Text className="mt-1 text-lg font-semibold text-wrnc-text-primary">{value}</Text>
     </View>

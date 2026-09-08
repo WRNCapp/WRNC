@@ -19,7 +19,7 @@ describe('BuildPassport components', () => {
       />
     );
 
-    fireEvent.press(getByText('Back'));
+    fireEvent.press(getByText('← Vehicle'));
     expect(onBack).toHaveBeenCalledTimes(1);
     expect(getByText('88')).toBeTruthy();
   });
@@ -108,7 +108,7 @@ describe('BuildPassport components', () => {
             updatedAt: '2024-02-01T10:00:00.000Z',
           },
           categories: [
-            { key: 'vehicleInformation', label: 'Vehicle Information', score: 100, maxScore: 100, evidence: ['Recorded'] },
+            { key: 'vehicleProfile', label: 'Vehicle Profile', score: 10, maxScore: 10, evidence: ['Recorded'] },
           ],
           sourceLinks: [{ label: 'Open Documents', route: '/vehicle/veh-1/documents' }],
         }}
@@ -119,7 +119,7 @@ describe('BuildPassport components', () => {
 
     fireEvent.press(getByText('Open Documents'));
     expect(onNavigate).toHaveBeenCalledWith('/vehicle/veh-1/documents');
-    expect(getByText('Vehicle Information')).toBeTruthy();
+    expect(getByText('Vehicle Profile')).toBeTruthy();
   });
 
   it('renders recommendations and statistics', () => {
@@ -128,7 +128,7 @@ describe('BuildPassport components', () => {
       <BuildPassportRecommendations
         recommendations={[
           {
-            category: 'registration',
+            category: 'ownershipProvenance',
             title: 'Registration needs attention',
             message: 'Upload registration documents.',
             impact: 'high',

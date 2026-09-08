@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Linking, Platform, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, Linking, Platform, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Button } from '../../../../../components/common/Button';
 import { useDocument, useDocumentSignedUrl } from '../../../../../hooks/useDocument';

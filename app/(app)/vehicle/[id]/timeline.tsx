@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useActivities } from '../../../../hooks/useActivity';
 import { useVehicle } from '../../../../hooks/useVehicle';
@@ -35,7 +36,8 @@ export default function VehicleTimelineRoute() {
       vehicle={vehicle}
       activities={activities}
       isLoading={activitiesLoading}
-      onBack={() => router.back()}
+      onBack={() => router.replace('/workspace')}
+      onBuildPassport={() => router.push(`/vehicle/${vehicle.id}/passport`)}
       onActivityPress={(activityId) => router.push(`/vehicle/${vehicle.id}/activity/${activityId}`)}
       onCreateActivity={() => router.push(`/vehicle/${vehicle.id}/activity/new`)}
     />

@@ -1,7 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Button } from '../../../../../components/common/Button';
+import { KeyboardSafeScrollView } from '../../../../../components/common/KeyboardSafeScrollView';
 import { DocumentCard } from '../../../../../components/workspace/DocumentCard';
 import { DocumentUploadForm } from '../../../../../components/workspace/DocumentUploadForm';
 import { useActivity } from '../../../../../hooks/useActivity';
@@ -39,8 +41,8 @@ export default function ActivityDetailsRoute() {
 
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 40 }}>
-        <Button label="Back to Timeline" variant="secondary" onPress={() => router.replace(`/vehicle/${vehicleId}/timeline`)} />
+      <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
+        <Button label="← Timeline" variant="secondary" onPress={() => router.replace(`/vehicle/${vehicleId}/timeline`)} />
         <View className="mt-3">
           <Button label="Build Passport" variant="secondary" onPress={() => router.replace(`/vehicle/${vehicleId}/passport`)} />
         </View>
@@ -127,7 +129,7 @@ export default function ActivityDetailsRoute() {
             )}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardSafeScrollView>
     </SafeAreaView>
   );
 }

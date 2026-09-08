@@ -13,7 +13,7 @@ export const documentationScoreKeys = {
 export function useDocumentationScore(vehicleId: string | undefined) {
   const vehicleQuery = useVehicle(vehicleId);
   const activitiesQuery = useActivities(vehicleId);
-  const documentsQuery = useDocuments(vehicleQuery.data?.workspaceId);
+  const documentsQuery = useDocuments(vehicleQuery.data?.workspaceId, { vehicleId });
 
   return useQuery<DocumentationScoreResult>({
     queryKey: documentationScoreKeys.vehicle(vehicleId ?? ''),

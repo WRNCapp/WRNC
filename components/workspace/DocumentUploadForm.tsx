@@ -5,6 +5,7 @@ import { Button } from '../common/Button';
 import { Input } from '../common/Input';
 import { DOCUMENT_CATEGORIES, type DocumentCategory } from '../../services/api/documents';
 import type { AttachmentFileInput } from '../../services/api/attachmentStorage';
+import { pickAttachmentMedia } from '../../utils/pickAttachmentMedia';
 
 const CATEGORY_LABELS: Record<DocumentCategory, string> = {
   receipt: 'Receipt',
@@ -98,14 +99,19 @@ export function DocumentUploadForm({ onSubmit, isSubmitting = false }: DocumentU
   const [category, setCategory] = useState<DocumentCategory>('receipt');
   const [file, setFile] = useState<AttachmentFileInput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isPicking, setIsPicking] = useState(false);
 
-  const handlePickFile = async () => {
+  const handlePickFile = async (source: 'files' | 'camera' | 'library' = 'files') => {
+    if (isPicking) return;
+    setIsPicking(true);
     setError(null);
     try {
-      const picked = await pickDocument();
+      const picked = source === 'files' ? await pickDocument() : await pickAttachmentMedia(source);
       if (picked) setFile(picked);
     } catch (pickError) {
       setError(pickError instanceof Error ? pickError.message : 'Unable to select a file.');
+    } finally {
+      setIsPicking(false);
     }
   };
 
@@ -157,15 +163,22 @@ export function DocumentUploadForm({ onSubmit, isSubmitting = false }: DocumentU
         ))}
       </View>
 
+      {file ? <Text className="mb-3 text-wrnc-text-secondary">Selected: {file.name}</Text> : null}
+      <View style={{ gap: 12 }}>
+      {Platform.OS !== 'web' ? <>
+        <Button label="Camera" variant="secondary" onPress={() => handlePickFile('camera')} disabled={isSubmitting || isPicking} />
+        <Button label="Photo Library" variant="secondary" onPress={() => handlePickFile('library')} disabled={isSubmitting || isPicking} />
+      </> : null}
       <Button
-        label={file ? `Selected: ${file.name}` : 'Choose File'}
+        label={Platform.OS === 'web' ? 'Choose File' : 'Files'}
         variant="secondary"
-        onPress={handlePickFile}
-        disabled={isSubmitting}
+        onPress={() => handlePickFile('files')}
+        disabled={isSubmitting || isPicking}
       />
+      </View>
 
       <View className="mt-3">
-        <Button label="Upload Document" onPress={handleSubmit} loading={isSubmitting} disabled={isSubmitting} />
+        <Button label="Upload Document" onPress={handleSubmit} loading={isSubmitting} disabled={isSubmitting || isPicking} />
       </View>
 
       {error ? <Text className="mt-2 text-sm text-semantic-error">{error}</Text> : null}

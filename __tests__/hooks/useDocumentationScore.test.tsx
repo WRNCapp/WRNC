@@ -21,7 +21,14 @@ describe('useDocumentationScore', () => {
   it('returns a calculated score when the required data is available', async () => {
     (useVehicle as jest.Mock).mockReturnValue({ data: { id: 'veh-1', workspaceId: 'ws-1' }, isSuccess: true });
     (useActivities as jest.Mock).mockReturnValue({ data: [], isSuccess: true });
-    (useDocuments as jest.Mock).mockReturnValue({ data: [], isSuccess: true });
+    const documents = [
+      { vehicleId: 'veh-1', documentType: 'receipt', mimeType: 'application/pdf' },
+      { vehicleId: 'veh-2', documentType: 'insurance', mimeType: 'image/png' },
+    ];
+    (useDocuments as jest.Mock).mockImplementation((_workspaceId, options = {}) => ({
+      data: documents.filter((document) => !options.vehicleId || document.vehicleId === options.vehicleId),
+      isSuccess: true,
+    }));
 
     const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
     queryClients.push(queryClient);
@@ -33,5 +40,9 @@ describe('useDocumentationScore', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data?.overallScore).toBeDefined();
+    expect(useDocuments).toHaveBeenCalledWith('ws-1', { vehicleId: 'veh-1' });
+    expect(result.current.data?.categories.find((category) => category.key === 'documentsReceipts')?.score).toBe(4);
+    expect(result.current.data?.categories.find((category) => category.key === 'photos')?.score).toBe(0);
+    expect(result.current.data?.categories.find((category) => category.key === 'ownershipProvenance')?.score).toBe(0);
   });
 });

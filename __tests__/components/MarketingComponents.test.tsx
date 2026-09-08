@@ -1,9 +1,11 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
 import { HomeHero } from '../../components/marketing/HomeHero';
 import { FinalCtaSection } from '../../components/marketing/FinalCtaSection';
 import { MarketingFooter } from '../../components/marketing/MarketingFooter';
 import { MarketingHeader } from '../../components/marketing/MarketingHeader';
+import { MarketingButton } from '../../components/marketing/MarketingButton';
 import { ProductShowcaseSection } from '../../components/marketing/ProductShowcaseSection';
 import { WhyWrncSection } from '../../components/marketing/WhyWrncSection';
 import { WrncLogo } from '../../components/marketing/WrncLogo';
@@ -15,7 +17,22 @@ jest.mock('react-native/Libraries/Utilities/useWindowDimensions', () => ({
   default: jest.fn(() => ({ width: 1440, height: 900, scale: 1, fontScale: 1 })),
 }));
 
-const mockDimensions = require('react-native/Libraries/Utilities/useWindowDimensions').default as jest.Mock;
+// Jest must resolve the mocked CommonJS default after the mock factory is registered.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const mockedDimensionsModule = require('react-native/Libraries/Utilities/useWindowDimensions');
+const mockDimensions = (mockedDimensionsModule.default ?? mockedDimensionsModule) as jest.Mock;
+
+describe('MarketingButton', () => {
+  it('keeps the primary action at least 44px tall', () => {
+    const { getByRole } = render(<MarketingButton label="JOIN WRNC" />);
+    const button = getByRole('button', { name: 'JOIN WRNC' });
+    const resolvedStyle = typeof button.props.style === 'function'
+      ? button.props.style({ pressed: false })
+      : button.props.style;
+
+    expect(StyleSheet.flatten(resolvedStyle)).toMatchObject({ height: 44 });
+  });
+});
 
 // ─── HomeHero ──────────────────────────────────────────────────────────────
 
@@ -59,9 +76,11 @@ describe('HomeHero', () => {
 describe('ProductShowcaseSection', () => {
   beforeEach(() => mockDimensions.mockReturnValue({ width: 1440, height: 900, scale: 1, fontScale: 1 }));
 
-  it('renders the single Garage proof and positioning copy', () => {
+  it('renders the current Timeline capture with canonical branding and sample disclosure', () => {
     const { getByLabelText, getByText } = render(<ProductShowcaseSection />);
-    getByLabelText('WRNC Garage product interface');
+    getByLabelText('WRNC Timeline product capture with sample activity data');
+    getByLabelText('WRNC');
+    getByText('Timeline · Sample data');
     getByText('Built for builders, not algorithms.');
     getByText(/personal build database/i);
   });

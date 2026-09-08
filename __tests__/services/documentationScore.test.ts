@@ -65,21 +65,31 @@ describe('documentation score service', () => {
 
   it('calculates category scores from existing records', () => {
     const categories = calculateCategoryScores(baseInput);
-    const vehicleCategory = categories.find((category) => category.key === 'vehicleInformation');
+    const vehicleCategory = categories.find((category) => category.key === 'vehicleProfile');
+    const activityCategory = categories.find((category) => category.key === 'buildTimeline');
+    const photoCategory = categories.find((category) => category.key === 'photos');
     expect(vehicleCategory?.score).toBeGreaterThan(0);
     expect(vehicleCategory?.score).toBeLessThanOrEqual(100);
+    expect(activityCategory?.evidence).toEqual([
+      '1 meaningful activities across 1 documented stages',
+      '1 total activity records reviewed',
+    ]);
+    expect(photoCategory?.evidence).toEqual([
+      '0 photos across 0 documented activities',
+      'Diminishing returns prevent a single upload from maxing Photos',
+    ]);
   });
 
   it('produces an overall documentation score', () => {
     const result = calculateDocumentationScore(baseInput);
     expect(result.overallScore).toBeGreaterThanOrEqual(0);
     expect(result.overallScore).toBeLessThanOrEqual(100);
-    expect(result.categories.length).toBe(10);
+    expect(result.categories.length).toBe(9);
   });
 
   it('generates recommendations for low-scoring categories', () => {
     const recommendations = generateRecommendations(baseInput);
     expect(recommendations.length).toBeGreaterThan(0);
-    expect(recommendations[0].title).toContain('needs attention');
+    expect(recommendations[0].title).toContain('next step');
   });
 });

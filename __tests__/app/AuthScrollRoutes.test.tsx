@@ -32,4 +32,16 @@ describe('authentication route scrolling', () => {
     fireEvent.press(signup.getByText('ALREADY A MEMBER? SIGN IN'));
     expect(mockReplace).toHaveBeenCalledWith('/login');
   });
+
+  it.each([
+    ['Sign In', <LoginScreen />, 'NEW TO WRNC? CREATE AN ACCOUNT'],
+    ['Signup', <SignupScreen />, 'ALREADY A MEMBER? SIGN IN'],
+  ])('keeps %s navigation targets at least 44px tall', (_name, route, secondaryLabel) => {
+    const screen = render(route);
+    const homeButton = screen.getByLabelText('WRNC home');
+    const secondaryButton = screen.getByRole('button', { name: secondaryLabel });
+
+    expect(StyleSheet.flatten(homeButton.props.style)).toMatchObject({ minHeight: 44 });
+    expect(StyleSheet.flatten(secondaryButton.props.style)).toMatchObject({ minHeight: 44 });
+  });
 });

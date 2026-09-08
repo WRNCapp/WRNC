@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from '../common/Button';
+import { passportLayout } from './passportLayout';
 import type { BuildPassportTimelineSummary as BuildPassportTimelineSummaryType } from '../../types/buildPassport';
 
 interface BuildPassportTimelineSummaryProps {
@@ -31,7 +32,7 @@ export function BuildPassportTimelineSummary({ summary, onNavigate, onBack }: Bu
       <Text className="text-lg font-semibold text-wrnc-text-primary">Timeline Summary</Text>
       <Text className="mt-1 text-sm text-wrnc-text-secondary">Recent activity history and timeline depth.</Text>
 
-      <View className="mt-4 flex-row flex-wrap gap-3">
+      <View testID="timeline-stat-grid" style={passportLayout.metricGrid}>
         <Stat label="Activities" value={summary.totalActivities} />
         <Stat label="Active" value={summary.activeActivities} />
         <Stat label="Archived" value={summary.archivedActivities} />
@@ -45,9 +46,9 @@ export function BuildPassportTimelineSummary({ summary, onNavigate, onBack }: Bu
         </View>
       ) : null}
 
-      <View className="mt-4 flex-row flex-wrap gap-3">
+      <View style={passportLayout.links}>
         {summary.sourceLinks.map((link) => (
-          <View key={link.label} className="min-w-36 flex-1">
+          <View key={link.label} style={passportLayout.link}>
             {renderLink(link, onNavigate, onBack)}
           </View>
         ))}
@@ -58,7 +59,7 @@ export function BuildPassportTimelineSummary({ summary, onNavigate, onBack }: Bu
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <View className="min-w-24 flex-1 rounded-xl border border-wrnc-border bg-wrnc-background px-3 py-2">
+    <View testID="timeline-stat" className="rounded-xl border border-wrnc-border bg-wrnc-background px-3 py-2" style={passportLayout.metric}>
       <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
       <Text className="mt-1 text-lg font-semibold text-wrnc-text-primary">{value}</Text>
     </View>

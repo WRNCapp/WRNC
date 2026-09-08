@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { WrncLogo } from '../../components/marketing/WrncLogo';
 import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 
@@ -63,7 +64,7 @@ export default function AuthCallbackScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <Pressable accessibilityRole="button" onPress={() => router.replace('/')} style={styles.wordmark}>
+        <Pressable accessibilityLabel="WRNC home" accessibilityRole="button" onPress={() => router.replace('/')} style={styles.wordmark}>
           <WrncLogo />
         </Pressable>
 
@@ -92,7 +93,7 @@ export default function AuthCallbackScreen() {
 const styles = StyleSheet.create({
   screen: { backgroundColor: '#080808', flex: 1 },
   container: { alignSelf: 'center', maxWidth: 560, paddingHorizontal: 24, paddingVertical: 48, width: '100%' },
-  wordmark: { alignSelf: 'flex-start', marginBottom: 72 },
+  wordmark: { alignSelf: 'flex-start', justifyContent: 'center', marginBottom: 72, minHeight: 44 },
   card: { backgroundColor: '#1A1D22', borderColor: '#34373D', borderRadius: 8, borderWidth: 1, padding: 32 },
   eyebrow: { color: '#FF6400', fontSize: 14, fontWeight: '600', lineHeight: 17 },
   title: { color: '#FFFFFF', fontSize: 34, fontWeight: '600', lineHeight: 40, marginTop: 16 },

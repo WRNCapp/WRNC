@@ -79,4 +79,30 @@ describe('buildCreateActivityPayload', () => {
     expect(result.input?.metadata).toBeNull();
     expect(result.input?.description).toBeNull();
   });
+
+  it('requires a maintenance selection and generates its title and metadata', () => {
+    const missing = buildCreateActivityPayload({
+      ...baseValues,
+      activityType: 'Maintenance',
+      title: '',
+      maintenanceItems: [],
+    });
+    expect(missing.input).toBeNull();
+    expect(missing.errors.maintenanceItems).toBe('Select at least one maintenance item.');
+
+    const result = buildCreateActivityPayload({
+      ...baseValues,
+      activityType: 'Maintenance',
+      title: '',
+      maintenanceItems: ['Engine Oil', 'Oil Filter'],
+    });
+    expect(result.errors).toEqual({});
+    expect(result.input).toEqual(expect.objectContaining({
+      title: 'Engine Oil + Oil Filter',
+      metadata: expect.objectContaining({
+        serviceType: 'Engine Oil, Oil Filter',
+        serviceItems: ['Engine Oil', 'Oil Filter'],
+      }),
+    }));
+  });
 });

@@ -1,7 +1,9 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { WrncLogo } from '../components/marketing/WrncLogo';
+import { KeyboardSafeScrollView } from '../components/common/KeyboardSafeScrollView';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
 
 /** Universal WRNC account creation route used by the homepage CTAs. */
@@ -63,13 +65,12 @@ export default function SignupScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <ScrollView
+      <KeyboardSafeScrollView
         contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.container}>
-          <Pressable accessibilityRole="button" onPress={() => router.replace('/')} style={styles.wordmark}>
+          <Pressable accessibilityLabel="WRNC home" accessibilityRole="button" onPress={() => router.replace('/')} style={styles.wordmark}>
             <WrncLogo />
           </Pressable>
 
@@ -147,7 +148,7 @@ export default function SignupScreen() {
           )}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardSafeScrollView>
     </SafeAreaView>
   );
 }
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
   screen: { backgroundColor: '#080808', flex: 1 },
   scrollContent: { flexGrow: 1 },
   container: { alignSelf: 'center', maxWidth: 560, paddingHorizontal: 24, paddingVertical: 48, width: '100%' },
-  wordmark: { alignSelf: 'flex-start', marginBottom: 72 },
+  wordmark: { alignSelf: 'flex-start', justifyContent: 'center', marginBottom: 72, minHeight: 44 },
   card: { backgroundColor: '#1A1D22', borderColor: '#34373D', borderRadius: 8, borderWidth: 1, padding: 32 },
   eyebrow: { color: '#FF6400', fontSize: 14, fontWeight: '600', lineHeight: 17 },
   title: { color: '#FFFFFF', fontSize: 34, fontWeight: '600', lineHeight: 40, marginTop: 16 },
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
   primaryButton: { alignItems: 'center', backgroundColor: '#FF6400', borderRadius: 4, height: 48, justifyContent: 'center', marginTop: 28 },
   primaryButtonDisabled: { opacity: 0.65 },
   primaryButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '600', lineHeight: 17 },
-  secondaryButton: { alignItems: 'center', marginTop: 22, paddingVertical: 6 },
+  secondaryButton: { alignItems: 'center', justifyContent: 'center', marginTop: 22, minHeight: 44 },
   secondaryButtonText: { color: '#C0C0C0', fontSize: 13, fontWeight: '600', lineHeight: 16 },
   successBox: { backgroundColor: '#111318', borderColor: '#42464E', borderRadius: 4, borderWidth: 1, padding: 20 },
   successTitle: { color: '#FFFFFF', fontSize: 16, fontWeight: '600', lineHeight: 20 },

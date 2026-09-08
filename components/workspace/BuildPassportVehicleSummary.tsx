@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from '../common/Button';
+import { passportLayout } from './passportLayout';
 import type { BuildPassportVehicleSummary as BuildPassportVehicleSummaryType } from '../../types/buildPassport';
 
 interface BuildPassportVehicleSummaryProps {
@@ -31,18 +32,18 @@ export function BuildPassportVehicleSummary({ summary, onNavigate, onBack }: Bui
       <Text className="text-lg font-semibold text-wrnc-text-primary">Vehicle Information</Text>
       <Text className="mt-1 text-sm text-wrnc-text-secondary">Source vehicle record and core identity fields.</Text>
 
-      <View className="mt-4 gap-2">
+      <View style={passportLayout.compactStack}>
         {summary.details.map((detail) => (
-          <View key={detail.label} className="flex-row items-center justify-between rounded-xl bg-wrnc-background px-3 py-2">
-            <Text className="text-sm text-wrnc-text-secondary">{detail.label}</Text>
-            <Text className="text-sm font-medium text-wrnc-text-primary">{detail.value}</Text>
+          <View key={detail.label} style={passportLayout.detail} className="rounded-xl bg-wrnc-background px-3 py-2">
+            <Text style={passportLayout.detailLabel} className="text-sm text-wrnc-text-secondary">{detail.label}</Text>
+            <Text style={passportLayout.detailValue} className="text-sm font-medium text-wrnc-text-primary">{detail.value}</Text>
           </View>
         ))}
       </View>
 
-      <View className="mt-4 flex-row flex-wrap gap-3">
+      <View style={passportLayout.links}>
         {summary.sourceLinks.map((link) => (
-          <View key={link.label} className="min-w-36 flex-1">
+          <View key={link.label} style={passportLayout.link}>
             {renderLink(link, onNavigate, onBack)}
           </View>
         ))}

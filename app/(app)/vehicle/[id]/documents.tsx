@@ -1,7 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Button } from '../../../../components/common/Button';
+import { KeyboardSafeScrollView } from '../../../../components/common/KeyboardSafeScrollView';
 import { DocumentCard } from '../../../../components/workspace/DocumentCard';
 import { DocumentEmptyState } from '../../../../components/workspace/DocumentEmptyState';
 import { DocumentUploadForm } from '../../../../components/workspace/DocumentUploadForm';
@@ -38,7 +40,7 @@ export default function VehicleDocumentsRoute() {
 
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 40 }} keyboardShouldPersistTaps="handled">
+      <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
         <Button label="Back to Passport" variant="secondary" onPress={() => router.replace(`/vehicle/${vehicleId}/passport`)} />
 
         <View className="mt-4 rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
@@ -84,7 +86,7 @@ export default function VehicleDocumentsRoute() {
             )}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardSafeScrollView>
     </SafeAreaView>
   );
 }

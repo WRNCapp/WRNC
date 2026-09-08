@@ -1,0 +1,25 @@
+export const MAINTENANCE_ITEMS = [
+  'Engine Oil',
+  'Oil Filter',
+  'Fuel Filter',
+  'Engine Air Filter',
+  'Cabin Air Filter',
+  'Front Brake Pads',
+  'Rear Brake Pads',
+  'Front Brake Rotors',
+  'Rear Brake Rotors',
+  'Coolant Flush and Fill',
+  'Spark Plugs',
+  'Battery',
+  'Differential Fluid',
+  'Transmission Fluid',
+  'Transmission Filter',
+  'Tire Rotation',
+  'Tire Replacement',
+  'Wheel Alignment',
+  'Exterior Bulb',
+  'Interior Bulb',
+  'Other Maintenance',
+] as const;
+
+export type MaintenanceItem = (typeof MAINTENANCE_ITEMS)[number];

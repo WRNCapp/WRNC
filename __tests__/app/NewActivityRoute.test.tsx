@@ -59,6 +59,15 @@ describe('NewActivityRoute', () => {
     mockMutate.mockReset();
   });
 
+  it('keeps explicit space between the activity heading and large type controls', () => {
+    const { getByTestId, getByText } = render(<NewActivityRoute />);
+
+    expect(getByTestId('activity-type-options').props.style).toEqual({ marginTop: 16, rowGap: 12 });
+    expect(getByText('Create Activity')).toBeTruthy();
+    expect(getByText('Purchased Part')).toBeTruthy();
+    expect(getByText('Record Upload')).toBeTruthy();
+  });
+
   it('does not submit when cost validation fails', () => {
     const { getByLabelText, getByText } = render(<NewActivityRoute />);
 
@@ -108,5 +117,22 @@ describe('NewActivityRoute', () => {
       })
     );
     expect(mockReplace).toHaveBeenCalledWith('/vehicle/veh-1/activity/act-1');
+  });
+
+  it('creates multi-item maintenance with large selectable rows and a generated title', () => {
+    const { getByLabelText, getByText, getByTestId } = render(<NewActivityRoute />);
+    fireEvent.press(getByText('Maintenance'));
+    expect(getByTestId('maintenance-options').props.style).toEqual({ marginTop: 12, rowGap: 12 });
+    fireEvent.press(getByLabelText('Engine Oil'));
+    fireEvent.press(getByLabelText('Oil Filter'));
+    fireEvent.press(getByText('Save Activity'));
+    expect(mockMutate).toHaveBeenCalledWith(expect.objectContaining({
+      activityType: 'Maintenance',
+      title: 'Engine Oil + Oil Filter',
+      metadata: expect.objectContaining({
+        serviceType: 'Engine Oil, Oil Filter',
+        serviceItems: ['Engine Oil', 'Oil Filter'],
+      }),
+    }), expect.any(Object));
   });
 });

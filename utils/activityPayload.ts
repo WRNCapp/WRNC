@@ -9,6 +9,7 @@ export interface CreateActivityFormValues {
   activityDate: string;
   odometer: string;
   cost: string;
+  maintenanceItems?: string[];
 }
 
 export interface CreateActivityFieldErrors {
@@ -16,6 +17,7 @@ export interface CreateActivityFieldErrors {
   activityDate?: string;
   odometer?: string;
   cost?: string;
+  maintenanceItems?: string;
 }
 
 export interface BuildActivityPayloadResult {
@@ -53,9 +55,13 @@ function parseOptionalNumber(rawValue: string, fieldLabel: string, allowCurrency
 export function buildCreateActivityPayload(values: CreateActivityFormValues): BuildActivityPayloadResult {
   const errors: CreateActivityFieldErrors = {};
 
-  const title = values.title.trim();
+  const maintenanceItems = values.maintenanceItems ?? [];
+  const title = values.title.trim() || (values.activityType === 'Maintenance' ? maintenanceItems.join(' + ') : '');
   if (!title) {
     errors.title = 'Title is required.';
+  }
+  if (values.activityType === 'Maintenance' && maintenanceItems.length === 0) {
+    errors.maintenanceItems = 'Select at least one maintenance item.';
   }
 
   const activityDate = values.activityDate.trim();
@@ -77,12 +83,16 @@ export function buildCreateActivityPayload(values: CreateActivityFormValues): Bu
     return { input: null, errors };
   }
 
-  const metadata: Record<string, number> = {};
+  const metadata: Record<string, number | string | string[]> = {};
   if (odometerResult.value !== null) {
     metadata.odometer = odometerResult.value;
   }
   if (costResult.value !== null) {
     metadata.cost = costResult.value;
+  }
+  if (values.activityType === 'Maintenance') {
+    metadata.serviceType = maintenanceItems.join(', ');
+    metadata.serviceItems = maintenanceItems;
   }
 
   return {

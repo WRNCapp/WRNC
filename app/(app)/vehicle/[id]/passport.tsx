@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { BuildPassportHeader } from '../../../../components/workspace/BuildPassportHeader';
 import { BuildPassportVehicleSummary } from '../../../../components/workspace/BuildPassportVehicleSummary';
@@ -45,15 +46,18 @@ export default function VehiclePassportRoute() {
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 40 }}>
-        <BuildPassportHeader
-          vehicleTitle={vehicleSummary.title}
-          vehicleSubtitle={vehicleSummary.subtitle}
-          overallScore={documentationSummary.overallScore}
-          onBack={() => router.back()}
-        />
+        <View style={{ marginBottom: 16 }}>
+          <BuildPassportHeader
+            vehicleTitle={vehicleSummary.title}
+            vehicleSubtitle={vehicleSummary.subtitle}
+            overallScore={documentationSummary.overallScore}
+            onBack={() => router.replace('/workspace')}
+          />
+        </View>
 
         {vehicle ? (
-          <VehicleCoverPhoto
+          <View style={{ marginBottom: 16 }}>
+            <VehicleCoverPhoto
             signedUrl={signedUrl}
             hasPhoto={Boolean(vehicle.coverPhotoPath)}
             isLoadingUrl={isLoadingUrl}
@@ -72,28 +76,37 @@ export default function VehiclePassportRoute() {
             onRemove={async () => {
               await removePhoto.mutateAsync({ vehicleId });
             }}
-          />
+            />
+          </View>
         ) : null}
 
-        <BuildPassportVehicleSummary
-          summary={vehicleSummary}
-          onNavigate={(route) => router.push(route)}
-          onBack={() => router.back()}
-        />
+        <View style={{ marginBottom: 16 }}>
+          <BuildPassportVehicleSummary
+            summary={vehicleSummary}
+            onNavigate={(route) => router.push(route)}
+            onBack={() => router.back()}
+          />
+        </View>
 
-        <BuildPassportTimelineSummary
-          summary={timelineSummary}
-          onNavigate={(route) => router.push(route)}
-          onBack={() => router.back()}
-        />
+        <View style={{ marginBottom: 16 }}>
+          <BuildPassportTimelineSummary
+            summary={timelineSummary}
+            onNavigate={(route) => router.push(route)}
+            onBack={() => router.back()}
+          />
+        </View>
 
-        <BuildPassportDocumentationSummary
-          summary={documentationSummary}
-          onNavigate={(route) => router.push(route)}
-          onBack={() => router.back()}
-        />
+        <View style={{ marginBottom: 16 }}>
+          <BuildPassportDocumentationSummary
+            summary={documentationSummary}
+            onNavigate={(route) => router.push(route)}
+            onBack={() => router.back()}
+          />
+        </View>
 
-        <BuildPassportStatistics statistics={statistics} />
+        <View style={{ marginBottom: 16 }}>
+          <BuildPassportStatistics statistics={statistics} />
+        </View>
 
         <BuildPassportRecommendations
           recommendations={recommendations}

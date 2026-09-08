@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Stack, useRouter } from 'expo-router';
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Redirect, Stack } from 'expo-router';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 
 const queryClient = new QueryClient();
+type SessionStatus = 'checking' | 'authenticated' | 'unauthenticated';
 
 export default function AppLayout() {
-  const router = useRouter();
-  const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [sessionStatus, setSessionStatus] = useState<SessionStatus>(
+    isSupabaseConfigured ? 'checking' : 'unauthenticated'
+  );
 
   useEffect(() => {
-    if (!isSupabaseConfigured) {
-      router.replace('/login');
-      return;
-    }
+    if (!isSupabaseConfigured) return;
 
     let isMounted = true;
 
@@ -22,11 +22,11 @@ export default function AppLayout() {
       if (!isMounted) return;
 
       if (error || !data.session) {
-        router.replace('/login');
+        setSessionStatus('unauthenticated');
         return;
       }
 
-      setIsCheckingSession(false);
+      setSessionStatus('authenticated');
     });
 
     const {
@@ -35,23 +35,24 @@ export default function AppLayout() {
       if (!isMounted) return;
 
       if (!session) {
-        setIsCheckingSession(true);
-        router.replace('/login');
+        setSessionStatus('unauthenticated');
         return;
       }
 
-      setIsCheckingSession(false);
+      setSessionStatus('authenticated');
     });
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, [router]);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isCheckingSession ? (
+      {sessionStatus === 'unauthenticated' ? (
+        <Redirect href="/login" />
+      ) : sessionStatus === 'checking' ? (
         <SafeAreaView style={styles.screen}>
           <View style={styles.loading}>
             <ActivityIndicator color="#FF6400" />

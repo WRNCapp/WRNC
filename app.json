@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "WRNC",
-    "slug": "wrnc",
+    "slug": "garageosofficial",
+    "owner": "wrnc",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/brand/platform/wrnc-app-icon-ios-1024.png",
@@ -18,10 +19,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTabletMode": true,
-      "supportsRTL": false,
-      "bundleIdentifier": "com.wrnc.mobile",
-      "buildNumber": "1"
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wrnc.app",
+      "buildNumber": "14",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +33,11 @@
       },
       "package": "com.wrnc.mobile",
       "versionCode": 1,
-      "targetSdkVersion": 34
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET"
+      ]
     },
     "web": {
       "favicon": "./assets/brand/platform/wrnc-platform-favicon.png"
@@ -40,10 +47,12 @@
         "expo-image-picker",
         {
           "photosPermission": "Allow WRNC to access your photos and videos for vehicle documentation.",
-          "cameraPermission": "Allow WRNC to access your camera to document your builds."
+          "cameraPermission": "Allow WRNC to access your camera to document your builds.",
+          "microphonePermission": false
         }
       ],
-      "expo-file-system"
+      "expo-file-system",
+      "expo-font"
     ],
     "extra": {
       "eas": {

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useCurrentWorkspace } from '../../hooks/useWorkspace';
 import { useVehicles, useCreateVehicle, useArchiveVehicle, useRestoreVehicle, useUpdateVehicle } from '../../hooks/useVehicle';
 import { useDocumentationScore } from '../../hooks/useDocumentationScore';
+import { useActivities } from '../../hooks/useActivity';
 import { Button } from '../common/Button';
+import { KeyboardSafeScrollView } from '../common/KeyboardSafeScrollView';
 import { EmptyState } from '../common/EmptyState';
 import { VehicleCard } from './VehicleCard';
 import { VehicleDetailsForm } from './VehicleDetailsForm';
@@ -12,7 +15,9 @@ import { DocumentationScoreCard } from './DocumentationScoreCard';
 import { Input } from '../common/Input';
 import { validateVehicleInput } from '../../utils/validators';
 import type { Vehicle } from '../../types/vehicle';
+import type { Activity } from '../../types/activity';
 import { extractSupabaseErrorMessage, logSupabaseError } from '../../utils/supabaseError';
+import { formatTimelineDate } from '../../utils/activityTimeline';
 
 interface DarkStatusStateProps {
   title: string;
@@ -50,6 +55,7 @@ export function VehicleWorkspaceShell() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
   const documentationScore = useDocumentationScore(activeVehicle?.id);
+  const activitiesQuery = useActivities(activeVehicle?.id, { includeArchived: true });
 
   const isWorkspacePending = workspaceQuery.isPending;
   const isVehiclesPending = vehiclesQuery.isPending;
@@ -145,7 +151,8 @@ export function VehicleWorkspaceShell() {
   }
 
   return (
-    <ScrollView className="flex-1 bg-wrnc-background p-4">
+    <SafeAreaView testID="vehicles-safe-area" style={{ flex: 1, backgroundColor: '#080808' }}>
+    <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
       <Text className="mb-4 text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
       {!showCreate ? (
         <Button label="Create Vehicle" onPress={() => setShowCreate(true)} />
@@ -194,58 +201,131 @@ export function VehicleWorkspaceShell() {
           ) : null}
           {vehicles.map((vehicle) => (
             <View key={vehicle.id} className="mb-3">
-              <VehicleCard vehicle={vehicle} onPress={() => handleSelectVehicle(vehicle)} />
               {activeVehicle?.id === vehicle.id ? (
                 <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+                  <View testID="vehicle-heading" style={{ marginBottom: 16 }}>
+                    <Text className="text-lg font-semibold text-wrnc-text-primary">
+                      {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
+                    </Text>
+                    <Text className="mt-1 text-sm text-wrnc-text-secondary">
+                      {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
+                    </Text>
+                  </View>
+                  <View testID="vehicle-facts-grid" className="flex-row flex-wrap justify-between gap-y-2">
+                    <Fact label="VIN" value={activeVehicle.vin || 'Not recorded'} />
+                    <Fact label="Mileage" value={activeVehicle.mileage !== null ? `${activeVehicle.mileage.toLocaleString()} mi` : 'Not recorded'} />
+                    <Fact label="Engine" value={activeVehicle.engine || 'Not recorded'} />
+                    <Fact label="Transmission" value={activeVehicle.transmission || 'Not recorded'} />
+                  </View>
                   <DocumentationScoreCard
                     score={documentationScore.data?.overallScore ?? 0}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
-                  <VehicleDetailsForm
-                    vehicleData={activeVehicle}
-                    isEditMode={isEditMode}
-                    onSubmit={(input) => {
-                      setEditError(null);
-                      updateVehicle.mutate(
-                        { id: activeVehicle.id, input },
-                        {
-                          onSuccess: (updatedVehicle) => {
-                            setActiveVehicle(updatedVehicle);
-                            setIsEditMode(false);
-                          },
-                          onError: (error) => {
-                            setEditError(extractSupabaseErrorMessage(error, 'Unable to save vehicle changes.'));
-                            logSupabaseError('VehicleWorkspaceShell.updateVehicle', error, {
-                              vehicleId: activeVehicle.id,
-                            });
-                          },
-                        }
-                      );
-                    }}
-                    onCancel={() => {
-                      setIsEditMode(false);
-                      setEditError(null);
-                    }}
-                    isSubmitting={updateVehicle.isPending}
+                  <View testID="vehicle-primary-actions" className="mt-4">
+                    <View className="flex-row gap-3">
+                      <View className="flex-1">
+                        <Button label="Build Passport" onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
+                      </View>
+                      <View className="flex-1">
+                        <Button label="Timeline" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
+                      </View>
+                    </View>
+                    <View className="mt-3">
+                      <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
+                    </View>
+                  </View>
+                  <RecentActivities
+                    activities={activitiesQuery.data ?? []}
+                    onPress={(activityId) => router.push(`/vehicle/${activeVehicle.id}/activity/${activityId}`)}
                   />
+                  {isEditMode ? (
+                    <VehicleDetailsForm
+                      vehicleData={activeVehicle}
+                      isEditMode={isEditMode}
+                      onSubmit={(input) => {
+                        setEditError(null);
+                        updateVehicle.mutate(
+                          { id: activeVehicle.id, input },
+                          {
+                            onSuccess: (updatedVehicle) => {
+                              setActiveVehicle(updatedVehicle);
+                              setIsEditMode(false);
+                            },
+                            onError: (error) => {
+                              setEditError(extractSupabaseErrorMessage(error, 'Unable to save vehicle changes.'));
+                              logSupabaseError('VehicleWorkspaceShell.updateVehicle', error, {
+                                vehicleId: activeVehicle.id,
+                              });
+                            },
+                          }
+                        );
+                      }}
+                      onCancel={() => {
+                        setIsEditMode(false);
+                        setEditError(null);
+                      }}
+                      isSubmitting={updateVehicle.isPending}
+                    />
+                  ) : null}
                   {isEditMode && editError ? <Text className="mt-3 text-xs text-semantic-error">{editError}</Text> : null}
                   {!isEditMode ? (
                     <View className="mt-4 flex-row gap-3">
-                      <Button label="Timeline" variant="secondary" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
                       <Button label="Edit" variant="secondary" onPress={() => setIsEditMode(true)} />
                       {activeVehicle.archivedAt ? (
-                        <Button label="Restore" onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Restore" variant="secondary" onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
                       ) : (
-                        <Button label="Archive" variant="danger" onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Archive" variant="secondary" onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
                       )}
                     </View>
                   ) : null}
                 </View>
-              ) : null}
+              ) : <VehicleCard vehicle={vehicle} onPress={() => handleSelectVehicle(vehicle)} />}
             </View>
           ))}
         </>
       )}
-    </ScrollView>
+    </KeyboardSafeScrollView>
+    </SafeAreaView>
+  );
+}
+
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <View testID="vehicle-fact" className="rounded-lg bg-wrnc-background px-3 py-2" style={{ flexBasis: '48%', minHeight: 56 }}>
+      <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
+      <Text className="mt-1 text-sm font-medium text-wrnc-text-primary">{value}</Text>
+    </View>
+  );
+}
+
+function RecentActivities({
+  activities,
+  onPress,
+}: {
+  activities: Activity[];
+  onPress: (activityId: string) => void;
+}) {
+  const recentActivities = [...activities]
+    .sort((left, right) => new Date(right.activityDate).getTime() - new Date(left.activityDate).getTime())
+    .slice(0, 3);
+
+  return (
+    <View className="mt-4">
+      <Text className="text-sm font-semibold text-wrnc-text-primary">Recent Activity</Text>
+      {recentActivities.length === 0 ? (
+        <Text className="mt-2 text-sm text-wrnc-text-secondary">No activity recorded yet.</Text>
+      ) : (
+        recentActivities.map((activity) => (
+          <View key={activity.id} className="mt-2">
+            <Button
+              label={`${activity.title} · ${formatTimelineDate(activity.activityDate)}`}
+              variant="secondary"
+              compact
+              onPress={() => onPress(activity.id)}
+            />
+          </View>
+        ))
+      )}
+    </View>
   );
 }

@@ -12,13 +12,13 @@ interface BuildPassportHeaderProps {
 export function BuildPassportHeader({ vehicleTitle, vehicleSubtitle, overallScore, onBack }: BuildPassportHeaderProps) {
   return (
     <View className="rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
-      <View className="flex-row items-start justify-between gap-4">
+      <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', columnGap: 16 }}>
         <View className="flex-1">
-          <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-data-accent">Build Passport™</Text>
+          <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-data-accent">WRNC Build Score™</Text>
           <Text className="mt-1 text-3xl font-bold text-wrnc-text-primary">{vehicleTitle}</Text>
           <Text className="mt-2 text-sm text-wrnc-text-secondary">{vehicleSubtitle}</Text>
           <Text className="mt-3 text-xs uppercase tracking-wide text-wrnc-text-secondary">
-            Read-only aggregation from vehicle, activity, timeline, document, and documentation score records.
+            How completely this build has been documented, based on existing vehicle, activity, and record data.
           </Text>
         </View>
         <View className="items-end">
@@ -28,8 +28,8 @@ export function BuildPassportHeader({ vehicleTitle, vehicleSubtitle, overallScor
         </View>
       </View>
 
-      <View className="mt-4 max-w-40">
-        <Button label="Back" variant="secondary" onPress={onBack} />
+      <View style={{ marginTop: 16, maxWidth: 160, minHeight: 44 }}>
+        <Button label="← Vehicle" variant="secondary" onPress={onBack} />
       </View>
     </View>
   );

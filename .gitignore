@@ -25,6 +25,7 @@ coverage/
 # Build
 *.log
 .cache/
+.npm-cache/
 
 # Environment Variables
 .env

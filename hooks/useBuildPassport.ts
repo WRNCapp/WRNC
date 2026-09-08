@@ -15,7 +15,7 @@ export interface UseBuildPassportResult {
 export function useBuildPassport(vehicleId: string | undefined): UseBuildPassportResult {
   const vehicleQuery = useVehicle(vehicleId);
   const activitiesQuery = useActivities(vehicleId, { includeArchived: true });
-  const documentsQuery = useDocuments(vehicleQuery.data?.workspaceId, { includeArchived: true });
+  const documentsQuery = useDocuments(vehicleQuery.data?.workspaceId, { includeArchived: true, vehicleId });
   const documentationScoreQuery = useDocumentationScore(vehicleId);
 
   const data = useMemo(() => {
