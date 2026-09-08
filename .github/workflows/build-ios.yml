@@ -52,7 +52,7 @@ jobs:
         run: npm run build:web
 
   build-ios:
-    if: github.event_name == 'workflow_dispatch' && inputs.build_ios
+    if: (github.event_name == 'workflow_dispatch' && inputs.build_ios) || (github.event_name == 'push' && github.ref == 'refs/heads/release/build-15-spacing')
     needs: validate
     runs-on: ubuntu-latest
     steps:
