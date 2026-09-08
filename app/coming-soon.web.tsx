@@ -66,7 +66,8 @@ function ProductPreviewSlot({ assetUri, accessibilityLabel = 'WRNC product previ
 }
 
 export default function ComingSoonScreen() {
-  const { height: viewportHeight } = useWindowDimensions();
+  const { height: viewportHeight, width: viewportWidth } = useWindowDimensions();
+  const isCompact = viewportWidth <= 480;
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.location) return;
@@ -102,7 +103,7 @@ export default function ComingSoonScreen() {
         />
         <meta name="theme-color" content="#080808" />
         <meta name="robots" content="noindex,follow" />
-        <link rel="canonical" href="https://wrnc.app/coming-soon" />
+        <link rel="canonical" href="https://wrnc.app/" />
 
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="WRNC" />
@@ -111,7 +112,7 @@ export default function ComingSoonScreen() {
           property="og:description"
           content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds."
         />
-        <meta property="og:url" content="https://wrnc.app/coming-soon" />
+        <meta property="og:url" content="https://wrnc.app/" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="WRNC | The Car Culture Platform" />
@@ -134,28 +135,29 @@ export default function ComingSoonScreen() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.hero}>
-          <WrncLogo style={styles.logo} />
+        <View style={[styles.hero, isCompact && styles.heroCompact]}>
+          <WrncLogo style={[styles.logo, isCompact && styles.logoCompact]} />
 
           <View style={styles.copyBlock}>
-            <Text accessibilityRole="header" style={styles.headline}>
+            <Text accessibilityRole="header" style={[styles.headline, isCompact && styles.headlineCompact]}>
               EVERY BUILD DESERVES{`\n`}A LIVING RECORD.
             </Text>
 
-            <Text style={styles.supportingCopy}>
+            <Text style={[styles.supportingCopy, isCompact && styles.supportingCopyCompact]}>
               Your build history shouldn’t be scattered across camera rolls, receipts, emails, notes and memory.
             </Text>
-            <Text style={styles.supportingCopy}>
+            <Text style={[styles.supportingCopy, isCompact && styles.supportingCopyCompact]}>
               WRNC is building a purpose-built home for the Builder and the Build.
             </Text>
           </View>
 
-          <View style={styles.statusBlock}>
+          <KitLaunchListForm />
+
+          <View style={[styles.statusBlock, isCompact && styles.statusBlockCompact]}>
             <Text style={styles.builderStatement}>BUILT FOR BUILDERS.</Text>
             <View style={styles.accentLine} />
           </View>
 
-          <KitLaunchListForm />
         </View>
 
         <ProductPreviewSlot />
@@ -173,21 +175,31 @@ const styles = StyleSheet.create({
   hero: {
     alignItems: 'center',
     alignSelf: 'center',
-    justifyContent: 'center',
     maxWidth: 920,
-    paddingBottom: 72,
-    paddingTop: 72,
+    paddingBottom: 48,
+    paddingTop: 56,
     width: '100%',
+  },
+  heroCompact: {
+    paddingBottom: 36,
+    paddingTop: 34,
   },
   logo: {
     height: 50,
-    marginBottom: 64,
+    marginBottom: 44,
     width: 226,
+  },
+  logoCompact: {
+    marginBottom: 30,
   },
   copyBlock: {
     alignItems: 'center',
     maxWidth: 760,
     width: '100%',
+  },
+  headlineCompact: {
+    fontSize: 37,
+    lineHeight: 40,
   },
   headline: {
     color: '#FFFFFF',
@@ -200,14 +212,22 @@ const styles = StyleSheet.create({
   supportingCopy: {
     color: '#C0C0C0',
     fontSize: 18,
-    lineHeight: 28,
-    marginTop: 22,
+    lineHeight: 27,
+    marginTop: 18,
     maxWidth: 660,
     textAlign: 'center',
   },
+  supportingCopyCompact: {
+    fontSize: 16,
+    lineHeight: 23,
+    marginTop: 15,
+  },
   statusBlock: {
     alignItems: 'center',
-    marginTop: 52,
+    marginTop: 34,
+  },
+  statusBlockCompact: {
+    marginTop: 28,
   },
   builderStatement: {
     color: '#FFFFFF',
