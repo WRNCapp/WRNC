@@ -203,13 +203,15 @@ export function VehicleWorkspaceShell() {
             <View key={vehicle.id} className="mb-3">
               {activeVehicle?.id === vehicle.id ? (
                 <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
-                  <Text className="text-lg font-semibold text-wrnc-text-primary">
-                    {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
-                  </Text>
-                  <Text className="mt-1 text-sm text-wrnc-text-secondary">
-                    {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
-                  </Text>
-                  <View testID="vehicle-facts-grid" className="mt-4 flex-row flex-wrap justify-between gap-y-2">
+                  <View testID="vehicle-heading" style={{ marginBottom: 16 }}>
+                    <Text className="text-lg font-semibold text-wrnc-text-primary">
+                      {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
+                    </Text>
+                    <Text className="mt-1 text-sm text-wrnc-text-secondary">
+                      {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
+                    </Text>
+                  </View>
+                  <View testID="vehicle-facts-grid" className="flex-row flex-wrap justify-between gap-y-2">
                     <Fact label="VIN" value={activeVehicle.vin || 'Not recorded'} />
                     <Fact label="Mileage" value={activeVehicle.mileage !== null ? `${activeVehicle.mileage.toLocaleString()} mi` : 'Not recorded'} />
                     <Fact label="Engine" value={activeVehicle.engine || 'Not recorded'} />
@@ -219,14 +221,16 @@ export function VehicleWorkspaceShell() {
                     score={documentationScore.data?.overallScore ?? 0}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
-                  <View className="mt-4 flex-row flex-wrap gap-3">
-                    <View className="min-w-40 flex-1">
-                      <Button label="Build Passport" onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
+                  <View testID="vehicle-primary-actions" className="mt-4">
+                    <View className="flex-row gap-3">
+                      <View className="flex-1">
+                        <Button label="Build Passport" onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
+                      </View>
+                      <View className="flex-1">
+                        <Button label="Timeline" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
+                      </View>
                     </View>
-                    <View className="min-w-40 flex-1">
-                      <Button label="Timeline" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
-                    </View>
-                    <View className="min-w-40 flex-1">
+                    <View className="mt-3">
                       <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     </View>
                   </View>

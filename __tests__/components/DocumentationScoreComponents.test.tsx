@@ -9,6 +9,9 @@ describe('documentation score components', () => {
   it('renders the score card', () => {
     const { getByText } = render(<DocumentationScoreCard score={72} />);
     expect(getByText('72/100')).toBeTruthy();
+    expect(getByText('72 of 100 documentation points')).toBeTruthy();
+    expect(getByText(/Measures how completely this vehicle/)).toBeTruthy();
+    expect(getByText('See Breakdown & Next Steps')).toBeTruthy();
   });
 
   it('renders the breakdown', () => {
