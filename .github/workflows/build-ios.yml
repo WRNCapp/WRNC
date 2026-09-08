@@ -52,7 +52,7 @@ jobs:
         run: npm run build:web
 
   build-ios:
-    if: (github.event_name == 'workflow_dispatch' && inputs.build_ios) || (github.event_name == 'push' && github.ref == 'refs/heads/release/build-15-spacing')
+    if: github.event_name == 'workflow_dispatch' && inputs.build_ios
     needs: validate
     runs-on: ubuntu-latest
     steps:
@@ -70,7 +70,7 @@ jobs:
       - name: Build store-signed iOS QA artifact
         run: npx eas-cli build --platform ios --profile qa --non-interactive --no-wait
         env:
-          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
 
 # Submission is intentionally excluded. Submit a verified build by exact build ID
 # so an unrelated newer EAS artifact can never be uploaded by accident.
