@@ -13,6 +13,7 @@ import { Input } from '../common/Input';
 import { validateVehicleInput } from '../../utils/validators';
 import type { Vehicle } from '../../types/vehicle';
 import { extractSupabaseErrorMessage, logSupabaseError } from '../../utils/supabaseError';
+import { isMotorSandboxEnabled } from '../../services/api/motor';
 
 interface DarkStatusStateProps {
   title: string;
@@ -147,6 +148,11 @@ export function VehicleWorkspaceShell() {
   return (
     <ScrollView className="flex-1 bg-wrnc-background p-4">
       <Text className="mb-4 text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
+      {isMotorSandboxEnabled() ? (
+        <View className="mb-3">
+          <Button label="Open MOTOR Sandbox" variant="secondary" onPress={() => router.push('/motor-sandbox')} />
+        </View>
+      ) : null}
       {!showCreate ? (
         <Button label="Create Vehicle" onPress={() => setShowCreate(true)} />
       ) : (
