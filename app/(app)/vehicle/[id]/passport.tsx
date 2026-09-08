@@ -45,8 +45,8 @@ export default function VehiclePassportRoute() {
 
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 40 }}>
-        <View style={{ marginBottom: 16 }}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
+        <View style={{ marginBottom: 12 }}>
           <BuildPassportHeader
             vehicleTitle={vehicleSummary.title}
             vehicleSubtitle={vehicleSummary.subtitle}
@@ -56,7 +56,7 @@ export default function VehiclePassportRoute() {
         </View>
 
         {vehicle ? (
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: 12 }}>
             <VehicleCoverPhoto
             signedUrl={signedUrl}
             hasPhoto={Boolean(vehicle.coverPhotoPath)}
@@ -80,7 +80,7 @@ export default function VehiclePassportRoute() {
           </View>
         ) : null}
 
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ marginBottom: 12 }}>
           <BuildPassportVehicleSummary
             summary={vehicleSummary}
             onNavigate={(route) => router.push(route)}
@@ -88,7 +88,7 @@ export default function VehiclePassportRoute() {
           />
         </View>
 
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ marginBottom: 12 }}>
           <BuildPassportTimelineSummary
             summary={timelineSummary}
             onNavigate={(route) => router.push(route)}
@@ -96,7 +96,7 @@ export default function VehiclePassportRoute() {
           />
         </View>
 
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ marginBottom: 12 }}>
           <BuildPassportDocumentationSummary
             summary={documentationSummary}
             onNavigate={(route) => router.push(route)}
@@ -104,7 +104,7 @@ export default function VehiclePassportRoute() {
           />
         </View>
 
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ marginBottom: 12 }}>
           <BuildPassportStatistics statistics={statistics} />
         </View>
 
