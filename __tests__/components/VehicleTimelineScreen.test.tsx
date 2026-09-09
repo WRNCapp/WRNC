@@ -111,7 +111,7 @@ describe('VehicleTimelineScreen', () => {
     expect(queryByText('No Photo')).toBeNull();
     fireEvent.press(getByText('Add Activity'));
     expect(onCreateActivity).toHaveBeenCalled();
-    fireEvent.press(getByText('Show Filters'));
+    fireEvent.press(getByText('Filters'));
 
     const maintenanceButtons = getAllByRole('button', { name: 'Maintenance' });
     fireEvent.press(maintenanceButtons[0]);
