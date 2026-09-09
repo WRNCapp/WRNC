@@ -223,7 +223,8 @@ export function VehicleWorkspaceShell() {
                     <Fact label="Transmission" value={activeVehicle.transmission || 'Not recorded'} />
                   </View>
                   <DocumentationScoreCard
-                    score={documentationScore.data?.overallScore ?? 0}
+                    score={documentationScore.data?.overallScore}
+                    isLoading={documentationScore.isPending}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
                   <View testID="vehicle-primary-actions" className="mt-3">
