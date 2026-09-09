@@ -66,16 +66,18 @@ export function VehicleTimelineScreen({
         <Text className="text-3xl font-bold text-wrnc-text-primary">Timeline</Text>
         <Text className="mt-1 text-sm text-wrnc-text-secondary">{vehicle.nickname || vehicleLabel}</Text>
       </View>
-      <View className="mt-3">
-        <Button label="Add Activity" onPress={onCreateActivity} />
-      </View>
-      <View className="mt-2">
-        <Button
-          label={showFilters ? 'Hide Filters' : 'Show Filters'}
-          variant="secondary"
-          compact
-          onPress={() => setShowFilters((current) => !current)}
-        />
+      <View className="mt-3 flex-row gap-2">
+        <View className="flex-[2]">
+          <Button label="Add Activity" compact onPress={onCreateActivity} />
+        </View>
+        <View className="flex-1">
+          <Button
+            label={showFilters ? 'Hide Filters' : 'Filters'}
+            variant="secondary"
+            compact
+            onPress={() => setShowFilters((current) => !current)}
+          />
+        </View>
       </View>
       {showFilters ? <VehicleTimelineFilters filters={filters} onFiltersChange={setFilters} /> : null}
     </View>

@@ -16,7 +16,6 @@ export interface VehicleTimelineItemProps {
 
 function VehicleTimelineItemComponent({
   activity,
-  vehicleLabel,
   onPress,
 }: VehicleTimelineItemProps) {
   const previewPhotoUrl = getActivityPreviewPhotoUrl(activity);
@@ -52,8 +51,6 @@ function VehicleTimelineItemComponent({
 
           <Text className="mt-2 text-lg font-semibold text-wrnc-text-primary">{activity.title}</Text>
           <Text className="mt-1 text-sm text-wrnc-text-secondary">{formatTimelineDate(activity.activityDate)}</Text>
-          <Text className="mt-1 text-sm text-wrnc-text-secondary">{vehicleLabel}</Text>
-
           {activity.description ? (
             <Text className="mt-2 text-sm leading-5 text-wrnc-text-secondary">{activity.description}</Text>
           ) : null}

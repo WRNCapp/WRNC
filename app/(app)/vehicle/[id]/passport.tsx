@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button } from '../../../../components/common/Button';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { BuildPassportHeader } from '../../../../components/workspace/BuildPassportHeader';
 import { BuildPassportVehicleSummary } from '../../../../components/workspace/BuildPassportVehicleSummary';
@@ -23,6 +24,7 @@ export default function VehiclePassportRoute() {
   const uploadPhoto = useUploadVehiclePhoto();
   const replacePhoto = useReplaceVehiclePhoto();
   const removePhoto = useRemoveVehiclePhoto();
+  const [showFullPassport, setShowFullPassport] = useState(false);
 
   if (!vehicleId) {
     return (
@@ -79,36 +81,80 @@ export default function VehiclePassportRoute() {
           </View>
         ) : null}
 
-        <View style={{ marginBottom: 12 }}>
-          <BuildPassportVehicleSummary
-            summary={vehicleSummary}
-            onNavigate={(route) => router.push(route)}
-            onBack={() => router.back()}
-          />
+        <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+          <Text className="text-lg font-semibold text-wrnc-text-primary">At a Glance</Text>
+          <Text className="mt-1 text-sm text-wrnc-text-secondary">The current build record, without the report noise.</Text>
+          <View className="mt-4 flex-row gap-2">
+            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+              <Text className="text-xs uppercase text-wrnc-text-secondary">Activities</Text>
+              <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{timelineSummary.totalActivities}</Text>
+            </View>
+            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+              <Text className="text-xs uppercase text-wrnc-text-secondary">Documents</Text>
+              <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{documentationSummary.totalDocuments}</Text>
+            </View>
+            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+              <Text className="text-xs uppercase text-wrnc-text-secondary">Photos</Text>
+              <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{documentationSummary.photoDocuments}</Text>
+            </View>
+          </View>
+          {timelineSummary.latestActivity ? (
+            <View className="mt-3 border-t border-wrnc-border pt-3">
+              <Text className="text-xs uppercase text-wrnc-text-secondary">Latest Activity</Text>
+              <Text className="mt-1 text-sm font-semibold text-wrnc-text-primary">{timelineSummary.latestActivity.title}</Text>
+              <Text className="mt-1 text-xs text-wrnc-text-secondary">{timelineSummary.latestActivity.activityDate}</Text>
+            </View>
+          ) : null}
+          <View className="mt-3 flex-row gap-2">
+            <View className="flex-1">
+              <Button label="Timeline" variant="secondary" compact onPress={() => router.push(`/vehicle/${vehicleId}/timeline`)} />
+            </View>
+            <View className="flex-1">
+              <Button label="Documents" variant="secondary" compact onPress={() => router.push(`/vehicle/${vehicleId}/documents`)} />
+            </View>
+          </View>
         </View>
 
-        <View style={{ marginBottom: 12 }}>
-          <BuildPassportTimelineSummary
-            summary={timelineSummary}
-            onNavigate={(route) => router.push(route)}
-            onBack={() => router.back()}
-          />
-        </View>
-
-        <View style={{ marginBottom: 12 }}>
-          <BuildPassportDocumentationSummary
-            summary={documentationSummary}
-            onNavigate={(route) => router.push(route)}
-            onBack={() => router.back()}
-          />
-        </View>
-
-
-        <BuildPassportRecommendations
-          recommendations={recommendations}
-          onNavigate={(route) => router.push(route)}
-          onBack={() => router.back()}
+        <Button
+          label={showFullPassport ? 'Hide Full Passport' : 'View Full Passport'}
+          variant="secondary"
+          compact
+          onPress={() => setShowFullPassport((current) => !current)}
         />
+
+        {showFullPassport ? (
+          <View className="mt-3">
+            <View style={{ marginBottom: 12 }}>
+              <BuildPassportVehicleSummary
+                summary={vehicleSummary}
+                onNavigate={(route) => router.push(route)}
+                onBack={() => router.back()}
+              />
+            </View>
+
+            <View style={{ marginBottom: 12 }}>
+              <BuildPassportTimelineSummary
+                summary={timelineSummary}
+                onNavigate={(route) => router.push(route)}
+                onBack={() => router.back()}
+              />
+            </View>
+
+            <View style={{ marginBottom: 12 }}>
+              <BuildPassportDocumentationSummary
+                summary={documentationSummary}
+                onNavigate={(route) => router.push(route)}
+                onBack={() => router.back()}
+              />
+            </View>
+
+            <BuildPassportRecommendations
+              recommendations={recommendations}
+              onNavigate={(route) => router.push(route)}
+              onBack={() => router.back()}
+            />
+          </View>
+        ) : null
       </ScrollView>
     </SafeAreaView>
   );
