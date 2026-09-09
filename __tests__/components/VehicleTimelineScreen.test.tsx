@@ -108,8 +108,10 @@ describe('VehicleTimelineScreen', () => {
 
     expect(getByText('Brake Service')).toBeTruthy();
     expect(getByText('Weekend Photos')).toBeTruthy();
+    expect(queryByText('No Photo')).toBeNull();
     fireEvent.press(getByText('Add Activity'));
     expect(onCreateActivity).toHaveBeenCalled();
+    fireEvent.press(getByText('Show Filters'));
 
     const maintenanceButtons = getAllByRole('button', { name: 'Maintenance' });
     fireEvent.press(maintenanceButtons[0]);
