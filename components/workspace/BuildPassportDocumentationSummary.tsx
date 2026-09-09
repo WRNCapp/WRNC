@@ -13,25 +13,24 @@ interface BuildPassportDocumentationSummaryProps {
 
 function renderLink(
   link: BuildPassportDocumentationSummaryType['sourceLinks'][number],
-  onNavigate: (route: string) => void,
-  onBack: () => void
+  onNavigate: (route: string) => void
 ) {
   if (link.action === 'back') {
-    return <Button label={link.label} variant="secondary" onPress={onBack} />;
+    return null;
   }
 
   if (!link.route) {
     return null;
   }
 
-  return <Button label={link.label} variant="secondary" onPress={() => onNavigate(link.route as string)} />;
+  return <Button label={link.label} variant="secondary" compact onPress={() => onNavigate(link.route as string)} />;
 }
 
-export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack }: BuildPassportDocumentationSummaryProps) {
+export function BuildPassportDocumentationSummary({ summary, onNavigate }: BuildPassportDocumentationSummaryProps) {
   return (
-    <View className="rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
-      <Text className="text-lg font-semibold text-wrnc-text-primary">WRNC Build Score™</Text>
-      <Text className="mt-1 text-sm text-wrnc-text-secondary">Documentation quality and coverage from the current build record.</Text>
+    <View>
+      <Text className="text-lg font-semibold text-wrnc-text-primary">Documentation</Text>
+      <Text className="mt-1 text-sm text-wrnc-text-secondary">What is recorded and where the build history can improve.</Text>
 
       <View testID="documentation-stat-grid" style={passportLayout.metricGrid}>
         <Stat label="Score" value={`${summary.overallScore}/100`} />
@@ -57,7 +56,7 @@ export function BuildPassportDocumentationSummary({ summary, onNavigate, onBack 
       <View style={passportLayout.links}>
         {summary.sourceLinks.map((link) => (
           <View key={link.label} style={passportLayout.link}>
-            {renderLink(link, onNavigate, onBack)}
+            {renderLink(link, onNavigate)}
           </View>
         ))}
       </View>

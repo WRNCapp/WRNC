@@ -54,13 +54,9 @@ export function VehicleTimelineScreen({
   const vehicleLabel = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
   const listHeader = (
     <View>
-      <View className="flex-row gap-3">
-        <View className="flex-1">
-          <Button label="← Vehicle" variant="secondary" compact onPress={onBack} />
-        </View>
-        <View className="flex-1">
-          <Button label="Build Passport" variant="secondary" compact onPress={onBuildPassport} />
-        </View>
+      <View className="flex-row items-center justify-between">
+        <Button label="← Vehicle" variant="secondary" compact onPress={onBack} />
+        <Button label="Passport" variant="secondary" compact onPress={onBuildPassport} />
       </View>
       <View className="mt-3">
         <Text className="text-3xl font-bold text-wrnc-text-primary">Timeline</Text>
@@ -72,7 +68,7 @@ export function VehicleTimelineScreen({
         </View>
         <View className="flex-1">
           <Button
-            label={showFilters ? 'Hide Filters' : 'Filters'}
+            label={showFilters ? 'Close Filters' : 'Filters'}
             variant="secondary"
             compact
             onPress={() => setShowFilters((current) => !current)}

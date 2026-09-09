@@ -137,7 +137,7 @@ export function DocumentUploadForm({ onSubmit, isSubmitting = false }: DocumentU
   };
 
   return (
-    <View className="mb-6 rounded-2xl border border-wrnc-border bg-wrnc-surface p-4">
+    <View className="mb-4 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
       <Text className="mb-3 text-lg font-semibold text-wrnc-text-primary">Add Document</Text>
 
       <Input label="Title" value={title} onChangeText={setTitle} placeholder="e.g. Front brake receipt" />
@@ -164,17 +164,25 @@ export function DocumentUploadForm({ onSubmit, isSubmitting = false }: DocumentU
       </View>
 
       {file ? <Text className="mb-3 text-wrnc-text-secondary">Selected: {file.name}</Text> : null}
-      <View style={{ gap: 12 }}>
-      {Platform.OS !== 'web' ? <>
-        <Button label="Camera" variant="secondary" onPress={() => handlePickFile('camera')} disabled={isSubmitting || isPicking} />
-        <Button label="Photo Library" variant="secondary" onPress={() => handlePickFile('library')} disabled={isSubmitting || isPicking} />
-      </> : null}
-      <Button
-        label={Platform.OS === 'web' ? 'Choose File' : 'Files'}
-        variant="secondary"
-        onPress={() => handlePickFile('files')}
-        disabled={isSubmitting || isPicking}
-      />
+      <Text className="mb-2 text-sm font-medium text-wrnc-text-secondary">Add from</Text>
+      <View className="flex-row gap-2">
+        {Platform.OS !== 'web' ? <>
+          <View className="flex-1">
+            <Button label="Camera" variant="secondary" compact onPress={() => handlePickFile('camera')} disabled={isSubmitting || isPicking} />
+          </View>
+          <View className="flex-1">
+            <Button label="Library" variant="secondary" compact onPress={() => handlePickFile('library')} disabled={isSubmitting || isPicking} />
+          </View>
+        </> : null}
+        <View className="flex-1">
+          <Button
+            label={Platform.OS === 'web' ? 'Choose File' : 'Files'}
+            variant="secondary"
+            compact
+            onPress={() => handlePickFile('files')}
+            disabled={isSubmitting || isPicking}
+          />
+        </View>
       </View>
 
       <View className="mt-3">
