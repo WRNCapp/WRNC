@@ -41,6 +41,7 @@ export function VehicleTimelineScreen({
   onCreateActivity,
 }: VehicleTimelineScreenProps) {
   const [filters, setFilters] = useState<TimelineFilters>(DEFAULT_FILTERS);
+  const [showFilters, setShowFilters] = useState(false);
 
   const filteredActivities = useMemo(
     () => filterTimelineActivities(activities, filters),
@@ -68,7 +69,15 @@ export function VehicleTimelineScreen({
       <View className="mt-3">
         <Button label="Add Activity" onPress={onCreateActivity} />
       </View>
-      <VehicleTimelineFilters filters={filters} onFiltersChange={setFilters} />
+      <View className="mt-2">
+        <Button
+          label={showFilters ? 'Hide Filters' : 'Show Filters'}
+          variant="secondary"
+          compact
+          onPress={() => setShowFilters((current) => !current)}
+        />
+      </View>
+      {showFilters ? <VehicleTimelineFilters filters={filters} onFiltersChange={setFilters} /> : null}
     </View>
   );
 
