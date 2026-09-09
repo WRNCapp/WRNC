@@ -7,7 +7,7 @@ export async function pickAttachmentMedia(source: 'camera' | 'library'): Promise
   if (source === 'camera') {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
     if (!permission.granted) {
-      throw new Error('Camera access is off. Enable it in Settings, or choose Photo Library or Files.');
+      throw new Error('Camera access is off. Enable it in Settings, or choose Library or Files.');
     }
   }
   const result = source === 'camera'

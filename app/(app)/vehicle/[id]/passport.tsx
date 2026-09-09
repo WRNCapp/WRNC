@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../../../components/common/Button';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -24,7 +24,7 @@ export default function VehiclePassportRoute() {
   const uploadPhoto = useUploadVehiclePhoto();
   const replacePhoto = useReplaceVehiclePhoto();
   const removePhoto = useRemoveVehiclePhoto();
-  const [showFullPassport, setShowFullPassport] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<'vehicle' | 'timeline' | 'documentation' | 'next' | null>(null);
 
   if (!vehicleId) {
     return (
@@ -83,8 +83,8 @@ export default function VehiclePassportRoute() {
 
         <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
           <Text className="text-lg font-semibold text-wrnc-text-primary">At a Glance</Text>
-          <Text className="mt-1 text-sm text-wrnc-text-secondary">The current build record, without the report noise.</Text>
-          <View className="mt-4 flex-row gap-2">
+          <Text className="mt-1 text-sm text-wrnc-text-secondary">The current build record.</Text>
+          <View className="mt-3 flex-row gap-2">
             <View className="flex-1 rounded-lg bg-wrnc-background p-3">
               <Text className="text-xs uppercase text-wrnc-text-secondary">Activities</Text>
               <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{timelineSummary.totalActivities}</Text>
@@ -115,47 +115,82 @@ export default function VehiclePassportRoute() {
           </View>
         </View>
 
-        <Button
-          label={showFullPassport ? 'Hide Full Passport' : 'View Full Passport'}
-          variant="secondary"
-          compact
-          onPress={() => setShowFullPassport((current) => !current)}
-        />
-
-        {showFullPassport ? (
-          <View className="mt-3">
-            <View style={{ marginBottom: 12 }}>
+        <View className="overflow-hidden rounded-xl border border-wrnc-border bg-wrnc-surface">
+          <PassportSectionButton
+            label="Vehicle Details"
+            expanded={expandedSection === 'vehicle'}
+            onPress={() => setExpandedSection((current) => (current === 'vehicle' ? null : 'vehicle'))}
+          />
+          {expandedSection === 'vehicle' ? (
+            <View className="border-t border-wrnc-border p-3">
               <BuildPassportVehicleSummary
                 summary={vehicleSummary}
                 onNavigate={(route) => router.push(route)}
                 onBack={() => router.back()}
               />
             </View>
+          ) : null}
 
-            <View style={{ marginBottom: 12 }}>
+          <PassportSectionButton
+            label="Timeline Details"
+            expanded={expandedSection === 'timeline'}
+            onPress={() => setExpandedSection((current) => (current === 'timeline' ? null : 'timeline'))}
+          />
+          {expandedSection === 'timeline' ? (
+            <View className="border-t border-wrnc-border p-3">
               <BuildPassportTimelineSummary
                 summary={timelineSummary}
                 onNavigate={(route) => router.push(route)}
                 onBack={() => router.back()}
               />
             </View>
+          ) : null}
 
-            <View style={{ marginBottom: 12 }}>
+          <PassportSectionButton
+            label="Documentation Details"
+            expanded={expandedSection === 'documentation'}
+            onPress={() => setExpandedSection((current) => (current === 'documentation' ? null : 'documentation'))}
+          />
+          {expandedSection === 'documentation' ? (
+            <View className="border-t border-wrnc-border p-3">
               <BuildPassportDocumentationSummary
                 summary={documentationSummary}
                 onNavigate={(route) => router.push(route)}
                 onBack={() => router.back()}
               />
             </View>
+          ) : null}
 
-            <BuildPassportRecommendations
-              recommendations={recommendations}
-              onNavigate={(route) => router.push(route)}
-              onBack={() => router.back()}
-            />
-          </View>
-        ) : null}
+          <PassportSectionButton
+            label="Next Steps"
+            expanded={expandedSection === 'next'}
+            onPress={() => setExpandedSection((current) => (current === 'next' ? null : 'next'))}
+          />
+          {expandedSection === 'next' ? (
+            <View className="border-t border-wrnc-border p-3">
+              <BuildPassportRecommendations
+                recommendations={recommendations}
+                onNavigate={(route) => router.push(route)}
+                onBack={() => router.back()}
+              />
+            </View>
+          ) : null}
+        </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function PassportSectionButton({ label, expanded, onPress }: { label: string; expanded: boolean; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ expanded }}
+      className="min-h-12 flex-row items-center justify-between px-4 py-3"
+      onPress={onPress}
+    >
+      <Text className="text-sm font-semibold text-wrnc-text-primary">{label}</Text>
+      <Text className="text-lg text-wrnc-text-secondary">{expanded ? '−' : '+'}</Text>
+    </Pressable>
   );
 }

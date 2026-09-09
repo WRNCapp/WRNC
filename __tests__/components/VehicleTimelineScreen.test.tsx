@@ -88,7 +88,7 @@ describe('VehicleTimelineScreen', () => {
     expect(getByText('No activities yet')).toBeTruthy();
     fireEvent.press(getByText('Create Activity'));
     expect(onCreateActivity).toHaveBeenCalled();
-    fireEvent.press(getByText('Build Passport'));
+    fireEvent.press(getByText('Passport'));
     expect(onBuildPassport).toHaveBeenCalled();
   });
 

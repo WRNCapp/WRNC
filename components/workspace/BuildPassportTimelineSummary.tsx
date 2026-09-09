@@ -12,25 +12,24 @@ interface BuildPassportTimelineSummaryProps {
 
 function renderLink(
   link: BuildPassportTimelineSummaryType['sourceLinks'][number],
-  onNavigate: (route: string) => void,
-  onBack: () => void
+  onNavigate: (route: string) => void
 ) {
   if (link.action === 'back') {
-    return <Button label={link.label} variant="secondary" onPress={onBack} />;
+    return null;
   }
 
   if (!link.route) {
     return null;
   }
 
-  return <Button label={link.label} variant="secondary" onPress={() => onNavigate(link.route as string)} />;
+  return <Button label={link.label} variant="secondary" compact onPress={() => onNavigate(link.route as string)} />;
 }
 
-export function BuildPassportTimelineSummary({ summary, onNavigate, onBack }: BuildPassportTimelineSummaryProps) {
+export function BuildPassportTimelineSummary({ summary, onNavigate }: BuildPassportTimelineSummaryProps) {
   return (
-    <View className="rounded-2xl border border-wrnc-border bg-wrnc-surface p-5">
+    <View>
       <Text className="text-lg font-semibold text-wrnc-text-primary">Timeline Summary</Text>
-      <Text className="mt-1 text-sm text-wrnc-text-secondary">Recent activity history and timeline depth.</Text>
+      <Text className="mt-1 text-sm text-wrnc-text-secondary">Work recorded throughout this build.</Text>
 
       <View testID="timeline-stat-grid" style={passportLayout.metricGrid}>
         <Stat label="Activities" value={summary.totalActivities} />
@@ -49,7 +48,7 @@ export function BuildPassportTimelineSummary({ summary, onNavigate, onBack }: Bu
       <View style={passportLayout.links}>
         {summary.sourceLinks.map((link) => (
           <View key={link.label} style={passportLayout.link}>
-            {renderLink(link, onNavigate, onBack)}
+            {renderLink(link, onNavigate)}
           </View>
         ))}
       </View>

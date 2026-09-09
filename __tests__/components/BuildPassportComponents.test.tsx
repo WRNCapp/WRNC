@@ -27,7 +27,7 @@ describe('BuildPassport components', () => {
   it('renders the vehicle summary with navigation', () => {
     const onNavigate = jest.fn();
     const onBack = jest.fn();
-    const { getByText } = render(
+    const { queryByText } = render(
       <BuildPassportVehicleSummary
         summary={{
           title: 'Bluebird',
@@ -40,8 +40,8 @@ describe('BuildPassport components', () => {
       />
     );
 
-    fireEvent.press(getByText('Back to Vehicle Workspace'));
-    expect(onBack).toHaveBeenCalledTimes(1);
+    expect(queryByText('Back to Vehicle Workspace')).toBeNull();
+    expect(onBack).not.toHaveBeenCalled();
     expect(onNavigate).not.toHaveBeenCalled();
   });
 
@@ -143,7 +143,7 @@ describe('BuildPassport components', () => {
 
     fireEvent.press(getByText('Open Documents'));
     expect(onNavigate).toHaveBeenCalledWith('/vehicle/veh-1/documents');
-    expect(getByText('Registration needs attention')).toBeTruthy();
+    expect(getByText('Registration')).toBeTruthy();
 
     const { getByText: getStatsByText } = render(
       <BuildPassportStatistics
