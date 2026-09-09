@@ -7,7 +7,6 @@ import { BuildPassportVehicleSummary } from '../../../../components/workspace/Bu
 import { BuildPassportTimelineSummary } from '../../../../components/workspace/BuildPassportTimelineSummary';
 import { BuildPassportDocumentationSummary } from '../../../../components/workspace/BuildPassportDocumentationSummary';
 import { BuildPassportRecommendations } from '../../../../components/workspace/BuildPassportRecommendations';
-import { BuildPassportStatistics } from '../../../../components/workspace/BuildPassportStatistics';
 import { VehicleCoverPhoto } from '../../../../components/workspace/VehicleCoverPhoto';
 import { useBuildPassport } from '../../../../hooks/useBuildPassport';
 import { useVehicle } from '../../../../hooks/useVehicle';
@@ -41,7 +40,7 @@ export default function VehiclePassportRoute() {
     );
   }
 
-  const { vehicleSummary, timelineSummary, documentationSummary, statistics, recommendations } = passport;
+  const { vehicleSummary, timelineSummary, documentationSummary, recommendations } = passport;
 
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
@@ -104,9 +103,6 @@ export default function VehiclePassportRoute() {
           />
         </View>
 
-        <View style={{ marginBottom: 12 }}>
-          <BuildPassportStatistics statistics={statistics} />
-        </View>
 
         <BuildPassportRecommendations
           recommendations={recommendations}
