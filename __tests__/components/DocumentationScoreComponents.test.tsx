@@ -14,6 +14,13 @@ describe('documentation score components', () => {
     expect(getByText('Breakdown & Next Steps')).toBeTruthy();
   });
 
+  it('renders a neutral loading state instead of a false zero score', () => {
+    const { getByText, queryByText } = render(<DocumentationScoreCard isLoading />);
+    expect(getByText('—/100')).toBeTruthy();
+    expect(getByText('Calculating documentation score…')).toBeTruthy();
+    expect(queryByText('0/100')).toBeNull();
+  });
+
   it('renders the breakdown', () => {
     const { getByText } = render(
       <DocumentationScoreBreakdown categories={[{ key: 'vehicleProfile', label: 'Vehicle Profile', score: 5, maxScore: 10, evidence: ['Recorded'] }]} />
