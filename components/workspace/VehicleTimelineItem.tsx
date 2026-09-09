@@ -36,13 +36,7 @@ function VehicleTimelineItemComponent({
             className="h-16 w-16 rounded-lg bg-wrnc-surface-elevated"
             accessibilityLabel={`${activity.title} preview image`}
           />
-        ) : (
-          <View className="h-16 w-16 items-center justify-center rounded-lg bg-wrnc-surface-elevated">
-            <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-text-secondary">
-              No Photo
-            </Text>
-          </View>
-        )}
+        ) : null}
 
         <View className="flex-1">
           <View className="flex-row flex-wrap items-center gap-2">
