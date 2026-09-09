@@ -154,7 +154,7 @@ export default function VehiclePassportRoute() {
               onBack={() => router.back()}
             />
           </View>
-        ) : null
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
