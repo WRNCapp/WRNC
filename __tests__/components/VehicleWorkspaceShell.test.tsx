@@ -314,10 +314,12 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     expect(getByText('Build Passport')).toBeTruthy();
     expect(getByText('Timeline')).toBeTruthy();
     expect(getByText('Add Activity')).toBeTruthy();
-    expect(getByText('Brake Service · Aug 1, 2026')).toBeTruthy();
-    expect(getByText('Second Activity · Jul 1, 2026')).toBeTruthy();
-    expect(getByText('Third Activity · Jun 1, 2026')).toBeTruthy();
-    expect(queryByText('Fourth Activity · May 1, 2026')).toBeNull();
+    expect(getByText('Brake Service')).toBeTruthy();
+    expect(getByText('Maintenance · Aug 1, 2026')).toBeTruthy();
+    expect(getByText('Second Activity')).toBeTruthy();
+    expect(getByText('Progress Update · Jul 1, 2026')).toBeTruthy();
+    expect(getByText('Third Activity')).toBeTruthy();
+    expect(queryByText('Fourth Activity')).toBeNull();
   });
 
   it('applies updated vehicle data immediately after edit success', () => {
