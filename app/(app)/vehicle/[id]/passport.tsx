@@ -46,8 +46,8 @@ export default function VehiclePassportRoute() {
 
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
-        <View style={{ marginBottom: 12 }}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 12, paddingTop: 8, paddingBottom: 24 }}>
+        <View style={{ marginBottom: 8 }}>
           <BuildPassportHeader
             vehicleTitle={vehicleSummary.title}
             vehicleSubtitle={vehicleSummary.subtitle}
@@ -57,8 +57,7 @@ export default function VehiclePassportRoute() {
         </View>
 
         {vehicle ? (
-          <View style={{ marginBottom: 12 }}>
-            <VehicleCoverPhoto
+          <VehicleCoverPhoto
             signedUrl={signedUrl}
             hasPhoto={Boolean(vehicle.coverPhotoPath)}
             isLoadingUrl={isLoadingUrl}
@@ -77,35 +76,33 @@ export default function VehiclePassportRoute() {
             onRemove={async () => {
               await removePhoto.mutateAsync({ vehicleId });
             }}
-            />
-          </View>
+          />
         ) : null}
 
-        <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+        <View className="mb-2 rounded-xl border border-wrnc-border bg-wrnc-surface p-3">
           <Text className="text-lg font-semibold text-wrnc-text-primary">At a Glance</Text>
-          <Text className="mt-1 text-sm text-wrnc-text-secondary">The current build record.</Text>
-          <View className="mt-3 flex-row gap-2">
-            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+          <View className="mt-2 flex-row gap-2">
+            <View className="flex-1 rounded-lg bg-wrnc-background p-2">
               <Text className="text-xs uppercase text-wrnc-text-secondary">Activities</Text>
               <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{timelineSummary.totalActivities}</Text>
             </View>
-            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+            <View className="flex-1 rounded-lg bg-wrnc-background p-2">
               <Text className="text-xs uppercase text-wrnc-text-secondary">Documents</Text>
               <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{documentationSummary.totalDocuments}</Text>
             </View>
-            <View className="flex-1 rounded-lg bg-wrnc-background p-3">
+            <View className="flex-1 rounded-lg bg-wrnc-background p-2">
               <Text className="text-xs uppercase text-wrnc-text-secondary">Photos</Text>
               <Text className="mt-1 text-2xl font-bold text-wrnc-text-primary">{documentationSummary.photoDocuments}</Text>
             </View>
           </View>
           {timelineSummary.latestActivity ? (
-            <View className="mt-3 border-t border-wrnc-border pt-3">
+            <View className="mt-2 border-t border-wrnc-border pt-2">
               <Text className="text-xs uppercase text-wrnc-text-secondary">Latest Activity</Text>
               <Text className="mt-1 text-sm font-semibold text-wrnc-text-primary">{timelineSummary.latestActivity.title}</Text>
               <Text className="mt-1 text-xs text-wrnc-text-secondary">{timelineSummary.latestActivity.activityDate}</Text>
             </View>
           ) : null}
-          <View className="mt-3 flex-row gap-2">
+          <View className="mt-2 flex-row gap-2">
             <View className="flex-1">
               <Button label="Timeline" variant="secondary" compact onPress={() => router.push(`/vehicle/${vehicleId}/timeline`)} />
             </View>
@@ -122,7 +119,7 @@ export default function VehiclePassportRoute() {
             onPress={() => setExpandedSection((current) => (current === 'vehicle' ? null : 'vehicle'))}
           />
           {expandedSection === 'vehicle' ? (
-            <View className="border-t border-wrnc-border p-3">
+            <View className="border-t border-wrnc-border p-2">
               <BuildPassportVehicleSummary
                 summary={vehicleSummary}
                 onNavigate={(route) => router.push(route)}
@@ -137,7 +134,7 @@ export default function VehiclePassportRoute() {
             onPress={() => setExpandedSection((current) => (current === 'timeline' ? null : 'timeline'))}
           />
           {expandedSection === 'timeline' ? (
-            <View className="border-t border-wrnc-border p-3">
+            <View className="border-t border-wrnc-border p-2">
               <BuildPassportTimelineSummary
                 summary={timelineSummary}
                 onNavigate={(route) => router.push(route)}
@@ -152,7 +149,7 @@ export default function VehiclePassportRoute() {
             onPress={() => setExpandedSection((current) => (current === 'documentation' ? null : 'documentation'))}
           />
           {expandedSection === 'documentation' ? (
-            <View className="border-t border-wrnc-border p-3">
+            <View className="border-t border-wrnc-border p-2">
               <BuildPassportDocumentationSummary
                 summary={documentationSummary}
                 onNavigate={(route) => router.push(route)}
@@ -167,7 +164,7 @@ export default function VehiclePassportRoute() {
             onPress={() => setExpandedSection((current) => (current === 'next' ? null : 'next'))}
           />
           {expandedSection === 'next' ? (
-            <View className="border-t border-wrnc-border p-3">
+            <View className="border-t border-wrnc-border p-2">
               <BuildPassportRecommendations
                 recommendations={recommendations}
                 onNavigate={(route) => router.push(route)}
@@ -186,7 +183,7 @@ function PassportSectionButton({ label, expanded, onPress }: { label: string; ex
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ expanded }}
-      className="min-h-12 flex-row items-center justify-between px-4 py-3"
+      className="min-h-11 flex-row items-center justify-between px-3 py-2"
       onPress={onPress}
     >
       <Text className="text-sm font-semibold text-wrnc-text-primary">{label}</Text>

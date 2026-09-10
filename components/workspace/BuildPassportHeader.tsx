@@ -11,7 +11,7 @@ interface BuildPassportHeaderProps {
 export function BuildPassportHeader({ vehicleTitle, vehicleSubtitle, overallScore, onBack }: BuildPassportHeaderProps) {
   return (
     <View>
-      <View className="mb-3 flex-row items-center justify-between">
+      <View className="mb-2 flex-row items-center justify-between">
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Back to vehicle"
@@ -22,7 +22,7 @@ export function BuildPassportHeader({ vehicleTitle, vehicleSubtitle, overallScor
         </Pressable>
         <Text className="text-sm font-semibold uppercase tracking-wide text-wrnc-text-secondary">Build Passport</Text>
       </View>
-      <View className="flex-row items-start justify-between gap-3 border-b border-wrnc-border pb-3">
+      <View className="flex-row items-start justify-between gap-3 border-b border-wrnc-border pb-2">
         <View className="flex-1">
           <Text className="text-2xl font-bold text-wrnc-text-primary">{vehicleTitle}</Text>
           <Text className="mt-1 text-sm text-wrnc-text-secondary">{vehicleSubtitle}</Text>
