@@ -51,9 +51,10 @@ export function VehicleWorkspaceShell() {
   const [form, setForm] = useState({ year: '', make: '', model: '', nickname: '', vin: '' });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [activeVehicle, setActiveVehicle] = useState<Vehicle | null>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const activeVehicle = selectedVehicle ?? (vehicles.length === 1 ? vehicles[0] : null);
   const documentationScore = useDocumentationScore(activeVehicle?.id);
   const activitiesQuery = useActivities(activeVehicle?.id, { includeArchived: true });
 
@@ -119,7 +120,7 @@ export function VehicleWorkspaceShell() {
   };
 
   const handleSelectVehicle = (vehicle: Vehicle) => {
-    setActiveVehicle(vehicle);
+    setSelectedVehicle(vehicle);
     setIsEditMode(false);
     setEditError(null);
   };
@@ -257,7 +258,7 @@ export function VehicleWorkspaceShell() {
                           { id: activeVehicle.id, input },
                           {
                             onSuccess: (updatedVehicle) => {
-                              setActiveVehicle(updatedVehicle);
+                              setSelectedVehicle(updatedVehicle);
                               setIsEditMode(false);
                             },
                             onError: (error) => {

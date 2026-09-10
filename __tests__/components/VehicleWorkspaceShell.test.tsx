@@ -283,7 +283,7 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     expect(queryByText('No vehicles yet')).toBeNull();
   });
 
-  it('shows the selected vehicle as one active workspace with primary actions and three recent activities', () => {
+  it('opens a sole vehicle as the active workspace without requiring an extra tap', () => {
     mockVehiclesQuery.data = [
       {
         id: 'veh-1',
@@ -306,8 +306,6 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
 
     const { getAllByText, getAllByTestId, getByTestId, getByText, queryByText } = render(<VehicleWorkspaceShell />);
 
-    fireEvent.press(getAllByText('Benny')[0]);
-
     expect(getAllByText('Benny')).toHaveLength(1);
     expect(getByTestId('vehicle-facts-grid')).toBeTruthy();
     expect(getAllByTestId('vehicle-fact')).toHaveLength(4);
@@ -320,6 +318,36 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     expect(getByText('Progress Update · Jul 1, 2026')).toBeTruthy();
     expect(getByText('Third Activity')).toBeTruthy();
     expect(queryByText('Fourth Activity')).toBeNull();
+  });
+
+  it('keeps multiple vehicles compact until the builder selects one', () => {
+    const firstVehicle = {
+      id: 'veh-1',
+      workspaceId: 'ws-1',
+      year: 2012,
+      make: 'Porsche',
+      model: '911',
+      trim: null,
+      nickname: 'Benny',
+      vin: null,
+      engine: null,
+      transmission: null,
+      mileage: null,
+      coverPhotoUrl: null,
+      archivedAt: null,
+      createdAt: '2026-08-01T00:00:00.000Z',
+      updatedAt: '2026-08-01T00:00:00.000Z',
+    };
+    mockVehiclesQuery.data = [
+      firstVehicle,
+      { ...firstVehicle, id: 'veh-2', nickname: 'Bluebird', year: 1991, make: 'BMW', model: '318i' },
+    ];
+
+    const { getByText, queryByTestId } = render(<VehicleWorkspaceShell />);
+
+    expect(getByText('Benny')).toBeTruthy();
+    expect(getByText('Bluebird')).toBeTruthy();
+    expect(queryByTestId('vehicle-facts-grid')).toBeNull();
   });
 
   it('applies updated vehicle data immediately after edit success', () => {

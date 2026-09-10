@@ -112,7 +112,7 @@ export function VehicleCoverPhoto({
   const combinedError = localError || errorMessage;
 
   return (
-    <View className="mb-4">
+    <View className="mb-2">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={hasPhoto ? 'Vehicle cover photo' : 'Add vehicle cover photo'}
@@ -136,16 +136,17 @@ export function VehicleCoverPhoto({
         )}
       </Pressable>
 
-      <View className="mt-3 flex-row gap-3">
+      <View className="mt-1 flex-row gap-2">
         <Button
           label={hasPhoto ? 'Change Photo' : 'Add Photo'}
           variant="secondary"
+          compact
           onPress={handlePick}
           loading={isUploading}
           disabled={busy}
         />
         {hasPhoto ? (
-          <Button label="Remove Photo" variant="danger" onPress={handleRemove} loading={isRemoving} disabled={busy} />
+          <Button label="Remove Photo" variant="danger" compact onPress={handleRemove} loading={isRemoving} disabled={busy} />
         ) : null}
       </View>
 
