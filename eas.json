@@ -32,6 +32,10 @@
       }
     },
     "production": {
+      "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://tfxufjdbiszpnlgeflop.supabase.co"
+      },
       "ios": {
         "resourceClass": "default"
       },

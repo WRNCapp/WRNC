@@ -18,6 +18,7 @@ import type { Vehicle } from '../../types/vehicle';
 import type { Activity } from '../../types/activity';
 import { extractSupabaseErrorMessage, logSupabaseError } from '../../utils/supabaseError';
 import { formatTimelineDate } from '../../utils/activityTimeline';
+import { AccountMenu } from './AccountMenu';
 
 interface DarkStatusStateProps {
   title: string;
@@ -54,6 +55,7 @@ export function VehicleWorkspaceShell() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
   const activeVehicle = selectedVehicle ?? (vehicles.length === 1 ? vehicles[0] : null);
   const documentationScore = useDocumentationScore(activeVehicle?.id);
   const activitiesQuery = useActivities(activeVehicle?.id, { includeArchived: true });
@@ -154,14 +156,20 @@ export function VehicleWorkspaceShell() {
   return (
     <SafeAreaView testID="vehicles-safe-area" style={{ flex: 1, backgroundColor: '#080808' }}>
     <KeyboardSafeScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
-      <View className="mb-3 flex-row items-center justify-between gap-4">
+      <View className="mb-3 flex-row items-center justify-between gap-3">
         <Text className="text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
-        {!showCreate ? (
-          <View style={{ width: 136 }}>
-            <Button label="Create Vehicle" compact onPress={() => setShowCreate(true)} />
-          </View>
-        ) : null}
+        <View className="flex-row items-center gap-2">
+          <Pressable accessibilityLabel="Open account menu" accessibilityRole="button" className="min-h-11 items-center justify-center rounded-lg border border-wrnc-border bg-wrnc-surface-elevated px-3" onPress={() => setShowAccountMenu(true)}>
+            <Text className="text-sm font-semibold text-wrnc-text-secondary">Account</Text>
+          </Pressable>
+          {!showCreate ? (
+            <View style={{ width: 136 }}>
+              <Button label="Create Vehicle" compact onPress={() => setShowCreate(true)} />
+            </View>
+          ) : null}
+        </View>
       </View>
+      <AccountMenu visible={showAccountMenu} onClose={() => setShowAccountMenu(false)} />
       {showCreate ? (
         <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
           <Input label="Year" value={form.year} onChangeText={(year) => setForm((f) => ({ ...f, year }))} keyboardType="number-pad" error={formErrors.year} />
