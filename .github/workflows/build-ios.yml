@@ -61,7 +61,9 @@ jobs:
         run: npm run build:web
 
   build-ios:
-    if: github.event_name == 'workflow_dispatch' && inputs.build_ios
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.build_ios) ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/launch/build-20-production')
     needs: validate
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +79,7 @@ jobs:
         run: npm ci
 
       - name: Build store-signed iOS artifact
-        run: npx eas-cli build --platform ios --profile "${{ inputs.build_profile }}" --non-interactive --no-wait
+        run: npx eas-cli build --platform ios --profile "${{ github.event_name == 'workflow_dispatch' && inputs.build_profile || 'production' }}" --non-interactive --no-wait
         env:
           EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
 
