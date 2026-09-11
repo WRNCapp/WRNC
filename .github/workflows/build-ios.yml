@@ -63,7 +63,8 @@ jobs:
   build-ios:
     if: >-
       (github.event_name == 'workflow_dispatch' && inputs.build_ios) ||
-      (github.event_name == 'push' && github.ref == 'refs/heads/launch/build-20-production')
+      (github.event_name == 'push' && github.ref == 'refs/heads/launch/build-20-production') ||
+      (github.event_name == 'pull_request' && github.head_ref == 'launch/build-20-production')
     needs: validate
     runs-on: ubuntu-latest
     steps:
