@@ -14,6 +14,9 @@ export default function WebsiteHomeScreen() {
   const openSignup = () => router.push('/signup');
   const openLogin = () => router.push('/login');
   const openFounding23 = () => router.push('/founding23');
+  const openAbout = () => router.push('/about');
+  const openPrivacy = () => router.push('/privacy');
+  const openTerms = () => router.push('/terms');
 
   return (
     <>
@@ -35,7 +38,13 @@ export default function WebsiteHomeScreen() {
         <WhyWrncSection />
         <ProductShowcaseSection />
         <FinalCtaSection onFounding23={openFounding23} onJoin={openSignup} />
-        <MarketingFooter onFounding23={openFounding23} onSignIn={openLogin} />
+        <MarketingFooter
+          onAbout={openAbout}
+          onFounding23={openFounding23}
+          onPrivacy={openPrivacy}
+          onSignIn={openLogin}
+          onTerms={openTerms}
+        />
       </ScrollView>
     </>
   );
