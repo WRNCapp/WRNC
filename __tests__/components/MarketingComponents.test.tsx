@@ -135,6 +135,9 @@ describe('V3.1 navigation and benefits', () => {
     footer.getByText('Built for Builders.');
     expect(footer.queryByText('The OS for Automotive Builders.')).toBeNull();
     footer.getByText('© 2026 WRNC.');
+    ['Privacy', 'Terms', 'Contact', 'Support'].forEach((label) => {
+      fireEvent.press(footer.getByText(label));
+    });
     fireEvent.press(footer.getByText('Sign In'));
     expect(onSignIn).toHaveBeenCalledTimes(1);
   });

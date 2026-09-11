@@ -4,7 +4,12 @@ import { Linking, Pressable, StyleSheet, Text, useWindowDimensions, View } from 
 import { WrncLogo } from './WrncLogo';
 
 const productLinks = ['About', 'Founding Builders', 'Sign In'];
-const legalLinks = ['Privacy', 'Terms', 'Contact', 'Support'];
+const legalLinks = [
+  { label: 'Privacy', url: 'https://wrnc.app/privacy' },
+  { label: 'Terms', url: 'https://wrnc.app/terms' },
+  { label: 'Contact', url: 'mailto:contact@wrnc.app' },
+  { label: 'Support', url: 'https://wrnc.app/support' },
+];
 const socialLinks = [
   { label: 'Instagram', icon: 'instagram', iconStyle: 'brand', url: 'https://www.instagram.com/wrnc.app/' },
   { label: 'Facebook', icon: 'facebook', iconStyle: 'brand', url: 'https://www.facebook.com/WRNCapp/' },
@@ -45,11 +50,11 @@ export function MarketingFooter({ onFounding23, onSignIn }: MarketingFooterProps
         ) : item === 'Founding Builders' ? (
           <Pressable accessibilityRole="link" key={item} onPress={onFounding23} style={styles.linkPressable}><Text style={styles.link}>{item}</Text></Pressable>
         ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
-        <View style={styles.links}>{legalLinks.map((item) => item === 'Contact' || item === 'Support' ? (
-          <Pressable accessibilityRole="link" key={item} onPress={() => Linking.openURL(`mailto:${item.toLowerCase()}@wrnc.app`)} style={styles.linkPressable}>
-            <Text style={styles.link}>{item}</Text>
+        <View style={styles.links}>{legalLinks.map((item) => (
+          <Pressable accessibilityRole="link" key={item.label} onPress={() => Linking.openURL(item.url)} style={styles.linkPressable}>
+            <Text style={styles.link}>{item.label}</Text>
           </Pressable>
-        ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
+        ))}</View>
         <View style={styles.legal}>
           <Text style={styles.legalText}>© 2026 WRNC.</Text>
           <Text style={styles.legalText}>A Swear Like A Sailor, LLC company.</Text>

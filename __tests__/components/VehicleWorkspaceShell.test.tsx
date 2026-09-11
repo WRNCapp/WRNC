@@ -159,6 +159,17 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     expect(screen.getByTestId('keyboard-safe-container')).toBeTruthy();
     expect(screen.getByText('Vehicles')).toBeTruthy();
   });
+
+  it('opens account management with sign-out and deletion controls', () => {
+    const screen = render(<VehicleWorkspaceShell />);
+    fireEvent.press(screen.getByLabelText('Open account menu'));
+
+    expect(screen.getByText('Manage your WRNC session and account data.')).toBeTruthy();
+    expect(screen.getByText('Sign Out')).toBeTruthy();
+    fireEvent.press(screen.getByText('Delete Account'));
+    expect(screen.getByText('Permanently Delete Account')).toBeTruthy();
+    expect(screen.getByText(/cannot be undone/i)).toBeTruthy();
+  });
   beforeEach(() => {
     mockWorkspaceQuery.data = {
       id: 'ws-1',
