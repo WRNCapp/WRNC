@@ -3,6 +3,9 @@
   "env": {
     "node": true
   },
+  "ignorePatterns": [
+    "supabase/functions/**"
+  ],
   "rules": {
     "react/display-name": "off",
     "react-hooks/exhaustive-deps": "warn"
