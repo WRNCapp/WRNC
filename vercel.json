@@ -5,6 +5,10 @@
       "dest": "/privacy/index.html"
     },
     {
+      "src": "/support/?",
+      "dest": "/support/index.html"
+    },
+    {
       "src": "/",
       "dest": "/api/coming-soon"
     },
