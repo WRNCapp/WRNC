@@ -1,10 +1,16 @@
 import React from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Linking, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { WrncLogo } from './WrncLogo';
 
 const productLinks = ['About', 'Founding Builders', 'Sign In'];
 const legalLinks = ['Privacy', 'Terms', 'Contact', 'Support'];
+const legalRoutes: Record<string, string> = {
+  Privacy: '/privacy',
+  Terms: '/terms',
+  Support: '/support',
+};
 const socialLinks = [
   { label: 'Instagram', icon: 'instagram', iconStyle: 'brand', url: 'https://www.instagram.com/wrnc.app/' },
   { label: 'Facebook', icon: 'facebook', iconStyle: 'brand', url: 'https://www.facebook.com/WRNCapp/' },
@@ -17,9 +23,20 @@ const socialLinks = [
 type MarketingFooterProps = { onFounding23?: () => void; onSignIn?: () => void };
 
 export function MarketingFooter({ onFounding23, onSignIn }: MarketingFooterProps) {
+  const router = useRouter();
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
   const isCompact = width < 1100;
+
+  const openLegalLink = (item: string) => {
+    if (item === 'Contact') {
+      void Linking.openURL('mailto:support@wrnc.app');
+      return;
+    }
+    const route = legalRoutes[item];
+    if (route) router.push(route as never);
+  };
+
   return (
     <View style={[styles.footer, isCompact && styles.footerCompact, isMobile && styles.footerMobile]}>
       <View style={[styles.content, isCompact && styles.contentCompact]}>
@@ -45,11 +62,11 @@ export function MarketingFooter({ onFounding23, onSignIn }: MarketingFooterProps
         ) : item === 'Founding Builders' ? (
           <Pressable accessibilityRole="link" key={item} onPress={onFounding23} style={styles.linkPressable}><Text style={styles.link}>{item}</Text></Pressable>
         ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
-        <View style={styles.links}>{legalLinks.map((item) => item === 'Contact' || item === 'Support' ? (
-          <Pressable accessibilityRole="link" key={item} onPress={() => Linking.openURL(`mailto:${item.toLowerCase()}@wrnc.app`)} style={styles.linkPressable}>
+        <View style={styles.links}>{legalLinks.map((item) => (
+          <Pressable accessibilityRole="link" key={item} onPress={() => openLegalLink(item)} style={styles.linkPressable}>
             <Text style={styles.link}>{item}</Text>
           </Pressable>
-        ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
+        ))}</View>
         <View style={styles.legal}>
           <Text style={styles.legalText}>© 2026 WRNC.</Text>
           <Text style={styles.legalText}>A Swear Like A Sailor, LLC company.</Text>
