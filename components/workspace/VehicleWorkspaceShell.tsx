@@ -152,12 +152,17 @@ export function VehicleWorkspaceShell() {
 
   return (
     <SafeAreaView testID="vehicles-safe-area" style={{ flex: 1, backgroundColor: '#080808' }}>
-    <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
-      <Text className="mb-4 text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
-      {!showCreate ? (
-        <Button label="Create Vehicle" onPress={() => setShowCreate(true)} />
-      ) : (
-        <View className="mb-4 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+    <KeyboardSafeScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
+      <View className="mb-3 flex-row items-center justify-between gap-4">
+        <Text className="text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
+        {!showCreate ? (
+          <View style={{ width: 136 }}>
+            <Button label="Create Vehicle" compact onPress={() => setShowCreate(true)} />
+          </View>
+        ) : null}
+      </View>
+      {showCreate ? (
+        <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
           <Input label="Year" value={form.year} onChangeText={(year) => setForm((f) => ({ ...f, year }))} keyboardType="number-pad" error={formErrors.year} />
           <Input label="Make" value={form.make} onChangeText={(make) => setForm((f) => ({ ...f, make }))} error={formErrors.make} />
           <Input label="Model" value={form.model} onChangeText={(model) => setForm((f) => ({ ...f, model }))} error={formErrors.model} />
@@ -188,7 +193,7 @@ export function VehicleWorkspaceShell() {
             </View>
           </View>
         </View>
-      )}
+      ) : null}
 
       {showEmptyState ? (
         <EmptyState title="No vehicles yet" message="Create your first vehicle to begin tracking your build." actionLabel="Create Vehicle" onAction={() => setShowCreate(true)} />
@@ -202,8 +207,8 @@ export function VehicleWorkspaceShell() {
           {vehicles.map((vehicle) => (
             <View key={vehicle.id} className="mb-3">
               {activeVehicle?.id === vehicle.id ? (
-                <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
-                  <View testID="vehicle-heading" style={{ marginBottom: 16 }}>
+                <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-3">
+                  <View testID="vehicle-heading" style={{ marginBottom: 12 }}>
                     <Text className="text-lg font-semibold text-wrnc-text-primary">
                       {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
                     </Text>
@@ -221,17 +226,15 @@ export function VehicleWorkspaceShell() {
                     score={documentationScore.data?.overallScore ?? 0}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
-                  <View testID="vehicle-primary-actions" className="mt-4">
+                  <View testID="vehicle-primary-actions" className="mt-3">
+                    <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     <View className="flex-row gap-3">
-                      <View className="flex-1">
-                        <Button label="Build Passport" onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
+                      <View className="mt-2 flex-1">
+                        <Button label="Build Passport" variant="secondary" compact onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
                       </View>
-                      <View className="flex-1">
-                        <Button label="Timeline" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
+                      <View className="mt-2 flex-1">
+                        <Button label="Timeline" variant="secondary" compact onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
                       </View>
-                    </View>
-                    <View className="mt-3">
-                      <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     </View>
                   </View>
                   <RecentActivities
@@ -269,12 +272,12 @@ export function VehicleWorkspaceShell() {
                   ) : null}
                   {isEditMode && editError ? <Text className="mt-3 text-xs text-semantic-error">{editError}</Text> : null}
                   {!isEditMode ? (
-                    <View className="mt-4 flex-row gap-3">
-                      <Button label="Edit" variant="secondary" onPress={() => setIsEditMode(true)} />
+                    <View className="mt-3 flex-row gap-3">
+                      <Button label="Edit" variant="secondary" compact onPress={() => setIsEditMode(true)} />
                       {activeVehicle.archivedAt ? (
-                        <Button label="Restore" variant="secondary" onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Restore" variant="secondary" compact onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
                       ) : (
-                        <Button label="Archive" variant="secondary" onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Archive" variant="secondary" compact onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
                       )}
                     </View>
                   ) : null}
@@ -291,7 +294,7 @@ export function VehicleWorkspaceShell() {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <View testID="vehicle-fact" className="rounded-lg bg-wrnc-background px-3 py-2" style={{ flexBasis: '48%', minHeight: 56 }}>
+    <View testID="vehicle-fact" className="rounded-lg bg-wrnc-background px-3 py-2" style={{ flexBasis: '48%', minHeight: 52 }}>
       <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
       <Text className="mt-1 text-sm font-medium text-wrnc-text-primary">{value}</Text>
     </View>
@@ -310,7 +313,7 @@ function RecentActivities({
     .slice(0, 3);
 
   return (
-    <View className="mt-4">
+    <View className="mt-3">
       <Text className="text-sm font-semibold text-wrnc-text-primary">Recent Activity</Text>
       {recentActivities.length === 0 ? (
         <Text className="mt-2 text-sm text-wrnc-text-secondary">No activity recorded yet.</Text>
