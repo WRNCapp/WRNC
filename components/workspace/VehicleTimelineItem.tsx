@@ -16,7 +16,6 @@ export interface VehicleTimelineItemProps {
 
 function VehicleTimelineItemComponent({
   activity,
-  vehicleLabel,
   onPress,
 }: VehicleTimelineItemProps) {
   const previewPhotoUrl = getActivityPreviewPhotoUrl(activity);
@@ -26,23 +25,17 @@ function VehicleTimelineItemComponent({
   return (
     <Pressable
       accessibilityRole="button"
-      className="mb-3 rounded-2xl border border-wrnc-border bg-wrnc-surface p-4"
+      className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-3"
       onPress={() => onPress(activity.id)}
     >
-      <View className="flex-row items-start gap-4">
+      <View className="flex-row items-start gap-3">
         {previewPhotoUrl ? (
           <Image
             source={{ uri: previewPhotoUrl }}
-            className="h-20 w-20 rounded-xl bg-wrnc-surface-elevated"
+            className="h-16 w-16 rounded-lg bg-wrnc-surface-elevated"
             accessibilityLabel={`${activity.title} preview image`}
           />
-        ) : (
-          <View className="h-20 w-20 items-center justify-center rounded-xl bg-wrnc-surface-elevated">
-            <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-text-secondary">
-              No Photo
-            </Text>
-          </View>
-        )}
+        ) : null}
 
         <View className="flex-1">
           <View className="flex-row flex-wrap items-center gap-2">
@@ -56,12 +49,10 @@ function VehicleTimelineItemComponent({
             ) : null}
           </View>
 
-          <Text className="mt-3 text-lg font-semibold text-wrnc-text-primary">{activity.title}</Text>
+          <Text className="mt-2 text-lg font-semibold text-wrnc-text-primary">{activity.title}</Text>
           <Text className="mt-1 text-sm text-wrnc-text-secondary">{formatTimelineDate(activity.activityDate)}</Text>
-          <Text className="mt-1 text-sm text-wrnc-text-secondary">{vehicleLabel}</Text>
-
           {activity.description ? (
-            <Text className="mt-3 text-sm leading-5 text-wrnc-text-secondary">{activity.description}</Text>
+            <Text className="mt-2 text-sm leading-5 text-wrnc-text-secondary">{activity.description}</Text>
           ) : null}
 
           {cost !== null || odometer !== null ? (

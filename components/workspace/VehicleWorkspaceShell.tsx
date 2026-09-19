@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useCurrentWorkspace } from '../../hooks/useWorkspace';
@@ -152,12 +152,17 @@ export function VehicleWorkspaceShell() {
 
   return (
     <SafeAreaView testID="vehicles-safe-area" style={{ flex: 1, backgroundColor: '#080808' }}>
-    <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
-      <Text className="mb-4 text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
-      {!showCreate ? (
-        <Button label="Create Vehicle" onPress={() => setShowCreate(true)} />
-      ) : (
-        <View className="mb-4 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+    <KeyboardSafeScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
+      <View className="mb-3 flex-row items-center justify-between gap-4">
+        <Text className="text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
+        {!showCreate ? (
+          <View style={{ width: 136 }}>
+            <Button label="Create Vehicle" compact onPress={() => setShowCreate(true)} />
+          </View>
+        ) : null}
+      </View>
+      {showCreate ? (
+        <View className="mb-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
           <Input label="Year" value={form.year} onChangeText={(year) => setForm((f) => ({ ...f, year }))} keyboardType="number-pad" error={formErrors.year} />
           <Input label="Make" value={form.make} onChangeText={(make) => setForm((f) => ({ ...f, make }))} error={formErrors.make} />
           <Input label="Model" value={form.model} onChangeText={(model) => setForm((f) => ({ ...f, model }))} error={formErrors.model} />
@@ -188,7 +193,7 @@ export function VehicleWorkspaceShell() {
             </View>
           </View>
         </View>
-      )}
+      ) : null}
 
       {showEmptyState ? (
         <EmptyState title="No vehicles yet" message="Create your first vehicle to begin tracking your build." actionLabel="Create Vehicle" onAction={() => setShowCreate(true)} />
@@ -202,13 +207,18 @@ export function VehicleWorkspaceShell() {
           {vehicles.map((vehicle) => (
             <View key={vehicle.id} className="mb-3">
               {activeVehicle?.id === vehicle.id ? (
-                <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
-                  <View testID="vehicle-heading" style={{ marginBottom: 16 }}>
-                    <Text className="text-lg font-semibold text-wrnc-text-primary">
-                      {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
-                    </Text>
-                    <Text className="mt-1 text-sm text-wrnc-text-secondary">
-                      {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
+                <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-3">
+                  <View testID="vehicle-heading" className="mb-3 flex-row items-start justify-between gap-3">
+                    <View className="flex-1">
+                      <Text className="text-2xl font-bold text-wrnc-text-primary">
+                        {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
+                      </Text>
+                      <Text className="mt-1 text-sm text-wrnc-text-secondary">
+                        {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
+                      </Text>
+                    </View>
+                    <Text className="rounded-full bg-wrnc-data-accent/20 px-3 py-1 text-xs font-semibold text-wrnc-data-accent">
+                      {activeVehicle.archivedAt ? 'Archived' : 'Active'}
                     </Text>
                   </View>
                   <View testID="vehicle-facts-grid" className="flex-row flex-wrap justify-between gap-y-2">
@@ -218,20 +228,19 @@ export function VehicleWorkspaceShell() {
                     <Fact label="Transmission" value={activeVehicle.transmission || 'Not recorded'} />
                   </View>
                   <DocumentationScoreCard
-                    score={documentationScore.data?.overallScore ?? 0}
+                    score={documentationScore.data?.overallScore}
+                    isLoading={documentationScore.isPending}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
-                  <View testID="vehicle-primary-actions" className="mt-4">
+                  <View testID="vehicle-primary-actions" className="mt-3">
+                    <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     <View className="flex-row gap-3">
-                      <View className="flex-1">
-                        <Button label="Build Passport" onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
+                      <View className="mt-2 flex-1">
+                        <Button label="Build Passport" variant="secondary" compact onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)} />
                       </View>
-                      <View className="flex-1">
-                        <Button label="Timeline" onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
+                      <View className="mt-2 flex-1">
+                        <Button label="Timeline" variant="secondary" compact onPress={() => router.push(`/vehicle/${activeVehicle.id}/timeline`)} />
                       </View>
-                    </View>
-                    <View className="mt-3">
-                      <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     </View>
                   </View>
                   <RecentActivities
@@ -269,12 +278,12 @@ export function VehicleWorkspaceShell() {
                   ) : null}
                   {isEditMode && editError ? <Text className="mt-3 text-xs text-semantic-error">{editError}</Text> : null}
                   {!isEditMode ? (
-                    <View className="mt-4 flex-row gap-3">
-                      <Button label="Edit" variant="secondary" onPress={() => setIsEditMode(true)} />
+                    <View className="mt-3 flex-row gap-3">
+                      <Button label="Edit" variant="secondary" compact onPress={() => setIsEditMode(true)} />
                       {activeVehicle.archivedAt ? (
-                        <Button label="Restore" variant="secondary" onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Restore" variant="secondary" compact onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
                       ) : (
-                        <Button label="Archive" variant="secondary" onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
+                        <Button label="Archive" variant="secondary" compact onPress={() => archiveVehicle.mutate(activeVehicle.id)} />
                       )}
                     </View>
                   ) : null}
@@ -291,9 +300,9 @@ export function VehicleWorkspaceShell() {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <View testID="vehicle-fact" className="rounded-lg bg-wrnc-background px-3 py-2" style={{ flexBasis: '48%', minHeight: 56 }}>
+    <View testID="vehicle-fact" className="border-b border-wrnc-border px-1 py-2" style={{ flexBasis: '48%', minHeight: 48 }}>
       <Text className="text-xs uppercase tracking-wide text-wrnc-text-secondary">{label}</Text>
-      <Text className="mt-1 text-sm font-medium text-wrnc-text-primary">{value}</Text>
+      <Text className="mt-1 text-sm font-semibold text-wrnc-text-primary">{value}</Text>
     </View>
   );
 }
@@ -310,21 +319,29 @@ function RecentActivities({
     .slice(0, 3);
 
   return (
-    <View className="mt-4">
+    <View className="mt-3">
       <Text className="text-sm font-semibold text-wrnc-text-primary">Recent Activity</Text>
       {recentActivities.length === 0 ? (
         <Text className="mt-2 text-sm text-wrnc-text-secondary">No activity recorded yet.</Text>
       ) : (
-        recentActivities.map((activity) => (
-          <View key={activity.id} className="mt-2">
-            <Button
-              label={`${activity.title} · ${formatTimelineDate(activity.activityDate)}`}
-              variant="secondary"
-              compact
+        <View className="mt-2 overflow-hidden rounded-xl border border-wrnc-border">
+          {recentActivities.map((activity, index) => (
+            <Pressable
+              key={activity.id}
+              accessibilityRole="button"
+              className={`flex-row items-center justify-between gap-3 px-3 py-3 ${index > 0 ? 'border-t border-wrnc-border' : ''}`}
               onPress={() => onPress(activity.id)}
-            />
-          </View>
-        ))
+            >
+              <View className="flex-1">
+                <Text className="text-sm font-semibold text-wrnc-text-primary" numberOfLines={1}>{activity.title}</Text>
+                <Text className="mt-1 text-xs text-wrnc-text-secondary">
+                  {activity.activityType} · {formatTimelineDate(activity.activityDate)}
+                </Text>
+              </View>
+              <Text className="text-xl text-wrnc-text-secondary">›</Text>
+            </Pressable>
+          ))}
+        </View>
       )}
     </View>
   );

@@ -23,11 +23,14 @@ function ActivityTypeOption({
   onPress: () => void;
 }) {
   return (
-    <Button
-      label={label}
-      variant={selected ? 'primary' : 'secondary'}
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      className={`min-h-11 items-center justify-center rounded-lg border px-3 py-2 ${selected ? 'border-wrnc-action-primary bg-wrnc-action-primary' : 'border-wrnc-border bg-wrnc-surface-elevated'}`}
       onPress={onPress}
-    />
+    >
+      <Text className={`text-center text-sm font-semibold ${selected ? 'text-wrnc-text-primary' : 'text-wrnc-text-secondary'}`}>{label}</Text>
+    </Pressable>
   );
 }
 
@@ -96,25 +99,26 @@ export default function NewActivityRoute() {
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
       <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
-        <Button label="Cancel" variant="secondary" onPress={() => router.back()} />
-        <View className="mt-4 rounded-2xl border border-wrnc-border bg-wrnc-surface p-4">
+        <Button label="← Cancel" variant="secondary" compact onPress={() => router.back()} />
+        <View className="mt-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
           <Text className="text-2xl font-bold text-wrnc-text-primary">Create Activity</Text>
           <Text className="mt-2 text-sm text-wrnc-text-secondary">
             {vehicle ? `Log work for ${vehicle.year} ${vehicle.make} ${vehicle.model}.` : 'Log work for this vehicle.'}
           </Text>
 
-          <View testID="activity-type-options" style={{ marginTop: 16, rowGap: 12 }}>
+          <View testID="activity-type-options" className="mt-3 flex-row flex-wrap gap-2">
             {ACTIVITY_TYPES.map((option) => (
-              <ActivityTypeOption
-                key={option}
-                label={option}
-                selected={activityType === option}
-                onPress={() => {
-                  setActivityType(option);
-                  setMaintenanceMenuOpen(option === 'Maintenance');
-                  setFieldErrors((currentErrors) => ({ ...currentErrors, maintenanceItems: undefined }));
-                }}
-              />
+              <View key={option} style={{ flexBasis: '48%', flexGrow: 1 }}>
+                <ActivityTypeOption
+                  label={option}
+                  selected={activityType === option}
+                  onPress={() => {
+                    setActivityType(option);
+                    setMaintenanceMenuOpen(option === 'Maintenance');
+                    setFieldErrors((currentErrors) => ({ ...currentErrors, maintenanceItems: undefined }));
+                  }}
+                />
+              </View>
             ))}
           </View>
 
@@ -172,7 +176,7 @@ export default function NewActivityRoute() {
               }}
               error={fieldErrors.title}
             />
-            <Input label="Description" value={description} onChangeText={setDescription} multiline numberOfLines={4} />
+            <Input label="Description" value={description} onChangeText={setDescription} multiline numberOfLines={3} />
             <Input
               label="Activity Date"
               value={activityDate}

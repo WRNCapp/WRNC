@@ -9,9 +9,15 @@ describe('documentation score components', () => {
   it('renders the score card', () => {
     const { getByText } = render(<DocumentationScoreCard score={72} />);
     expect(getByText('72/100')).toBeTruthy();
-    expect(getByText('72 of 100 documentation points')).toBeTruthy();
-    expect(getByText(/Measures how completely this vehicle/)).toBeTruthy();
-    expect(getByText('See Breakdown & Next Steps')).toBeTruthy();
+    expect(getByText('72 documentation points')).toBeTruthy();
+    expect(getByText('Breakdown & Next Steps')).toBeTruthy();
+  });
+
+  it('renders a neutral loading state instead of a false zero score', () => {
+    const { getByText, queryByText } = render(<DocumentationScoreCard isLoading />);
+    expect(getByText('—/100')).toBeTruthy();
+    expect(getByText('Calculating documentation score…')).toBeTruthy();
+    expect(queryByText('0/100')).toBeNull();
   });
 
   it('renders the breakdown', () => {
