@@ -15,7 +15,8 @@
     "build:android": "eas build --platform android",
     "build:ios": "eas build --platform ios",
     "build:web": "expo export --platform web",
-    "qa:attachments:live": "node scripts/live-attachment-qa.mjs"
+    "qa:attachments:live": "node scripts/live-attachment-qa.mjs",
+    "eas-build-post-install": "node scripts/verify-production-env.cjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
