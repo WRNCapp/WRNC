@@ -6,7 +6,7 @@
     "version": "1.0",
     "orientation": "portrait",
     "icon": "./assets/brand/platform/wrnc-app-icon-ios-1024.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wrnc.app",
-      "buildNumber": "20",
+      "buildNumber": "23",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
