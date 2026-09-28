@@ -13,6 +13,8 @@ import { useBuildPassport } from '../../../../hooks/useBuildPassport';
 import { useVehicle } from '../../../../hooks/useVehicle';
 import { useVehiclePhotoUrl, useUploadVehiclePhoto, useReplaceVehiclePhoto, useRemoveVehiclePhoto } from '../../../../hooks/useVehiclePhotos';
 import { supabase } from '../../../../lib/supabase';
+import { useActivities } from '../../../../hooks/useActivity';
+import { PassportSharing } from '../../../../components/workspace/PassportSharing';
 
 export default function VehiclePassportRoute() {
   const router = useRouter();
@@ -20,6 +22,7 @@ export default function VehiclePassportRoute() {
   const vehicleId = Array.isArray(params.id) ? params.id[0] : params.id;
   const { data: passport, isLoading } = useBuildPassport(vehicleId);
   const { data: vehicle } = useVehicle(vehicleId);
+  const { data: activities = [] } = useActivities(vehicleId);
   const { data: signedUrl, isLoading: isLoadingUrl } = useVehiclePhotoUrl(vehicle?.coverPhotoPath);
   const uploadPhoto = useUploadVehiclePhoto();
   const replacePhoto = useReplaceVehiclePhoto();
@@ -111,6 +114,8 @@ export default function VehiclePassportRoute() {
             </View>
           </View>
         </View>
+
+        <PassportSharing vehicleId={vehicleId} activities={activities} />
 
         <View className="overflow-hidden rounded-xl border border-wrnc-border bg-wrnc-surface">
           <PassportSectionButton

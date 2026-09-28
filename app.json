@@ -21,7 +21,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wrnc.app",
-      "buildNumber": "23",
+      "buildNumber": "24",
+      "associatedDomains": ["applinks:www.wrnc.app"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
