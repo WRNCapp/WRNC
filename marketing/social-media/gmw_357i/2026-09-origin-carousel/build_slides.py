@@ -5,7 +5,7 @@ Source photos are the owner's originals; outputs land next to this script.
 """
 import os
 import sys
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 W, H = 1080, 1350
 PHOTO_TOP, PHOTO_BOTTOM = 150, 1080  # photo band, text lives below it
@@ -93,6 +93,13 @@ slide(5, load("ba12c471-image.jpg"),
       "SO I WENT AMERICAN.", "5.7L LS1. PARTS IN EVERY TOWN.", anchor=1.0)
 slide(6, load("6a8e4020-image.jpg", (0, 115, 1206, 880)),
       "BMW OUTSIDE. GM INSIDE.", "THAT'S THE GMW.")
-slide(7, Image.open(dog).convert("RGB") if dog else None,
+def face_crop(im, cy=0.56):
+    """Portrait photo into the landscape band, centered on the face (cy of height)."""
+    h = round(im.width * (PHOTO_BOTTOM - PHOTO_TOP) / W)
+    t = min(max(round(im.height * cy - h / 2), 0), im.height - h)
+    return im.crop((0, t, im.width, t + h))
+
+
+slide(7, face_crop(ImageOps.exif_transpose(Image.open(dog)).convert("RGB")) if dog else None,
       "THE REAL CREW CHIEF.", "SUPERVISES. DOES NOT TURN WRENCHES." if dog else "[ DOG PHOTO GOES HERE ]")
 print("done")

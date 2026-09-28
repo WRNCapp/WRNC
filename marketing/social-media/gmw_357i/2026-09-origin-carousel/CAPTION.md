@@ -1,8 +1,7 @@
 # @GMW_357i origin carousel
 
 Post as a 7-slide carousel, slides in order `slide_1.jpg` to `slide_7.jpg` (1080x1350, 4:5).
-Slide 7 is a placeholder until the dog photo is added:
-`python3 build_slides.py <photo_dir> <BebasNeue-Regular.ttf> <dog_photo.jpg>`
+Rebuild: `python3 build_slides.py <photo_dir> <BebasNeue-Regular.ttf> <dog_photo.jpg>`
 
 ## Caption
 
