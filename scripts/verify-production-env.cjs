@@ -10,14 +10,15 @@ if (process.env.EAS_BUILD_PROFILE !== 'production') {
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 const errors = [];
+const productionUrl = require('../eas.json').build.production.env.EXPO_PUBLIC_SUPABASE_URL;
 
 if (!url) {
   errors.push('EXPO_PUBLIC_SUPABASE_URL is missing from the selected EAS environment.');
 } else {
   try {
     const parsed = new URL(url);
-    if (parsed.protocol !== 'https:' || !parsed.hostname.endsWith('.supabase.co')) {
-      errors.push('EXPO_PUBLIC_SUPABASE_URL must be a production HTTPS Supabase project URL.');
+    if (parsed.href !== `${productionUrl}/`) {
+      errors.push('EXPO_PUBLIC_SUPABASE_URL must match the WRNC production project in eas.json.');
     }
   } catch {
     errors.push('EXPO_PUBLIC_SUPABASE_URL is not a valid URL.');
@@ -26,6 +27,17 @@ if (!url) {
 
 if (!key || key === 'placeholder-anon-key' || key.trim().length < 20) {
   errors.push('EXPO_PUBLIC_SUPABASE_ANON_KEY is missing or invalid in the selected EAS environment.');
+} else if (key.startsWith('sb_secret_')) {
+  errors.push('EXPO_PUBLIC_SUPABASE_ANON_KEY must never contain a Supabase secret key.');
+} else if (key.split('.').length === 3) {
+  try {
+    const payload = JSON.parse(Buffer.from(key.split('.')[1], 'base64url').toString('utf8'));
+    if (payload.role !== 'anon') {
+      errors.push('EXPO_PUBLIC_SUPABASE_ANON_KEY must contain an anon-role JWT.');
+    }
+  } catch {
+    errors.push('EXPO_PUBLIC_SUPABASE_ANON_KEY contains a malformed JWT.');
+  }
 }
 
 if (errors.length) {
