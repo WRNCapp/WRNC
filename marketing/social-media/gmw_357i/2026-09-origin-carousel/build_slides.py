@@ -103,8 +103,12 @@ def face_crop(im, cy=0.56):
     return im.crop((0, t, im.width, t + h))
 
 
-slide(7, face_crop(ImageOps.exif_transpose(Image.open(dog)).convert("RGB")) if dog else None,
-      "THE REAL CREW CHIEF.", "SUPERVISES. DOES NOT TURN WRENCHES." if dog else "[ DOG PHOTO GOES HERE ]")
+dog_im = ImageOps.exif_transpose(Image.open(dog)).convert("RGB") if dog else None
+if dog_im is not None and dog_im.width > dog_im.height:
+    slide(7, dog_im, "THE REAL CREW CHIEF.", "SUPERVISES. DOES NOT TURN WRENCHES.", anchor=0.85)
+else:
+    slide(7, face_crop(dog_im) if dog_im is not None else None,
+          "THE REAL CREW CHIEF.", "SUPERVISES. DOES NOT TURN WRENCHES." if dog else "[ DOG PHOTO GOES HERE ]")
 if regret:
     slide(4, face_crop(ImageOps.exif_transpose(Image.open(regret)).convert("RGB"), cy=0.62),
           "M60 V8. NIKASIL BLOCK.", "MOST EXPENSIVE MISTAKE SO FAR. REVERSED COURSE.")
