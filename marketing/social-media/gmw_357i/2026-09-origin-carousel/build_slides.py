@@ -1,6 +1,6 @@
 """Render the @GMW_357i origin carousel (1080x1350, Instagram 4:5).
 
-Usage: python3 build_slides.py <source_dir> <font.ttf> [dog_photo]
+Usage: python3 build_slides.py <source_dir> <font.ttf> [dog_photo] [regret_selfie]
 Source photos are the owner's originals; outputs land next to this script.
 """
 import os
@@ -13,6 +13,7 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 
 src, font_path = sys.argv[1], sys.argv[2]
 dog = sys.argv[3] if len(sys.argv) > 3 else None
+regret = sys.argv[4] if len(sys.argv) > 4 else None
 
 
 def font(size):
@@ -77,17 +78,19 @@ slide(2, load("a9ab0e47-image.jpg", (0, 272, 1080, 1080)),
 slide(3, load("3bbab943-image.jpg", (0, 270, 1080, 1080)),
       "IT CAME APART FIRST.", "ENGINE. CLUTCH. DIFF. ALL OF IT.")
 
-# Slide 4: text-only confession, no photo exists for the M60
-c = Image.new("RGB", (W, H), "black")
-d = ImageDraw.Draw(c)
-d.text((40, 60), "@GMW_357I", font=font(44), fill=(150, 150, 150))
-d.text((W - 110, 60), "4/7", font=font(44), fill=(150, 150, 150))
-centered(d, 360, "MOST EXPENSIVE MISTAKE", 80, fill=(150, 150, 150))
-centered(d, 450, "SO FAR:", 80, fill=(150, 150, 150))
-centered(d, 620, "BOUGHT A BMW M60 V8.", 120)
-centered(d, 760, "NIKASIL BLOCK.", 120, fill=(230, 60, 40))
-centered(d, 960, "REVERSED COURSE.", 80)
-c.save(os.path.join(OUT, "slide_4.jpg"), quality=92)
+# Slide 4: the M60 confession. No photo of the M60 exists, so the face tells it.
+def slide_4_text_only():
+    c = Image.new("RGB", (W, H), "black")
+    d = ImageDraw.Draw(c)
+    d.text((40, 60), "@GMW_357I", font=font(44), fill=(150, 150, 150))
+    d.text((W - 110, 60), "4/7", font=font(44), fill=(150, 150, 150))
+    centered(d, 360, "MOST EXPENSIVE MISTAKE", 80, fill=(150, 150, 150))
+    centered(d, 450, "SO FAR:", 80, fill=(150, 150, 150))
+    centered(d, 620, "BOUGHT A BMW M60 V8.", 120)
+    centered(d, 760, "NIKASIL BLOCK.", 120, fill=(230, 60, 40))
+    centered(d, 960, "REVERSED COURSE.", 80)
+    c.save(os.path.join(OUT, "slide_4.jpg"), quality=92)
+
 
 slide(5, load("ba12c471-image.jpg"),
       "SO I WENT AMERICAN.", "5.7L LS1. PARTS IN EVERY TOWN.", anchor=1.0)
@@ -102,4 +105,9 @@ def face_crop(im, cy=0.56):
 
 slide(7, face_crop(ImageOps.exif_transpose(Image.open(dog)).convert("RGB")) if dog else None,
       "THE REAL CREW CHIEF.", "SUPERVISES. DOES NOT TURN WRENCHES." if dog else "[ DOG PHOTO GOES HERE ]")
+if regret:
+    slide(4, face_crop(ImageOps.exif_transpose(Image.open(regret)).convert("RGB"), cy=0.62),
+          "M60 V8. NIKASIL BLOCK.", "MOST EXPENSIVE MISTAKE SO FAR. REVERSED COURSE.")
+else:
+    slide_4_text_only()
 print("done")
