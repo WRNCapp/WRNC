@@ -6,7 +6,7 @@ export default function PrivacyPage() {
     <LegalPage
       title="Privacy Policy"
       description="This policy explains how WRNC collects, uses, stores, and protects information when you use the WRNC app and website."
-      updated="September 11, 2026"
+      updated="September 28, 2026"
       sections={[
         {
           heading: 'Information you provide',
@@ -18,6 +18,12 @@ export default function PrivacyPage() {
           heading: 'How we use information',
           paragraphs: [
             'We use this information to operate WRNC, display your vehicle history and Build Passport, secure your account, respond to support requests, diagnose problems, and improve the service. We do not sell your personal information.',
+          ],
+        },
+        {
+          heading: 'Build sharing',
+          paragraphs: [
+            'If you create a public Build Passport link, anyone with that link can see the vehicle year, make, model, and installed-part titles you select. Sharing is off by default. You can turn off the link in your Passport; the public snapshot then becomes unavailable. Avoid selecting titles that contain personal information.',
           ],
         },
         {

@@ -9,6 +9,11 @@
       "dest": "/api/coming-soon"
     },
     {
+      "src": "/.well-known/apple-app-site-association",
+      "headers": { "Content-Type": "application/json" },
+      "continue": true
+    },
+    {
       "handle": "filesystem"
     },
     {

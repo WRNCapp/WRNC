@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "GKNJ58S5YG.com.wrnc.app",
+        "paths": ["/build/*"]
+      }
+    ]
+  }
+}
