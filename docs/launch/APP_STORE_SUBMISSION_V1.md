@@ -8,11 +8,11 @@ Build 20 failed physical-device authentication. Builds 21 and 22 are not validat
 
 - GitHub validation passed on the exact Build 23 source commit.
 - Expo production build `525a5568-a35d-4180-8bd9-5f478b0d9c52` succeeded as version 1.0 (23). Its post-install hook confirmed the production Supabase client configuration was present without printing values.
-- Expo submission `07d5cf0d-59ac-430a-92be-46174fd512e4` uploaded that build successfully to App Store Connect. Apple processing was pending at last check. This is a TestFlight upload, not App Review submission.
+- Expo submission `07d5cf0d-59ac-430a-92be-46174fd512e4` uploaded that build successfully to App Store Connect. Expo reports **Ready for TestFlight**. This is not App Review submission.
 - Production Supabase was restored from `INACTIVE` to `ACTIVE_HEALTHY` and returned a successful database query. This does not verify authentication or Garage data loading from the installed app.
 - The GitHub Actions `EAS_TOKEN` lacks READ permission on the Expo project. The authenticated Expo dashboard was used for the successful build and upload. Repair the CI token before relying on automated release builds.
 
-**Next release gate:** Apple finishes processing Build 23, then install that exact build through TestFlight on a physical iPhone, sign in against production, and load an existing Garage vehicle. Verify account deletion with a disposable account, not a founder account. Record the device result before selecting a build for App Review.
+**Next release gate:** Install Build 23 through TestFlight on a physical iPhone, sign in against production, and load an existing Garage vehicle. Verify account deletion with a disposable account, not a founder account. Record the device result before selecting a build for App Review.
 
 ## App Store metadata
 
@@ -93,7 +93,7 @@ Each file is 1242 × 2688 px, opaque PNG, and derived from the accepted Build 19
 
 1. Account Holder accepts the updated Apple Developer Program License Agreement.
 2. Production Supabase is active and production data paths are verified.
-3. Version 1.0 Build 23 completes Apple processing, is installed from TestFlight, and passes sign-in plus Garage data validation on a physical iPhone. Select only that validated build for review.
+3. Version 1.0 Build 23 is installed from TestFlight and passes sign-in plus Garage data validation on a physical iPhone. Select only that validated build for review.
 4. Support, privacy, and terms URLs return HTTP 200 publicly.
 5. A dedicated production review account is tested.
 6. Required metadata, screenshots, age rating, content rights, export compliance, and privacy labels are complete.
