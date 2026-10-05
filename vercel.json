@@ -13,6 +13,13 @@
       "dest": "/terms/index.html"
     },
     {
+      "src": "/.well-known/apple-app-site-association",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "continue": true
+    },
+    {
       "src": "/",
       "dest": "/api/coming-soon"
     },
