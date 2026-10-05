@@ -23,17 +23,27 @@ import { AccountMenu } from './AccountMenu';
 interface DarkStatusStateProps {
   title: string;
   message?: string;
+  onRetry?: () => void;
 }
 
-function DarkStatusState({ title, message }: DarkStatusStateProps) {
+function DarkStatusState({ title, message, onRetry }: DarkStatusStateProps) {
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+
   return (
     <SafeAreaView testID="workspace-shell-dark-state" className="flex-1 bg-[#080808]">
       <View className="flex-1 justify-center p-6">
         <View className="max-w-xl">
           <Text className="text-lg font-semibold text-[#C0C0C0]">{title}</Text>
           {message ? <Text className="mt-2 text-sm text-[#C0C0C0]">{message}</Text> : null}
+          {onRetry ? (
+            <View className="mt-5 gap-3">
+              <Button label="Try Again" onPress={onRetry} />
+              <Button label="Account" variant="secondary" onPress={() => setShowAccountMenu(true)} />
+            </View>
+          ) : null}
         </View>
       </View>
+      {onRetry ? <AccountMenu visible={showAccountMenu} onClose={() => setShowAccountMenu(false)} /> : null}
     </SafeAreaView>
   );
 }
@@ -142,15 +152,15 @@ export function VehicleWorkspaceShell() {
   }
 
   if (workspaceErrorMessage) {
-    return <DarkStatusState title="Unable to load your garage." message={workspaceErrorMessage} />;
+    return <DarkStatusState title="Unable to load your garage." message={workspaceErrorMessage} onRetry={() => void workspaceQuery.refetch()} />;
   }
 
   if (!workspace) {
-    return <DarkStatusState title="Garage unavailable" message="No garage workspace was found for this account. Sign out and back in, or contact support to provision your workspace." />;
+    return <DarkStatusState title="Garage unavailable" message="No garage workspace was found for this account. Sign out and back in, or contact support to provision your workspace." onRetry={() => void workspaceQuery.refetch()} />;
   }
 
   if (showVehicleErrorState) {
-    return <DarkStatusState title="Unable to load vehicles." message={vehiclesErrorMessage ?? 'Unable to load vehicles.'} />;
+    return <DarkStatusState title="Unable to load vehicles." message={vehiclesErrorMessage ?? 'Unable to load vehicles.'} onRetry={() => void vehiclesQuery.refetch()} />;
   }
 
   return (
