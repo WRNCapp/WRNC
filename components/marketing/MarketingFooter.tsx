@@ -45,11 +45,16 @@ export function MarketingFooter({ onFounding23, onSignIn }: MarketingFooterProps
         ) : item === 'Founding Builders' ? (
           <Pressable accessibilityRole="link" key={item} onPress={onFounding23} style={styles.linkPressable}><Text style={styles.link}>{item}</Text></Pressable>
         ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
-        <View style={styles.links}>{legalLinks.map((item) => item === 'Contact' || item === 'Support' ? (
-          <Pressable accessibilityRole="link" key={item} onPress={() => Linking.openURL(`mailto:${item.toLowerCase()}@wrnc.app`)} style={styles.linkPressable}>
-            <Text style={styles.link}>{item}</Text>
-          </Pressable>
-        ) : <Text key={item} style={styles.link}>{item}</Text>)}</View>
+        <View style={styles.links}>{legalLinks.map((item) => {
+          const url = item === 'Contact'
+            ? 'mailto:contact@wrnc.app'
+            : `https://www.wrnc.app/${item.toLowerCase()}`;
+          return (
+            <Pressable accessibilityRole="link" key={item} onPress={() => Linking.openURL(url)} style={styles.linkPressable}>
+              <Text style={styles.link}>{item}</Text>
+            </Pressable>
+          );
+        })}</View>
         <View style={styles.legal}>
           <Text style={styles.legalText}>© 2026 WRNC.</Text>
           <Text style={styles.legalText}>A Swear Like A Sailor, LLC company.</Text>
