@@ -4,11 +4,14 @@ import { VehicleWorkspaceShell } from '../../components/workspace/VehicleWorkspa
 
 const mockUpdateVehicleMutate = jest.fn();
 
+const mockWorkspaceRefetch = jest.fn();
+
 const mockWorkspaceQuery: {
   data: { id: string; ownerId: string } | undefined;
   error: Error | null;
   isLoading: boolean;
   isPending: boolean;
+  refetch: () => void;
 } = {
   data: {
     id: 'ws-1',
@@ -17,6 +20,7 @@ const mockWorkspaceQuery: {
   error: null,
   isLoading: false,
   isPending: false,
+  refetch: () => mockWorkspaceRefetch(),
 };
 
 const mockVehiclesQuery: {
@@ -229,6 +233,20 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     expect(getByText('Unable to load your garage.')).toBeTruthy();
     expect(getByText('Workspace failed')).toBeTruthy();
     expect(getByTestId('workspace-shell-dark-state')).toBeTruthy();
+  });
+
+  it('offers retry and account access from the garage error state', () => {
+    mockWorkspaceQuery.data = undefined;
+    mockWorkspaceQuery.error = new Error('Workspace failed');
+    mockWorkspaceRefetch.mockReset();
+
+    const screen = render(<VehicleWorkspaceShell />);
+
+    fireEvent.press(screen.getByText('Try Again'));
+    expect(mockWorkspaceRefetch).toHaveBeenCalledTimes(1);
+    fireEvent.press(screen.getByText('Account'));
+    expect(screen.getByText('Sign Out')).toBeTruthy();
+    expect(screen.getByText('Delete Account')).toBeTruthy();
   });
 
   it('renders vehicle query errors inside the dark state container when no vehicle data exists', () => {
