@@ -31,7 +31,7 @@ function VehicleTimelineListComponent({
       ListHeaderComponent={
         <View>
           {header}
-          <View className="mb-3 px-1">
+          <View className="mb-1 mt-4">
             <Text className="text-sm text-wrnc-text-secondary">
               {totalCount} {totalCount === 1 ? 'activity' : 'activities'}
             </Text>

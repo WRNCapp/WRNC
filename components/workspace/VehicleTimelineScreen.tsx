@@ -94,7 +94,7 @@ export function VehicleTimelineScreen({
           <VehicleTimelineEmptyState onCreateActivity={onCreateActivity} />
         </ScrollView>
       ) : (
-        <View className="flex-1 px-4">
+        <View className="flex-1 px-4 pt-4">
           <VehicleTimelineList
             sections={sections}
             totalCount={filteredActivities.length}

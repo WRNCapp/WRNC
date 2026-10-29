@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from '../common/Button';
 import { passportLayout } from './passportLayout';
+import { formatTimelineDate } from '../../utils/activityTimeline';
 import type { BuildPassportTimelineSummary as BuildPassportTimelineSummaryType } from '../../types/buildPassport';
 
 interface BuildPassportTimelineSummaryProps {
@@ -41,7 +42,7 @@ export function BuildPassportTimelineSummary({ summary, onNavigate }: BuildPassp
         <View className="mt-4 rounded-xl bg-wrnc-background px-4 py-3">
           <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-text-secondary">Latest Activity</Text>
           <Text className="mt-1 text-base font-semibold text-wrnc-text-primary">{summary.latestActivity.title}</Text>
-          <Text className="mt-1 text-sm text-wrnc-text-secondary">{summary.latestActivity.activityDate}</Text>
+          <Text className="mt-1 text-sm text-wrnc-text-secondary">{formatTimelineDate(summary.latestActivity.activityDate)}</Text>
         </View>
       ) : null}
 

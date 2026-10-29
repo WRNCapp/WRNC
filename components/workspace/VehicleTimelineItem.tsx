@@ -39,7 +39,7 @@ function VehicleTimelineItemComponent({
 
         <View className="flex-1">
           <View className="flex-row flex-wrap items-center gap-2">
-            <Text className="rounded-full bg-wrnc-data-accent/20 px-2 py-1 text-xs font-semibold text-wrnc-data-accent">
+            <Text className="rounded-full bg-wrnc-data-accent/20 px-2 py-1 text-xs font-semibold text-wrnc-data-accent-text">
               {activity.activityType}
             </Text>
             {activity.archivedAt ? (

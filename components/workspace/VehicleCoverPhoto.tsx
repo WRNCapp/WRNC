@@ -136,7 +136,7 @@ export function VehicleCoverPhoto({
         )}
       </Pressable>
 
-      <View className="mt-1 flex-row gap-2">
+      <View className="mt-2 flex-row gap-2">
         <Button
           label={hasPhoto ? 'Change Photo' : 'Add Photo'}
           variant="secondary"
@@ -146,7 +146,7 @@ export function VehicleCoverPhoto({
           disabled={busy}
         />
         {hasPhoto ? (
-          <Button label="Remove Photo" variant="danger" compact onPress={handleRemove} loading={isRemoving} disabled={busy} />
+          <Button label="Remove Photo" variant="secondary" compact onPress={handleRemove} loading={isRemoving} disabled={busy} />
         ) : null}
       </View>
 
