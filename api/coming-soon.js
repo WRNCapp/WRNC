@@ -1,8 +1,3 @@
-const LOGO_URL =
-  'https://raw.githubusercontent.com/GarageOSOfficial/WRNC/main/assets/brand/wrnc-master-logo-hyper-silver-transparent-placement.png';
-const SOCIAL_URL =
-  'https://raw.githubusercontent.com/GarageOSOfficial/WRNC/main/assets/brand/wrnc-master-logo-hyper-silver-080808.png';
-
 const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -10,39 +5,192 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#080808" />
 <meta name="robots" content="noindex,follow" />
-<title>WRNC | The Car Culture Platform</title>
-<meta name="description" content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds." />
+<title>WRNC | Keep every vehicle build detail in one place</title>
+<meta name="description" content="WRNC helps vehicle builders and owners keep the modifications, maintenance, costs, photos, and progress together as a project grows." />
 <link rel="canonical" href="https://wrnc.app/" />
 <link rel="icon" href="/favicon.ico" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="WRNC" />
-<meta property="og:title" content="WRNC | The Car Culture Platform" />
-<meta property="og:description" content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds." />
+<meta property="og:title" content="WRNC | Keep every vehicle build detail in one place" />
+<meta property="og:description" content="Modifications, maintenance, costs, photos, and progress, kept together as the project grows." />
 <meta property="og:url" content="https://wrnc.app/" />
-<meta property="og:image" content="${SOCIAL_URL}" />
-<meta property="og:image:alt" content="WRNC | The Car Culture Platform" />
+<meta property="og:image" content="https://wrnc.app/wrnc-social.png" />
+<meta property="og:image:alt" content="WRNC" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="WRNC | The Car Culture Platform" />
-<meta name="twitter:description" content="Every build deserves a living record. WRNC is building a purpose-built home for automotive Builders and their Builds." />
-<meta name="twitter:image" content="${SOCIAL_URL}" />
+<meta name="twitter:title" content="WRNC | Keep every vehicle build detail in one place" />
+<meta name="twitter:description" content="Modifications, maintenance, costs, photos, and progress, kept together as the project grows." />
+<meta name="twitter:image" content="https://wrnc.app/wrnc-social.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" />
 <style>
-:root{color-scheme:dark;background:#080808;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080808}body{min-height:100dvh;overflow-x:hidden}.page{min-height:100dvh;padding:0 24px}.hero{width:min(100%,920px);margin:0 auto;padding:56px 0 48px;display:flex;flex-direction:column;align-items:center;text-align:center}.logo{display:block;width:min(226px,62vw);height:auto;margin:0 0 44px}h1{margin:0;max-width:760px;color:#fff;font-size:clamp(2.15rem,6vw,3rem);line-height:1.08;font-weight:800;letter-spacing:.01em;text-wrap:balance}.copy{max-width:660px;margin:18px auto 0;color:#c0c0c0;font-size:clamp(1rem,2.4vw,1.125rem);line-height:1.5}.launch-list{width:min(100%,700px);margin-top:34px}.status{margin-top:34px;display:flex;flex-direction:column;align-items:center}.built{margin:0;color:#fff;font-size:.94rem;font-weight:700;letter-spacing:.14em}.accent{width:42px;height:2px;margin:16px 0 0;background:#ff6400}#product-preview[hidden]{display:none!important}.formkit-form[data-uid="9cf45d2196"]{border-color:#34373d!important;box-shadow:0 18px 60px rgba(0,0,0,.28)!important}.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:32px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header{margin:0 0 10px!important;font-size:28px!important;line-height:1.15!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header h2{margin:0!important;line-height:1.15!important}.formkit-form[data-uid="9cf45d2196"] .formkit-subheader{margin:0 0 20px!important;font-size:17px!important;line-height:1.45!important}.formkit-form[data-uid="9cf45d2196"] .formkit-fields{margin:0 auto!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input,.formkit-form[data-uid="9cf45d2196"] .formkit-submit{min-height:52px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input:focus,.formkit-form[data-uid="9cf45d2196"] .formkit-submit:focus-visible{outline:3px solid rgba(255,100,0,.48)!important;outline-offset:2px!important;border-color:#ff6400!important}@media(max-width:480px){.page{padding:0 20px}.hero{padding:34px 0 36px}.logo{margin-bottom:30px}h1{font-size:clamp(2rem,9.5vw,2.35rem)}.copy{margin-top:15px;line-height:1.45}.launch-list{margin-top:26px}.status{margin-top:28px}.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:24px 20px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-header{font-size:27px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-subheader{font-size:16px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input{font-size:16px!important}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+:root{color-scheme:dark;--bg:#080808;--panel:#0f1012;--panel-2:#141518;--line:#24262b;--text:#fff;--silver:#c0c0c0;--muted:#8d9096;--orange:#ff6400;--purple:#7c3aed;--lavender:#c4b5fd;--sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--serif:"Instrument Serif",Georgia,"Times New Roman",serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--silver);letter-spacing:0}
+.wrap{width:min(100% - 48px,1120px);margin:0 auto}
+.eyebrow{margin:0;font:600 .72rem/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--orange);font-weight:600}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7.4vw,5.4rem);line-height:.98}
+h2{font-size:clamp(2.1rem,5.2vw,3.6rem);line-height:1.02}
+h1 em,h2 em{font-size:1.08em}
+p{color:var(--silver);line-height:1.6}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:700;font-size:.95rem;text-decoration:none;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.btn:focus-visible{outline:3px solid rgba(255,100,0,.48);outline-offset:3px}
+.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{transform:translateY(-1px);background:#ff7a24}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}.btn-ghost:hover{border-color:#3a3d44}
+.arrow{font-family:var(--mono)}
+/* header */
+.top{position:sticky;top:0;z-index:10;background:rgba(8,8,8,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:68px}
+.brand img{display:block;width:118px;height:auto}
+.nav{display:flex;gap:28px}.nav a{color:var(--silver);text-decoration:none;font-size:.9rem}.nav a:hover{color:#fff}
+.top .btn{min-height:40px;padding:0 18px;font-size:.88rem}
+/* hero */
+.hero{padding:clamp(56px,10vw,120px) 0 clamp(48px,8vw,96px)}
+.hero h1{margin-top:22px;max-width:15ch}
+.hero .lede{max-width:56ch;margin:26px 0 0;font-size:clamp(1.05rem,2vw,1.2rem)}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero .for{margin:22px 0 0;font-size:.9rem;color:var(--muted)}
+/* feature panel */
+.panel{position:relative;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:radial-gradient(120% 90% at 85% 10%,rgba(124,58,237,.16),transparent 55%),linear-gradient(180deg,var(--panel-2),var(--panel))}
+.panel::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;opacity:.35;mask-image:linear-gradient(180deg,#000,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.panel-inner{position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;padding:clamp(28px,5vw,56px);min-height:420px}
+.panel-meta{display:flex;justify-content:space-between;gap:16px}
+.panel h2{margin-top:auto;max-width:12ch}
+.panel-left{display:flex;flex-direction:column;gap:28px}
+.panel-card{align-self:end;border:1px solid var(--line);border-radius:16px;background:rgba(8,8,8,.72);padding:24px}
+.panel-card .num{font:600 .8rem var(--mono);color:var(--lavender)}
+.panel-card h3{margin-top:14px;font-size:.78rem;font-family:var(--mono);letter-spacing:.16em;color:var(--muted)}
+.panel-card p{margin:10px 0 18px;color:#fff;font-size:1.15rem;line-height:1.4}
+.panel-card a{color:var(--orange);font-weight:700;text-decoration:none;font-size:.92rem}
+/* sections */
+section.block{padding:clamp(72px,11vw,128px) 0;border-top:1px solid var(--line)}
+.block-head{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end}
+.block-head p{margin:0;max-width:46ch;font-size:1.06rem}
+.block-head h2{margin-top:18px}
+.records{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.record{padding:28px 24px 32px;background:var(--panel);border-left:1px solid var(--line)}.record:first-child{border-left:0}
+.record .num{font:600 .8rem var(--mono);color:var(--lavender)}
+.record h3{margin-top:44px;font-size:1.2rem;letter-spacing:-.01em}
+.record p{margin:10px 0 0;font-size:.96rem}
+.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap}
+.band-track{display:inline-flex;gap:48px;padding:22px 0;font:600 clamp(.9rem,1.6vw,1.05rem) var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);animation:slide 38s linear infinite}
+.band-track span::before{content:"++";color:var(--orange);margin-right:16px}
+@keyframes slide{to{transform:translateX(-50%)}}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.split p{margin:0 0 28px;font-size:1.1rem;max-width:48ch}
+.steps{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{border:1px solid var(--line);border-radius:18px;padding:28px;background:var(--panel);display:flex;flex-direction:column;min-height:230px}
+.step .row{display:flex;justify-content:space-between;font:600 .8rem var(--mono);color:var(--lavender)}.step .row span:last-child{color:var(--orange)}
+.step h3{margin-top:auto;font-size:1.35rem}
+.step p{margin:10px 0 0}
+/* closing */
+.closing{padding:clamp(80px,12vw,140px) 0 56px;border-top:1px solid var(--line);text-align:center}
+.closing h2{margin:18px auto 0;max-width:14ch}
+.closing .copy{margin:20px auto 0;max-width:46ch;font-size:1.08rem}
+.launch-list{width:min(100%,640px);margin:40px auto 0;text-align:left}
+.status{margin-top:56px;display:flex;flex-direction:column;align-items:center}
+.built{margin:0;color:#fff;font-size:.94rem;font-weight:700;letter-spacing:.14em}
+.accent{width:42px;height:2px;margin:16px 0 0;background:var(--orange)}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;margin-top:44px;font-size:.88rem}
+.legal a{color:var(--muted);text-decoration:none}.legal a:hover{color:#fff}
+.copyright{margin:18px 0 0;font-size:.82rem;color:#6b6e74}
+/* Kit form */
+.formkit-form[data-uid="9cf45d2196"]{border-color:#24262b!important;background:#0f1012!important;box-shadow:0 18px 60px rgba(0,0,0,.28)!important;max-width:none!important}
+.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:32px!important}
+.formkit-form[data-uid="9cf45d2196"] .formkit-header{margin:0 0 10px!important;font-size:26px!important;line-height:1.15!important}
+.formkit-form[data-uid="9cf45d2196"] .formkit-header h2{margin:0!important;line-height:1.15!important}
+.formkit-form[data-uid="9cf45d2196"] .formkit-subheader{margin:0 0 20px!important;font-size:16px!important;line-height:1.45!important}
+.formkit-form[data-uid="9cf45d2196"] .formkit-input,.formkit-form[data-uid="9cf45d2196"] .formkit-submit{min-height:52px!important}
+.formkit-form[data-uid="9cf45d2196"] .formkit-input:focus,.formkit-form[data-uid="9cf45d2196"] .formkit-submit:focus-visible{outline:3px solid rgba(255,100,0,.48)!important;outline-offset:2px!important;border-color:#ff6400!important}
+@media(max-width:900px){.nav{display:none}.panel-inner,.block-head,.split{grid-template-columns:1fr}.records{grid-template-columns:1fr 1fr}.record:nth-child(3){border-left:0}.record:nth-child(n+3){border-top:1px solid var(--line)}.steps{grid-template-columns:1fr}.step{min-height:0}.step h3{margin-top:36px}}
+@media(max-width:560px){.wrap{width:min(100% - 32px,1120px)}.records{grid-template-columns:1fr}.record{border-left:0;border-top:1px solid var(--line)}.record:first-child{border-top:0}.record h3{margin-top:24px}.panel-inner{min-height:0}.brand img{width:100px}.formkit-form[data-uid="9cf45d2196"] [data-style="minimal"]{padding:24px 20px!important}.formkit-form[data-uid="9cf45d2196"] .formkit-input{font-size:16px!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band-track{animation:none}.btn{transition:none}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body>
-<main class="page">
-<section class="hero" aria-labelledby="coming-soon-heading">
-<img class="logo" src="${LOGO_URL}" alt="WRNC" width="226" height="50" decoding="async" fetchpriority="high" />
-<h1 id="coming-soon-heading">EVERY BUILD DESERVES<br />A LIVING RECORD.</h1>
-<p class="copy">Your build history shouldn’t be scattered across camera rolls, receipts, emails, notes and memory.</p>
-<p class="copy">WRNC is building a purpose-built home for the Builder and the Build.</p>
+<body id="top">
+<header class="top">
+<div class="wrap">
+<a class="brand" href="#top" aria-label="WRNC home"><img src="/wrnc-logo.png" alt="WRNC" width="118" height="21" decoding="async" fetchpriority="high" /></a>
+<nav class="nav" aria-label="Sections"><a href="#built-for">Who it’s for</a><a href="#records">What you can keep</a><a href="#how-it-works">How it works</a></nav>
+<a class="btn btn-primary" href="#launch-list">Join the launch list</a>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="wrap">
+<p class="eyebrow">For every project, from first wrench to final drive</p>
+<h1>Keep every vehicle build detail <em>in one place.</em></h1>
+<p class="lede">The work is in the details. WRNC helps vehicle builders and owners keep the modifications, maintenance, costs, photos, and progress together as a project grows.</p>
+<div class="actions"><a class="btn btn-primary" href="#launch-list">Join the launch list <span class="arrow" aria-hidden="true">→</span></a><a class="btn btn-ghost" href="#records">Take a closer look</a></div>
+<p class="for">For hobbyists, restorers, and hands-on owners.</p>
+</div>
+</section>
+<div class="wrap">
+<div class="panel" role="presentation">
+<div class="panel-inner">
+<div class="panel-left">
+<div class="panel-meta"><p class="eyebrow">The build, in full</p><p class="eyebrow">WRNC—001</p></div>
+<p class="eyebrow"><b>A project is a thousand small decisions</b> · WRNC / 01</p>
+<h2>Keep the story <em>with the machine.</em></h2>
+</div>
+<div class="panel-card">
+<span class="num">01</span>
+<h3>A LITTLE LESS SCATTERED</h3>
+<p>Build notes in one place. More time for the build.</p>
+<a href="#how-it-works">See the approach <span class="arrow" aria-hidden="true">→</span></a>
+</div>
+</div>
+</div>
+</div>
+<section class="block" id="records">
+<div class="wrap">
+<div class="block-head">
+<div><p class="eyebrow">The useful details</p><h2>One project. <em>All the details.</em></h2></div>
+<p>Build history has a way of ending up everywhere. WRNC brings the pieces that matter into a record you can keep adding to.</p>
+</div>
+<div class="records">
+<article class="record"><span class="num">01</span><h3>Modifications</h3><p>Keep a clear record of the parts, changes, and ideas that shape your build.</p></article>
+<article class="record"><span class="num">02</span><h3>Maintenance</h3><p>Save the service details that are easy to forget and useful to find later.</p></article>
+<article class="record"><span class="num">03</span><h3>Expenses &amp; receipts</h3><p>Keep the cost of the work and the paperwork that goes with it together.</p></article>
+<article class="record"><span class="num">04</span><h3>Photos &amp; progress</h3><p>Follow the project as it changes, one weekend and one detail at a time.</p></article>
+</div>
+</div>
+</section>
+<div class="band" aria-hidden="true"><div class="band-track"><span>Made to keep</span><span>Form follows the road</span><span>Organize</span><span>Build</span><span>Maintain</span><span>Preserve</span><span>Made to keep</span><span>Form follows the road</span><span>Organize</span><span>Build</span><span>Maintain</span><span>Preserve</span></div></div>
+<section class="block" id="built-for">
+<div class="wrap split">
+<div><p class="eyebrow">For the ones who do the work</p><h2 style="margin-top:18px">Built over time. <em>Worth remembering.</em></h2></div>
+<div><p>Whether you’re restoring a classic, refining a weekend project, or simply taking good care of the vehicle you love, the story is part of ownership. WRNC gives that story a place to live.</p><a class="btn btn-ghost" href="mailto:support@wrnc.app?subject=What%20I%E2%80%99m%20building">Tell us what you’re building <span class="arrow" aria-hidden="true">→</span></a></div>
+</div>
+</section>
+<section class="block" id="how-it-works">
+<div class="wrap">
+<div class="block-head">
+<div><p class="eyebrow">A simple habit</p><h2>Pick up where <em>you left off.</em></h2></div>
+<p>Big restorations and small improvements both happen one piece at a time.</p>
+</div>
+<ol class="steps">
+<li class="step"><div class="row"><span>01</span><span aria-hidden="true">↗</span></div><h3>Make a note</h3><p>Record the work, service, or decision while it’s fresh.</p></li>
+<li class="step"><div class="row"><span>02</span><span aria-hidden="true">↗</span></div><h3>Keep the context</h3><p>Add the receipt or photos alongside the details they belong to.</p></li>
+<li class="step"><div class="row"><span>03</span><span aria-hidden="true">↗</span></div><h3>See the progress</h3><p>Return to a project history that grows with the vehicle.</p></li>
+</ol>
+</div>
+</section>
+<section class="closing" id="launch-list" aria-labelledby="closing-heading">
+<div class="wrap">
+<p class="eyebrow">Keep the whole picture</p>
+<h2 id="closing-heading">The next detail <em>is yours to keep.</em></h2>
+<p class="copy">WRNC is coming to iPhone. Join the launch list and we’ll tell you the day it’s ready.</p>
 <div class="launch-list" aria-label="Join the WRNC Launch List"><script async data-uid="9cf45d2196" src="https://wrnc.kit.com/9cf45d2196/index.js"></script></div>
 <div class="status"><p class="built">BUILT FOR BUILDERS.</p><span class="accent" aria-hidden="true"></span></div>
+<nav class="legal" aria-label="Legal and support"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="mailto:support@wrnc.app">support@wrnc.app</a></nav>
+<p class="copyright">© 2026 Swear Like A Sailor, LLC. WRNC is a trademark of Swear Like A Sailor, LLC.</p>
+</div>
 </section>
-<section id="product-preview" hidden aria-label="WRNC product preview"></section>
 </main>
 <script>
 (function(){
