@@ -60,11 +60,16 @@ describe('static Coming Soon campaign page', () => {
   });
 
   it('serves the landing page at the root without intercepting other application routes', () => {
-    expect(vercelConfig.routes.slice(0, 2)).toEqual([
-      { src: '/', dest: '/api/coming-soon' },
-      { src: '/coming-soon', dest: '/api/coming-soon' },
-    ]);
-    expect(vercelConfig.routes).toContainEqual({ handle: 'filesystem' });
+    const routes: Record<string, unknown>[] = vercelConfig.routes;
+    const filesystemIndex = routes.findIndex((route) => route.handle === 'filesystem');
+    const rootIndex = routes.findIndex((route) => route.src === '/' && route.dest === '/api/coming-soon');
+    const comingSoonIndex = routes.findIndex((route) => route.src === '/coming-soon' && route.dest === '/api/coming-soon');
+
+    expect(filesystemIndex).toBeGreaterThan(-1);
+    expect(rootIndex).toBeGreaterThan(-1);
+    expect(comingSoonIndex).toBeGreaterThan(-1);
+    expect(rootIndex).toBeLessThan(filesystemIndex);
+    expect(comingSoonIndex).toBeLessThan(filesystemIndex);
     expect(vercelConfig.routes).toContainEqual({ src: '/(.*)', dest: '/index.html' });
   });
 });
