@@ -9,7 +9,9 @@ import { useActivities } from '../../hooks/useActivity';
 import { Button } from '../common/Button';
 import { KeyboardSafeScrollView } from '../common/KeyboardSafeScrollView';
 import { EmptyState } from '../common/EmptyState';
-import { VehicleCard } from './VehicleCard';
+import { VehicleCard, vehicleIdentity } from './VehicleCard';
+import { VehicleHeroPhoto } from './VehicleHeroPhoto';
+import { WrncLogo } from '../marketing/WrncLogo';
 import { VehicleDetailsForm } from './VehicleDetailsForm';
 import { DocumentationScoreCard } from './DocumentationScoreCard';
 import { Input } from '../common/Input';
@@ -166,18 +168,13 @@ export function VehicleWorkspaceShell() {
   return (
     <SafeAreaView testID="vehicles-safe-area" style={{ flex: 1, backgroundColor: '#080808' }}>
     <KeyboardSafeScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
-      <View className="mb-3 flex-row items-center justify-between gap-3">
-        <Text className="text-2xl font-bold text-wrnc-text-primary">Vehicles</Text>
-        <View className="flex-row items-center gap-2">
-          <Pressable accessibilityLabel="Open account menu" accessibilityRole="button" className="min-h-11 items-center justify-center rounded-lg border border-wrnc-border bg-wrnc-surface-elevated px-3" onPress={() => setShowAccountMenu(true)}>
-            <Text className="text-sm font-semibold text-wrnc-text-secondary">Account</Text>
-          </Pressable>
-          {!showCreate ? (
-            <View style={{ width: 136 }}>
-              <Button label="Create Vehicle" compact onPress={() => setShowCreate(true)} />
-            </View>
-          ) : null}
-        </View>
+      <View className="mb-4 flex-row items-center justify-between gap-3">
+        <WrncLogo style={{ height: 24, width: 109 }} />
+        <Button label="Account" variant="secondary" compact accessibilityLabel="Open account menu" onPress={() => setShowAccountMenu(true)} />
+      </View>
+      <View className="mb-4 flex-row items-center justify-between gap-3">
+        <Text className="text-2xl font-bold text-wrnc-text-primary">Garage</Text>
+        {!showCreate ? <Button label="Add Vehicle" compact onPress={() => setShowCreate(true)} /> : null}
       </View>
       <AccountMenu visible={showAccountMenu} onClose={() => setShowAccountMenu(false)} />
       {showCreate ? (
@@ -215,7 +212,7 @@ export function VehicleWorkspaceShell() {
       ) : null}
 
       {showEmptyState ? (
-        <EmptyState title="No vehicles yet" message="Create your first vehicle to begin tracking your build." actionLabel="Create Vehicle" onAction={() => setShowCreate(true)} />
+        <EmptyState title="No vehicles yet" message="Create your first vehicle to begin tracking your build." actionLabel="Add Vehicle" onAction={() => setShowCreate(true)} />
       ) : (
         <>
           {showVehicleErrorBanner ? (
@@ -226,31 +223,30 @@ export function VehicleWorkspaceShell() {
           {vehicles.map((vehicle) => (
             <View key={vehicle.id} className="mb-3">
               {activeVehicle?.id === vehicle.id ? (
-                <View className="rounded-xl border border-wrnc-border bg-wrnc-surface p-3">
-                  <View testID="vehicle-heading" className="mb-3 flex-row items-start justify-between gap-3">
+                <View>
+                  <VehicleHeroPhoto coverPhotoPath={activeVehicle.coverPhotoPath} />
+                  <View testID="vehicle-heading" className="mt-4 flex-row items-start justify-between gap-3">
                     <View className="flex-1">
-                      <Text className="text-2xl font-bold text-wrnc-text-primary">
-                        {activeVehicle.nickname || `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model}`}
-                      </Text>
-                      <Text className="mt-1 text-sm text-wrnc-text-secondary">
-                        {activeVehicle.year} {activeVehicle.make} {activeVehicle.model}
-                      </Text>
+                      <Text className="text-2xl font-bold text-wrnc-text-primary">{vehicleIdentity(activeVehicle).title}</Text>
+                      {vehicleIdentity(activeVehicle).subtitle ? (
+                        <Text className="mt-1 text-sm text-wrnc-text-secondary">{vehicleIdentity(activeVehicle).subtitle}</Text>
+                      ) : null}
                     </View>
-                    <Text className="rounded-full bg-wrnc-data-accent/20 px-3 py-1 text-xs font-semibold text-wrnc-data-accent">
-                      {activeVehicle.archivedAt ? 'Archived' : 'Active'}
-                    </Text>
-                  </View>
-                  <View testID="vehicle-facts-grid" className="flex-row flex-wrap justify-between gap-y-2">
-                    <Fact label="VIN" value={activeVehicle.vin || 'Not recorded'} />
-                    <Fact label="Mileage" value={activeVehicle.mileage !== null ? `${activeVehicle.mileage.toLocaleString()} mi` : 'Not recorded'} />
-                    <Fact label="Engine" value={activeVehicle.engine || 'Not recorded'} />
-                    <Fact label="Transmission" value={activeVehicle.transmission || 'Not recorded'} />
+                    {activeVehicle.archivedAt ? (
+                      <Text className="rounded-full bg-wrnc-data-accent/20 px-3 py-1 text-xs font-semibold text-wrnc-data-accent-text">Archived</Text>
+                    ) : null}
                   </View>
                   <DocumentationScoreCard
                     score={documentationScore.data?.overallScore}
                     isLoading={documentationScore.isPending}
                     onPress={() => router.push(`/vehicle/${activeVehicle.id}/passport`)}
                   />
+                  <View testID="vehicle-facts-grid" className="mt-3 flex-row flex-wrap justify-between gap-y-2">
+                    <Fact label="VIN" value={activeVehicle.vin || 'Not recorded'} />
+                    <Fact label="Mileage" value={activeVehicle.mileage !== null ? `${activeVehicle.mileage.toLocaleString()} mi` : 'Not recorded'} />
+                    <Fact label="Engine" value={activeVehicle.engine || 'Not recorded'} />
+                    <Fact label="Transmission" value={activeVehicle.transmission || 'Not recorded'} />
+                  </View>
                   <View testID="vehicle-primary-actions" className="mt-3">
                     <Button label="Add Activity" onPress={() => router.push(`/vehicle/${activeVehicle.id}/activity/new`)} />
                     <View className="flex-row gap-3">
@@ -297,8 +293,8 @@ export function VehicleWorkspaceShell() {
                   ) : null}
                   {isEditMode && editError ? <Text className="mt-3 text-xs text-semantic-error">{editError}</Text> : null}
                   {!isEditMode ? (
-                    <View className="mt-3 flex-row gap-3">
-                      <Button label="Edit" variant="secondary" compact onPress={() => setIsEditMode(true)} />
+                    <View className="mt-4 flex-row gap-3 border-t border-wrnc-border pt-4">
+                      <Button label="Edit Vehicle" variant="secondary" compact onPress={() => setIsEditMode(true)} />
                       {activeVehicle.archivedAt ? (
                         <Button label="Restore" variant="secondary" compact onPress={() => restoreVehicle.mutate(activeVehicle.id)} />
                       ) : (
@@ -338,8 +334,8 @@ function RecentActivities({
     .slice(0, 3);
 
   return (
-    <View className="mt-3">
-      <Text className="text-sm font-semibold text-wrnc-text-primary">Recent Activity</Text>
+    <View className="mt-5">
+      <Text className="text-xs font-semibold uppercase tracking-wide text-wrnc-text-secondary">Recent Activity</Text>
       {recentActivities.length === 0 ? (
         <Text className="mt-2 text-sm text-wrnc-text-secondary">No activity recorded yet.</Text>
       ) : (

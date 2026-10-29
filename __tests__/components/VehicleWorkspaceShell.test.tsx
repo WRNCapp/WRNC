@@ -146,6 +146,10 @@ jest.mock('../../hooks/useVehicle', () => ({
   }),
 }));
 
+jest.mock('../../hooks/useVehiclePhotos', () => ({
+  useVehiclePhotoUrl: () => ({ data: null }),
+}));
+
 jest.mock('../../hooks/useDocumentationScore', () => ({
   useDocumentationScore: () => ({
     data: { overallScore: 0 },
@@ -161,7 +165,7 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     const screen = render(<VehicleWorkspaceShell />);
     expect(screen.getByTestId('vehicles-safe-area')).toBeTruthy();
     expect(screen.getByTestId('keyboard-safe-container')).toBeTruthy();
-    expect(screen.getByText('Vehicles')).toBeTruthy();
+    expect(screen.getByText('Garage')).toBeTruthy();
   });
 
   it('opens account management with sign-out and deletion controls', () => {
@@ -418,7 +422,7 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     const { getAllByText, getByLabelText, getByText } = render(<VehicleWorkspaceShell />);
 
     fireEvent.press(getAllByText('Benny')[0]);
-    fireEvent.press(getByText('Edit'));
+    fireEvent.press(getByText('Edit Vehicle'));
     fireEvent.changeText(getByLabelText('Nickname'), 'Benny V2');
     fireEvent.press(getByText('Save Changes'));
 
@@ -460,7 +464,7 @@ describe('VehicleWorkspaceShell loading and empty states', () => {
     const { getAllByText, getByLabelText, getByText } = render(<VehicleWorkspaceShell />);
 
     fireEvent.press(getAllByText('Benny')[0]);
-    fireEvent.press(getByText('Edit'));
+    fireEvent.press(getByText('Edit Vehicle'));
     fireEvent.changeText(getByLabelText('Nickname'), 'Still Editing');
     fireEvent.press(getByText('Save Changes'));
 

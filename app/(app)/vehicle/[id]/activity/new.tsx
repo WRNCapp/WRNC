@@ -99,8 +99,10 @@ export default function NewActivityRoute() {
   return (
     <SafeAreaView className="flex-1 bg-wrnc-background">
       <KeyboardSafeScrollView contentContainerStyle={{ padding: 16 }}>
-        <Button label="← Cancel" variant="secondary" compact onPress={() => router.back()} />
-        <View className="mt-3 rounded-xl border border-wrnc-border bg-wrnc-surface p-4">
+        <View className="flex-row">
+          <Button label="← Cancel" variant="secondary" compact onPress={() => router.back()} />
+        </View>
+        <View className="mt-4">
           <Text className="text-2xl font-bold text-wrnc-text-primary">Create Activity</Text>
           <Text className="mt-2 text-sm text-wrnc-text-secondary">
             {vehicle ? `Log work for ${vehicle.year} ${vehicle.make} ${vehicle.model}.` : 'Log work for this vehicle.'}

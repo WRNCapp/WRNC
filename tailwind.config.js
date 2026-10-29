@@ -14,6 +14,7 @@ module.exports = {
         "wrnc-text-secondary": "#C0C0C0",
         "wrnc-action-primary": "#FF6400",
         "wrnc-data-accent": "#7C3AED",
+        "wrnc-data-accent-text": "#C4B5FD",
         "semantic-success": "#22C55E",
         "semantic-warning": "#F59E0B",
         "semantic-error": "#EF4444"

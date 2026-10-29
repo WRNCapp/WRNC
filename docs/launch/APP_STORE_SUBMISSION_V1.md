@@ -1,90 +1,116 @@
 # WRNC App Store submission package
 
-Release candidate: **Version 1.0, Build 20**
+Release candidate: **Version 1.0, Build 24**, built from `release/build-24-candidate` after PR #87 merges.
 
-Do not submit Build 19 for public review. It was a QA binary. Build 20 must use the EAS `production` profile and production Supabase environment.
+The founder reports that Build 23 (`7bf4c5a`) runs acceptably on a physical iPhone, but it was held for spacing and polish defects. Build 24 is that source plus the garage error-state recovery fix and the PR #87 presentation pass. It contains no new features. Shareable Build Passport (#84) is **not** in Build 24.
+
+Do not submit Builds 20, 21, 22 or 23 for review.
 
 ## App Store metadata
 
-| Field | Value |
-|---|---|
-| Name | WRNC |
-| Subtitle | Your vehicle's living record |
-| Promotional text | Every build deserves a living record. Keep vehicle details, activities, photos, documents, and milestones together in WRNC. |
-| Keywords | project car,car build,vehicle history,maintenance,receipts,modifications,garage,restoration |
-| Support URL | https://wrnc.app/support |
-| Marketing URL | https://wrnc.app |
-| Privacy Policy URL | https://wrnc.app/privacy |
-| Copyright | 2026 Swear Like A Sailor, LLC |
-| Release option | Manually release this version |
+| Field | Value | Limit |
+|---|---|---|
+| Name | WRNC | 30 |
+| Subtitle | Your vehicle's living record | 30 (28 used) |
+| Promotional text | Keep every vehicle build detail in one place. Log the work, attach the receipts and photos, and see how complete your build record is. | 170 |
+| Keywords | project car,car build,vehicle history,maintenance,receipts,modifications,garage,restoration | 100 (91 used) |
+| Support URL | https://www.wrnc.app/support | |
+| Marketing URL | https://www.wrnc.app | |
+| Privacy Policy URL | https://www.wrnc.app/privacy | |
+| Account deletion URL | https://www.wrnc.app/support#delete-account | |
+| Copyright | 2026 Swear Like A Sailor, LLC | |
+| Primary category | Lifestyle | |
+| Price | Free, no in-app purchases | |
+| Release option | Manually release this version | |
 
 ### Description
 
-WRNC gives automotive builders one organized record for every vehicle and every stage of the build.
+WRNC keeps every vehicle build detail in one place.
 
-Create a vehicle, record the work, attach the proof, and preserve the story. Instead of leaving important details scattered across camera rolls, notes, receipts, and memory, WRNC keeps them connected to the vehicle where they belong.
+Build history has a way of ending up everywhere: camera rolls, receipts in the glovebox, notes on your phone, and memory. WRNC keeps it all with the vehicle, as one record you can keep adding to.
 
-VEHICLE RECORDS
+YOUR GARAGE
 
-Keep essential vehicle details, mileage, engine and transmission information, and a cover photo in one clear overview.
+Every vehicle in one place, photo first, with VIN, mileage, engine and transmission details.
 
 ACTIVITY TIMELINE
 
-Document maintenance, installed parts, progress updates, and journal entries in chronological order so the build history remains easy to understand.
+Log installed parts, purchased parts, maintenance, progress updates and journal entries. Add the date, odometer and cost while the work is fresh, then follow the build month by month.
 
 PHOTOS AND DOCUMENTS
 
-Attach photos, receipts, registrations, manuals, warranties, and other supporting files to create a more complete record.
+Attach receipts, registrations, warranties, manuals, diagrams and photos to the vehicle they belong to. Upload PDFs and images straight from your phone.
 
-BUILD PASSPORT
+BUILD PASSPORT AND BUILD SCORE
 
-See documentation quality at a glance with the WRNC Build Score, activity and document summaries, and practical next steps for improving the record.
+The Build Passport summarizes your vehicle's documented history. The WRNC Build Score shows how completely the build is documented across timeline, photos, parts, maintenance and receipts, and suggests what to record next. It measures the record, not the car.
 
-BUILT FOR BUILDERS
+PRIVATE BY DEFAULT
 
-Whether the vehicle is a restoration, track project, daily driver, or long-term build, WRNC helps preserve what was done, when it happened, and why it matters.
+Your records and files are visible only to your account. You can permanently delete your account and everything in it from the Account menu at any time.
+
+Whether it's a restoration, a weekend project or the daily you take care of, WRNC gives the story a place to live.
 
 ## App Review information
 
-### Review notes
+### Review notes (paste into App Store Connect)
 
-WRNC is a vehicle documentation app. Sign in with the supplied review account, open Vehicles, and select the preloaded vehicle. The vehicle overview links to Add Activity, Build Passport, and Timeline. The Account menu includes permanent account deletion.
-
-The review account should contain one vehicle with representative activities, photos, and documents so Apple can test the primary experience without creating data from scratch.
+> WRNC is a private vehicle documentation app. Sign in with the review account provided below. The account has one vehicle with activities, photos and documents already recorded.
+>
+> Main flow: Garage → tap the vehicle → Add Activity, Timeline, or Build Passport. Documents are reached from Build Passport.
+>
+> Account deletion: Garage → Account (top right) → Delete Account → Permanently Delete Account. This permanently deletes the account, its vehicles, activities, documents and uploaded files. Please do not delete the review account itself. Create a new account from the sign-in screen to test deletion.
+>
+> Sign-in is email and password only. The app uses no third-party or social login, so Sign in with Apple is not required (guideline 4.8). The app has no ads, no tracking, no purchases and no user-to-user content.
 
 ### Reviewer access
 
-Create a dedicated review account in the production environment. Do not use a founder's personal account. Record the username and password directly in App Store Connect, not in this repository.
+- Create a dedicated production review account. Do not use the founder's account.
+- Seed it with one vehicle (with a cover photo), at least five activities across different types, one PDF and one photo document.
+- Enter the username and password **only in App Store Connect**, never in this repository or in chat.
+- Sign in to it on a device the day you submit, to confirm production is awake and the data loads.
 
-## App privacy answers
+## Age rating questionnaire
 
-Confirm these against the final production configuration before submission:
+Answer **None** or **No** to every content question. WRNC has no violence, mature themes, gambling, contests, unrestricted web access, or user-to-user communication. Users store private records for their own vehicles, which Apple does not treat as user-generated content shared with others. Expected rating: **4+**.
 
-| Data type | Collected | Linked to identity | Tracking | Purpose |
-|---|---:|---:|---:|---|
-| Email address | Yes | Yes | No | Account authentication, support |
-| User content: photos/videos | Yes | Yes | No | App functionality |
-| User content: other content | Yes | Yes | No | Vehicle records, activities, documents |
-| Product interaction on public website | Yes | No | No | Analytics |
+## Export compliance
 
-The mobile app does not contain an advertising SDK. Do not declare tracking unless the final production build adds cross-app or cross-site tracking.
+`ITSAppUsesNonExemptEncryption` is `false` in `app.json` (verified in Build 23 source). The app uses only standard HTTPS through the operating system. Answer **No** to proprietary or non-exempt encryption. No documentation upload is needed.
 
-## Required screenshots
+## App Privacy answers
 
-Upload these in order to the iPhone 6.5-inch screenshot slot:
+Data the **app** collects (the website's analytics are not part of the app's label):
 
-1. `docs/launch/app-store-screenshots/01-vehicles.png`
-2. `docs/launch/app-store-screenshots/02-build-passport.png`
-3. `docs/launch/app-store-screenshots/03-timeline.png`
+| Data type | Collected | Linked to user | Used for tracking | Purpose |
+|---|---|---|---|---|
+| Contact info: Email address | Yes | Yes | No | App functionality (account sign-in) |
+| Identifiers: User ID | Yes | Yes | No | App functionality |
+| User content: Photos | Yes | Yes | No | App functionality |
+| User content: Other user content | Yes | Yes | No | App functionality (vehicle records, activities, documents, costs) |
 
-Each file is 1242 × 2688 px, opaque PNG, and derived from the accepted Build 19 interface.
+Everything else: **Not collected.** Tracking: **No.** Build 23 source contains no advertising, analytics or crash-reporting SDK (checked against `package.json` and app code). Revisit this table if one is added.
+
+## Screenshots
+
+The existing `app-store-screenshots/` set comes from Build 19 and **must be replaced**. Capture six fresh screenshots from the exact Build 24 binary, on a physical iPhone or the matching simulator, signed in to the review account:
+
+1. Garage with the vehicle photo
+2. Vehicle overview: Build Score, key facts, actions
+3. Timeline
+4. Create Activity
+5. Build Passport
+6. Documents
+
+Required size: 6.9-inch iPhone (1320 × 2868) or 6.5-inch (1284 × 2778 or 1242 × 2688), PNG or JPG, no transparency. Confirm the accepted sizes in App Store Connect when you upload; Apple updates them periodically.
 
 ## Final submission gate
 
-1. Account Holder accepts the updated Apple Developer Program License Agreement.
-2. Production Supabase is active and production data paths are verified.
-3. Version 1.0 Build 20 is uploaded and selected.
-4. Support, privacy, and terms URLs return HTTP 200 publicly.
-5. A dedicated production review account is tested.
-6. Required metadata, screenshots, age rating, content rights, export compliance, and privacy labels are complete.
-7. Founder reviews the product page and explicitly authorizes **Submit for Review**.
+1. Production Supabase is on a plan that does not auto-pause, and is active.
+2. https://www.wrnc.app/privacy and /support show the in-app deletion steps (PR #86, merged October 29). Check in a private browser window.
+3. PR #87 is merged, Build 24 is built with the EAS `production` profile, and it is uploaded to TestFlight.
+4. Founder physical QA on Build 24: clean install, sign in, garage loads, sign out and back in, relaunch keeps the session, add an activity, upload a photo and a PDF, and delete a throwaway account then confirm it can no longer sign in.
+5. Review account seeded and tested on the Build 24 binary.
+6. Six screenshots captured from Build 24.
+7. Metadata, age rating, export compliance and App Privacy entered as above.
+8. Founder explicitly authorizes **Submit for Review**.
